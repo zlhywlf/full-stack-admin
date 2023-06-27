@@ -1,0 +1,89 @@
+package zlhywlf.javaasm;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.lang.reflect.InvocationTargetException;
+
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
+import org.objectweb.asm.ClassWriter;
+import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Opcodes;
+
+import lombok.extern.slf4j.Slf4j;
+import zlhywlf.javaasm.util.FileUtil;
+import zlhywlf.javaasm.util.HexUtil;
+
+@Slf4j
+@TestInstance(Lifecycle.PER_CLASS)
+public class JavaAsmTest {
+    @DisplayName("创建类")
+    @Test
+    void generateClz() throws ClassNotFoundException, InstantiationException, IllegalAccessException,
+            IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+        String path = "zlhywlf/javaagent/GenDemo";
+        String name = path.replace("/", ".");
+        String msg = "hello world!";
+        ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES);
+        cw.visit(Opcodes.V17, Opcodes.ACC_PUBLIC | Opcodes.ACC_SUPER, path, null,
+                "java/lang/Object", null);
+        {
+            MethodVisitor initMethod = cw.visitMethod(Opcodes.ACC_PUBLIC, "<init>", "()V", null, null);
+            initMethod.visitCode();
+            initMethod.visitVarInsn(Opcodes.ALOAD, 0);
+            initMethod.visitMethodInsn(Opcodes.INVOKESPECIAL, "java/lang/Object", "<init>", "()V", false);
+            initMethod.visitInsn(Opcodes.RETURN);
+            initMethod.visitMaxs(1, 1);
+            initMethod.visitEnd();
+        }
+        {
+            MethodVisitor toStringMethod = cw.visitMethod(Opcodes.ACC_PUBLIC, "toString", "()Ljava/lang/String;", null,
+                    null);
+            toStringMethod.visitCode();
+            toStringMethod.visitLdcInsn(msg);
+            toStringMethod.visitInsn(Opcodes.ARETURN);
+            toStringMethod.visitMaxs(1, 1);
+            toStringMethod.visitEnd();
+        }
+        cw.visitEnd();
+        Class<?> clz = new ClassLoader() {
+            @Override
+            protected Class<?> findClass(String clzName) throws ClassNotFoundException {
+                if (name.equals(clzName)) {
+                    byte[] byteArray = cw.toByteArray();
+                    return defineClass(clzName, byteArray, 0, byteArray.length);
+                }
+                throw new ClassNotFoundException("not found " + clzName);
+            }
+        }.loadClass(name);
+        assertEquals(clz.getConstructor().newInstance().toString(), msg);
+    }
+
+    @DisplayName("输出字节码为十六进制")
+    @Test
+    void getHex() {
+        String hexStr = HexUtil.format(bytes, HexUtil.HexFormat.FORMAT_FF_SPACE_FF_32);
+        log.debug("{} bytes\n{}", bytes.length, hexStr);
+    }
+
+    @DisplayName("输出字节码原始数据")
+    @Test
+    void getRaw() {
+
+    }
+
+    @BeforeAll
+    void beforeAll() {
+        String relativePath = "zlhywlf/javaasm/JavaAsmTest$Demo.class";
+        String path = FileUtil.getFilePath(relativePath);
+        bytes = FileUtil.readFileAsBytes(path);
+    }
+
+    byte[] bytes = null;
+
+    static class Demo {
+    }
+}

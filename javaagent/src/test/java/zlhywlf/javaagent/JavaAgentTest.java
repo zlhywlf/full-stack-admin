@@ -8,7 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @TestInstance(Lifecycle.PER_CLASS)
 @Slf4j
-public class AppTest {
+public class JavaAgentTest {
     @Test
     void appTest() {
         log.info("hello world!");
