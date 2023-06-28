@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class Main {
+
     public static void main(String[] args) {
         log.debug("main args : {}", Arrays.toString(args));
     }
@@ -33,4 +34,5 @@ public class Main {
     public static void agentmain(String args, Instrumentation inst) {
         log.debug("agentmain args : {}", args);
     }
+
 }

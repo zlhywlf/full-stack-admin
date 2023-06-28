@@ -4,7 +4,7 @@ import java.util.Formatter;
 
 import lombok.RequiredArgsConstructor;
 
-public class HexUtil {
+public final class HexUtil {
 
     public static String format(byte[] bytes, HexFormat format) {
         if (bytes == null || bytes.length < 1) {
@@ -15,15 +15,14 @@ public class HexUtil {
         StringBuilder sb = new StringBuilder();
         Formatter fm = new Formatter(sb);
         int length = bytes.length;
-        for (int i = 0; i < length - 1; i++) {
-            fm.format("%02X", bytes[i] & 0xFF);
-            if (columns > 0 && (i + 1) % columns == 0) {
+        for (int i = 1; i <= length; i++) {
+            fm.format("%02X", bytes[i - 1] & 0xFF);
+            if (columns > 0 && i % columns == 0) {
                 fm.format("%n");
-            } else {
+            } else if (i != length) {
                 fm.format("%s", separator);
             }
         }
-        fm.format("%02X", bytes[length - 1] & 0xFF);
         fm.close();
         return sb.toString();
     }
@@ -36,4 +35,5 @@ public class HexUtil {
         public final String separator;
         public final int columns;
     }
+
 }

@@ -6,7 +6,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-public class FileUtil {
+public final class FileUtil {
+
     public static String getFilePath(String relativePath) {
         String dir = FileUtil.class.getResource("/").getPath();
         return dir + relativePath;
@@ -17,13 +18,14 @@ public class FileUtil {
         if (!file.exists()) {
             throw new IllegalArgumentException("文件不存在: " + filepath);
         }
-        try (BufferedInputStream in = new BufferedInputStream(new FileInputStream(file));) {
-            ByteArrayOutputStream bao = new ByteArrayOutputStream();
-            IOUtil.copy(in, bao);
-            return bao.toByteArray();
+        try (BufferedInputStream in = new BufferedInputStream(new FileInputStream(file));
+                ByteArrayOutputStream out = new ByteArrayOutputStream();) {
+            IOUtil.copy(in, out);
+            return out.toByteArray();
         } catch (IOException e) {
             e.printStackTrace();
         }
         return null;
     }
+
 }

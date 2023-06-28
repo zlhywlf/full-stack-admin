@@ -14,12 +14,14 @@ import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
 import lombok.extern.slf4j.Slf4j;
+import zlhywlf.javaasm.classfile.ClassFile;
+import zlhywlf.javaasm.classfile.visitor.RawVisitor;
 import zlhywlf.javaasm.util.FileUtil;
-import zlhywlf.javaasm.util.HexUtil;
 
 @Slf4j
 @TestInstance(Lifecycle.PER_CLASS)
 public class JavaAsmTest {
+
     @DisplayName("创建类")
     @Test
     void generateClz() throws ClassNotFoundException, InstantiationException, IllegalAccessException,
@@ -65,14 +67,13 @@ public class JavaAsmTest {
     @DisplayName("输出字节码为十六进制")
     @Test
     void getHex() {
-        String hexStr = HexUtil.format(bytes, HexUtil.HexFormat.FORMAT_FF_SPACE_FF_32);
-        log.debug("{} bytes\n{}", bytes.length, hexStr);
+        log.debug("{} bytes\n{}", bytes.length, ClassFile.parse(bytes));
     }
 
     @DisplayName("输出字节码原始数据")
     @Test
     void getRaw() {
-
+        log.debug("{} bytes\n{}", bytes.length, ClassFile.parse(bytes, new RawVisitor()));
     }
 
     @BeforeAll
@@ -86,4 +87,5 @@ public class JavaAsmTest {
 
     static class Demo {
     }
+
 }
