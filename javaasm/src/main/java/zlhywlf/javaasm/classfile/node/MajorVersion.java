@@ -14,17 +14,18 @@ import zlhywlf.javaasm.cnst.ClassFileConst;
 public final class MajorVersion extends Node {
 
     public MajorVersion(ClassFileReader reader, Formatter fm) {
-        super(reader, fm);
+        super(3, reader, fm);
     }
 
     @Override
     public void accept(Visitor v) {
-        v.visitMajorVersion(this);
+        v.visitMajorVersion(this.init());
     }
 
     @Override
-    public byte[] init() {
-        return reader.next(ClassFileConst.MAJOR_VERSION_SIZE);
+    protected Node init() {
+        bytes = reader.next(ClassFileConst.MAJOR_VERSION_SIZE);
+        return this;
     }
 
 }

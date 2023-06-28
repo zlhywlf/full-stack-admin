@@ -16,16 +16,16 @@ import zlhywlf.javaasm.util.ByteUtil;
 public class ConstantPool extends Node {
 
     public ConstantPool(ClassFileReader reader, Formatter fm) {
-        super(reader, fm);
+        super(5, reader, fm);
     }
 
     @Override
     public void accept(Visitor v) {
-        v.visitConstantPool(this);
+        v.visitConstantPool(this.init());
     }
 
     @Override
-    public byte[] init() {
+    protected Node init() {
         int count = ByteUtil.toInt(reader.loc(ClassFileConst.MAGIC_SIZE
                 + ClassFileConst.MINOR_VERSION_SIZE + ClassFileConst.MAJOR_VERSION_SIZE,
                 ClassFileConst.CONSTANT_POOL_COUNT_SIZE));
@@ -71,7 +71,7 @@ public class ConstantPool extends Node {
                     throw new RuntimeException("无效常量池类型" + tag);
             }
         }
-        return new byte[0];
+        return this;
     }
 
 }

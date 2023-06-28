@@ -12,21 +12,22 @@ import zlhywlf.javaasm.util.HexUtil;
 @Setter
 public abstract class Node implements Element {
 
+    protected int id;
     protected byte[] bytes;
     protected String value;
     protected Formatter fm;
     protected ClassFileReader reader;
 
-    public Node(ClassFileReader reader, Formatter fm) {
+    public Node(int id, ClassFileReader reader, Formatter fm) {
+        this.id = id;
         this.fm = fm;
         this.reader = reader;
-        this.bytes = init();
     }
 
     public String toHex() {
         return HexUtil.format(this.bytes, HexUtil.HexFormat.FORMAT_FF_FF);
     }
 
-    public abstract byte[] init();
+    protected abstract Node init();
 
 }

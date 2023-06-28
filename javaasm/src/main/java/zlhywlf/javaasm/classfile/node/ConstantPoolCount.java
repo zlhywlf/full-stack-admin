@@ -14,17 +14,18 @@ import zlhywlf.javaasm.cnst.ClassFileConst;
 public final class ConstantPoolCount extends Node {
 
     public ConstantPoolCount(ClassFileReader reader, Formatter fm) {
-        super(reader, fm);
+        super(4, reader, fm);
     }
 
     @Override
     public void accept(Visitor v) {
-        v.visitConstantPoolCount(this);
+        v.visitConstantPoolCount(this.init());
     }
 
     @Override
-    public byte[] init() {
-        return reader.next(ClassFileConst.CONSTANT_POOL_COUNT_SIZE);
+    protected Node init() {
+        bytes = reader.next(ClassFileConst.CONSTANT_POOL_COUNT_SIZE);
+        return this;
     }
 
 }

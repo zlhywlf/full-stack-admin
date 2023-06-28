@@ -14,17 +14,18 @@ import zlhywlf.javaasm.cnst.ClassFileConst;
 public final class MinorVersion extends Node {
 
     public MinorVersion(ClassFileReader reader, Formatter fm) {
-        super(reader, fm);
+        super(2, reader, fm);
     }
 
     @Override
     public void accept(Visitor v) {
-        v.visitMinorVersion(this);
+        v.visitMinorVersion(this.init());
     }
 
     @Override
-    public byte[] init() {
-        return reader.next(ClassFileConst.MINOR_VERSION_SIZE);
+    protected Node init() {
+        bytes = reader.next(ClassFileConst.MINOR_VERSION_SIZE);
+        return this;
     }
 
 }

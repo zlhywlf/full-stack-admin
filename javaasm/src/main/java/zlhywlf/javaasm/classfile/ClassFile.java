@@ -1,8 +1,9 @@
 package zlhywlf.javaasm.classfile;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Formatter;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.List;
 
 import zlhywlf.javaasm.classfile.node.ConstantPool;
 import zlhywlf.javaasm.classfile.node.ConstantPoolCount;
@@ -39,29 +40,29 @@ import zlhywlf.javaasm.util.HexUtil;
  */
 public final class ClassFile implements Element {
 
-    private Map<Integer, Node> nodeMap;
+    private List<Node> nodeList;
 
-    public ClassFile(Map<Integer, Node> nodeMap) {
-        this.nodeMap = nodeMap;
+    public ClassFile(List<Node> nodeList) {
+        this.nodeList = nodeList;
     }
 
     @Override
     public void accept(Visitor v) {
-        nodeMap.forEach((id, node) -> node.accept(v));
+        nodeList.stream().sorted(Comparator.comparing(Node::getId)).forEach(node -> node.accept(v));
     }
 
     public static String parse(byte[] bytes, Visitor v) {
         StringBuilder sb = new StringBuilder();
         Formatter fm = new Formatter(sb);
-        Map<Integer, Node> nodeMap = new LinkedHashMap<>(4);
+        List<Node> nodeList = new ArrayList<>(16);
         ClassFileReader reader = new ClassFileReader(bytes);
-        nodeMap.put(1, new Magic(reader, fm));
-        nodeMap.put(2, new MinorVersion(reader, fm));
-        nodeMap.put(3, new MajorVersion(reader, fm));
-        nodeMap.put(4, new ConstantPoolCount(reader, fm));
-        nodeMap.put(5, new ConstantPool(reader, fm));
+        nodeList.add(new ConstantPool(reader, fm));
+        nodeList.add(new ConstantPoolCount(reader, fm));
+        nodeList.add(new MinorVersion(reader, fm));
+        nodeList.add(new Magic(reader, fm));
+        nodeList.add(new MajorVersion(reader, fm));
         fm.format("ClassFile {%n");
-        new ClassFile(nodeMap).accept(v);
+        new ClassFile(nodeList).accept(v);
         fm.format("}");
         fm.close();
         return sb.toString();

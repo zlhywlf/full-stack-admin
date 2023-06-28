@@ -15,22 +15,22 @@ import zlhywlf.javaasm.util.ByteUtil;
 public final class Magic extends Node {
 
     public Magic(ClassFileReader reader, Formatter fm) {
-        super(reader, fm);
+        super(1, reader, fm);
     }
 
     @Override
     public void accept(Visitor v) {
-        v.visitMagic(this);
+        v.visitMagic(this.init());
     }
 
     @Override
-    public byte[] init() {
-        byte[] b = reader.next(ClassFileConst.MAGIC_SIZE);
-        int magic = ByteUtil.toInt(b);
+    protected Node init() {
+        bytes = reader.next(ClassFileConst.MAGIC_SIZE);
+        int magic = ByteUtil.toInt(bytes);
         if (magic != ClassFileConst.MAGIC_VALUE) {
             throw new RuntimeException("不是标准的 .class 文件");
         }
-        return b;
+        return this;
     }
 
 }
