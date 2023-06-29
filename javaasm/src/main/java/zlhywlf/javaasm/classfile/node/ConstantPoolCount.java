@@ -5,6 +5,7 @@ import java.util.Formatter;
 import zlhywlf.javaasm.classfile.ClassFileReader;
 import zlhywlf.javaasm.classfile.visitor.Visitor;
 import zlhywlf.javaasm.cnst.ClassFileConst;
+import zlhywlf.javaasm.util.ByteUtil;
 
 /**
  * u2 constant_pool_count;
@@ -25,6 +26,7 @@ public final class ConstantPoolCount extends Node {
     @Override
     protected Node init() {
         bytes = reader.next(ClassFileConst.CONSTANT_POOL_COUNT_SIZE);
+        value = String.valueOf(ByteUtil.toInt(bytes));
         return this;
     }
 

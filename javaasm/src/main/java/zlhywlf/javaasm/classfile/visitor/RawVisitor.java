@@ -4,6 +4,11 @@ import zlhywlf.javaasm.classfile.node.Node;
 
 public final class RawVisitor implements Visitor {
 
+    private void visitBase(Node obj, String name) {
+        String value = obj.getValue();
+        obj.getFm().format("    %s: %s%s%n", name, obj.toHex(), value == null ? "" : " --> "+value);
+    }
+
     @Override
     public void visitMagic(Node obj) {
         visitBase(obj, "u4 magic");
@@ -29,8 +34,9 @@ public final class RawVisitor implements Visitor {
         visitBase(obj, "cp_info constant_pool[constant_pool_count-1]");
     }
 
-    private void visitBase(Node obj, String name) {
-        obj.getFm().format("    %s: %s %n", name, obj.toHex());
+    @Override
+    public void visitConstant(Node obj) {
+        obj.getFm().format("        |%03d| %s%n", obj.getId(), obj.toHex());
     }
 
 }

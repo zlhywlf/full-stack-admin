@@ -14,4 +14,74 @@ public interface Visitor {
 
     void visitConstantPool(Node obj);
 
+    void visitConstant(Node obj);
+
+    default void visitConstantClass(Node obj) {
+        visitConstant(obj);
+    }
+
+    default void visitConstantUtf8(Node obj) {
+        visitConstant(obj);
+    }
+
+    default void visitConstantMethodref(Node obj) {
+        visitConstant(obj);
+    }
+
+    default void visitConstantNameAndType(Node obj) {
+        visitConstant(obj);
+    }
+
+    default void visitConstantInteger(Node obj) {
+        visitConstant(obj);
+    }
+
+    default void visitConstantFieldref(Node obj) {
+        visitConstant(obj);
+    }
+
+    default void visitConstantString(Node obj) {
+        visitConstant(obj);
+    }
+
+    default void visitConstantDouble(Node obj) {
+        visitConstant(obj);
+    }
+
+    default void visitConstantFloat(Node obj) {
+        visitConstant(obj);
+    }
+
+    default void visitConstantLong(Node obj) {
+        visitConstant(obj);
+    }
+
+    default void visitConstantInterfaceMethodref(Node obj) {
+        visitConstant(obj);
+    }
+
+    default void visitConstantInvokeDynamic(Node obj) {
+        visitConstant(obj);
+    }
+
+    default void visitConstantMethodHandle(Node obj) {
+        visitConstant(obj);
+    }
+
+    default void visitConstantMethodType(Node obj) {
+        visitConstant(obj);
+    }
+
+    default void visitConstantModule(Node obj) {
+        visitConstant(obj);
+    }
+
+    default void visitConstantPackage(Node obj) {
+        visitConstant(obj);
+    }
+
+    default void visitConstantDynamic(Node obj) {
+        visitConstant(obj);
+    }
+
 }

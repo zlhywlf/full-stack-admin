@@ -12,7 +12,7 @@ public final class ClassFileConst {
     public static final byte CONSTANT_FIELDREF = 9;
     public static final byte CONSTANT_METHODREF = 10;
     public static final byte CONSTANT_INTERFACEMETHODREF = 11;
-    public static final byte CONSTANT_String = 8;
+    public static final byte CONSTANT_STRING = 8;
     public static final byte CONSTANT_INTEGER = 3;
     public static final byte CONSTANT_FLOAT = 4;
     public static final byte CONSTANT_LONG = 5;

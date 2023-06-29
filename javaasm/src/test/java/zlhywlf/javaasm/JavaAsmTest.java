@@ -3,6 +3,7 @@ package zlhywlf.javaasm;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.function.Consumer;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -78,14 +79,31 @@ public class JavaAsmTest {
 
     @BeforeAll
     void beforeAll() {
-        String relativePath = "zlhywlf/javaasm/JavaAsmTest$Demo.class";
+        String relativePath = Demo.class.getName().replace(".", "/") + ".class";
         String path = FileUtil.getFilePath(relativePath);
         bytes = FileUtil.readFileAsBytes(path);
     }
 
     byte[] bytes = null;
 
-    static class Demo {
+    class Demo {
+        public static final int a = Integer.MAX_VALUE;
+        public static final double b = Double.MAX_VALUE;
+        public static final float c = Float.MAX_VALUE;
+        public static final long d = Long.MAX_VALUE;
+        public static final String e = "hello world!";
+        private int f = 2;
+        private A g;
+        {
+            g.run(f);
+        }
+
+        Consumer<Integer> h = System.out::println;
+
     }
 
+}
+
+interface A {
+    void run(int i);
 }

@@ -9,6 +9,8 @@ import zlhywlf.javaasm.util.ByteUtil;
 
 /**
  * u4 magic;
+ * 恒为 0xCAFEBABE
+ * cafe babe：咖啡馆宝贝
  * 
  * @author zlhywlf
  */
@@ -30,6 +32,7 @@ public final class Magic extends Node {
         if (magic != ClassFileConst.MAGIC_VALUE) {
             throw new RuntimeException("不是标准的 .class 文件");
         }
+        value = String.valueOf(magic);
         return this;
     }
 
