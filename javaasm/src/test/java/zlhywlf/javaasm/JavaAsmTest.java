@@ -2,6 +2,7 @@ package zlhywlf.javaasm;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.util.function.Consumer;
 
@@ -86,7 +87,7 @@ public class JavaAsmTest {
 
     byte[] bytes = null;
 
-    class Demo {
+    class Demo implements Serializable {
         public static final int a = Integer.MAX_VALUE;
         public static final double b = Double.MAX_VALUE;
         public static final float c = Float.MAX_VALUE;

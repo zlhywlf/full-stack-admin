@@ -6,7 +6,7 @@ public final class RawVisitor implements Visitor {
 
     private void visitBase(Node obj, String name) {
         String value = obj.getValue();
-        obj.getFm().format("    %s: %s%s%n", name, obj.toHex(), value == null ? "" : " --> "+value);
+        obj.getFm().format("    %s: %s%s%n", name, obj.toHex(), value == null ? "" : " --> " + value);
     }
 
     @Override
@@ -36,7 +36,28 @@ public final class RawVisitor implements Visitor {
 
     @Override
     public void visitConstant(Node obj) {
-        obj.getFm().format("        |%03d| %s%n", obj.getId(), obj.toHex());
+        String value = obj.getValue();
+        obj.getFm().format("        |%03d| %s%s%n", obj.getId(), obj.toHex(), value == null ? "" : " --> " + value);
+    }
+
+    @Override
+    public void visitAccessFlags(Node obj) {
+        visitBase(obj, "u2 access_flags");
+    }
+
+    @Override
+    public void visitThisClass(Node obj) {
+        visitBase(obj, "u2 this_class");
+    }
+
+    @Override
+    public void visitSuperClass(Node obj) {
+        visitBase(obj, "u2 super_class");
+    }
+
+    @Override
+    public void visitInterfacesCount(Node obj) {
+        visitBase(obj, "u2 interfaces_count");
     }
 
 }

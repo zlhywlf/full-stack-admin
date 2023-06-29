@@ -14,6 +14,14 @@ public interface Visitor {
 
     void visitConstantPool(Node obj);
 
+    void visitAccessFlags(Node obj);
+
+    void visitThisClass(Node obj);
+
+    void visitSuperClass(Node obj);
+
+    void visitInterfacesCount(Node obj);
+
     void visitConstant(Node obj);
 
     default void visitConstantClass(Node obj) {

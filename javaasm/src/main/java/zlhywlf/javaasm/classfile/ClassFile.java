@@ -5,12 +5,7 @@ import java.util.Comparator;
 import java.util.Formatter;
 import java.util.List;
 
-import zlhywlf.javaasm.classfile.node.ConstantPool;
-import zlhywlf.javaasm.classfile.node.ConstantPoolCount;
-import zlhywlf.javaasm.classfile.node.Magic;
-import zlhywlf.javaasm.classfile.node.MajorVersion;
-import zlhywlf.javaasm.classfile.node.MinorVersion;
-import zlhywlf.javaasm.classfile.node.Node;
+import zlhywlf.javaasm.classfile.node.*;
 import zlhywlf.javaasm.classfile.visitor.Element;
 import zlhywlf.javaasm.classfile.visitor.Visitor;
 import zlhywlf.javaasm.util.HexUtil;
@@ -61,6 +56,10 @@ public final class ClassFile implements Element {
         nodeList.add(new MinorVersion(reader, fm));
         nodeList.add(new Magic(reader, fm));
         nodeList.add(new MajorVersion(reader, fm));
+        nodeList.add(new AccessFlags(reader, fm));
+        nodeList.add(new ThisClass(reader, fm));
+        nodeList.add(new SuperClass(reader, fm));
+        nodeList.add(new InterfacesCount(reader, fm));
         fm.format("ClassFile {%n");
         new ClassFile(nodeList).accept(v);
         fm.format("}");
