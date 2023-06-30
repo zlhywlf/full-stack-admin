@@ -14,7 +14,7 @@ import zlhywlf.javaasm.util.ByteUtil;
 public class InterfacesCount extends Node {
 
     public InterfacesCount(ClassFileReader reader, Formatter fm) {
-        super((byte) 9, reader, fm);
+        super(9, reader, fm);
     }
 
     @Override

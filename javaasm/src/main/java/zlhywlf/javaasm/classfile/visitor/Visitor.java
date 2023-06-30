@@ -22,6 +22,24 @@ public interface Visitor {
 
     void visitInterfacesCount(Node obj);
 
+    void visitInterfaces(Node obj);
+
+    void visitFieldsCount(Node obj);
+
+    void visitFields(Node obj);
+
+    void visitFieldInfo(Node obj);
+
+    void visitAttributeInfo(Node obj);
+
+    void visitMethodsCount(Node obj);
+
+    void visitMethods(Node obj);
+
+    void visitAttributesCount(Node obj);
+
+    void visitAttributes(Node obj);
+
     void visitConstant(Node obj);
 
     default void visitConstantClass(Node obj) {

@@ -60,4 +60,52 @@ public final class RawVisitor implements Visitor {
         visitBase(obj, "u2 interfaces_count");
     }
 
+    @Override
+    public void visitInterfaces(Node obj) {
+        visitBase(obj, "u2 interfaces[interfaces_count]");
+    }
+
+    @Override
+    public void visitFieldsCount(Node obj) {
+        visitBase(obj, "u2 interfaces_count");
+    }
+
+    @Override
+    public void visitFields(Node obj) {
+        visitBase(obj, "field_info fields[fields_count]");
+    }
+
+    @Override
+    public void visitFieldInfo(Node obj) {
+        // TODO
+        visitConstant(obj);
+    }
+
+    @Override
+    public void visitAttributeInfo(Node obj) {
+        // TODO
+        String value = obj.getValue();
+        obj.getFm().format("          %s info: %s%n", value ,obj.toHex());
+    }
+
+    @Override
+    public void visitMethodsCount(Node obj) {
+        visitBase(obj, "u2 methods_count");
+    }
+
+    @Override
+    public void visitMethods(Node obj) {
+        visitBase(obj, "method_info methods[methods_count]");
+    }
+
+    @Override
+    public void visitAttributesCount(Node obj) {
+        visitBase(obj, "u2 attributes_count");
+    }
+
+    @Override
+    public void visitAttributes(Node obj) {
+        visitBase(obj, "attribute_info attributes[attributes_count]");
+    }
+
 }

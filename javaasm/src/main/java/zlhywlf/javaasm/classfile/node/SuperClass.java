@@ -14,7 +14,7 @@ import zlhywlf.javaasm.util.ByteUtil;
 public class SuperClass extends Node {
 
     public SuperClass(ClassFileReader reader, Formatter fm) {
-        super((byte) 8, reader, fm);
+        super(8, reader, fm);
     }
 
     @Override

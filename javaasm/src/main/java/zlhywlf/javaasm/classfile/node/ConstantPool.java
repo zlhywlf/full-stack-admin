@@ -51,7 +51,7 @@ public class ConstantPool extends Node {
     private Constant[] constants;
 
     public ConstantPool(ClassFileReader reader, Formatter fm) {
-        super((byte) 5, reader, fm);
+        super(5, reader, fm);
     }
 
     @Override
@@ -66,9 +66,7 @@ public class ConstantPool extends Node {
 
     @Override
     protected Node init() {
-        int count = ByteUtil.toInt(reader.loc(ClassFileConst.MAGIC_SIZE
-                + ClassFileConst.MINOR_VERSION_SIZE + ClassFileConst.MAJOR_VERSION_SIZE,
-                ClassFileConst.CONSTANT_POOL_COUNT_SIZE));
+        int count = ByteUtil.toInt(reader.previous(2, 2));
         constants = new Constant[count];
         for (int i = 1; i < count; i++) {
             byte tag = reader.peek();

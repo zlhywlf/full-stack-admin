@@ -60,6 +60,13 @@ public final class ClassFile implements Element {
         nodeList.add(new ThisClass(reader, fm));
         nodeList.add(new SuperClass(reader, fm));
         nodeList.add(new InterfacesCount(reader, fm));
+        nodeList.add(new Interfaces(reader, fm));
+        nodeList.add(new FieldsCount(reader, fm));
+        nodeList.add(new Fields(reader, fm));
+        nodeList.add(new MethodsCount(reader, fm));
+        nodeList.add(new Methods(reader, fm));
+        nodeList.add(new AttributesCount(reader, fm));
+        nodeList.add(new Attributes(reader, fm));
         fm.format("ClassFile {%n");
         new ClassFile(nodeList).accept(v);
         fm.format("}");

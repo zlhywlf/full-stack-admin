@@ -7,25 +7,25 @@ import zlhywlf.javaasm.classfile.visitor.Visitor;
 import zlhywlf.javaasm.util.ByteUtil;
 
 /**
- * u2 this_class;
+ * u2 methods_count;
  * 
  * @author zlhywlf
  */
-public class ThisClass extends Node {
+public class MethodsCount extends Node {
 
-    public ThisClass(ClassFileReader reader, Formatter fm) {
-        super(7, reader, fm);
+    public MethodsCount(ClassFileReader reader, Formatter fm) {
+        super(13, reader, fm);
     }
 
     @Override
     public void accept(Visitor v) {
-        v.visitThisClass(this.init());
+        v.visitMethodsCount(this.init());
     }
 
     @Override
     protected Node init() {
         bytes = reader.next(2);
-        value = String.format("#%d", ByteUtil.toInt(bytes));
+        value = String.valueOf(ByteUtil.toInt(bytes));
         return this;
     }
 

@@ -87,7 +87,7 @@ public class JavaAsmTest {
 
     byte[] bytes = null;
 
-    class Demo implements Serializable {
+    class Demo implements Serializable, Cloneable {
         public static final int a = Integer.MAX_VALUE;
         public static final double b = Double.MAX_VALUE;
         public static final float c = Float.MAX_VALUE;

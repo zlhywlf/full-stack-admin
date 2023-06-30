@@ -24,4 +24,8 @@ public class ClassFileReader {
         return array;
     }
 
+    public byte[] previous(int preNum, int size) {
+        return loc(index - preNum, size);
+    }
+
 }

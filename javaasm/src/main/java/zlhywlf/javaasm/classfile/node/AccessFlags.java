@@ -27,7 +27,7 @@ import zlhywlf.javaasm.util.ByteUtil;
 public class AccessFlags extends Node {
 
     public AccessFlags(ClassFileReader reader, Formatter fm) {
-        super((byte) 6, reader, fm);
+        super(6, reader, fm);
     }
 
     @Override
