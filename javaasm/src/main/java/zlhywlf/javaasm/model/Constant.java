@@ -13,6 +13,6 @@ import lombok.Setter;
 public class Constant {
 
     private int id;
-    private byte tag;
+    private byte[] tag;
 
 }

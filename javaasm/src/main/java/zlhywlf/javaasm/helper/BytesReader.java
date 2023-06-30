@@ -1,4 +1,4 @@
-package zlhywlf.javaasm;
+package zlhywlf.javaasm.helper;
 
 import lombok.RequiredArgsConstructor;
 
