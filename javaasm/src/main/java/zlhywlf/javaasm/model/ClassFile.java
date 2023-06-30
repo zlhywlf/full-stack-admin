@@ -28,20 +28,22 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ClassFile {
+
     private Node magic;
     private Node minorVersion;
     private Node majorVersion;
     private Node constantPoolCount;
-    private Node[] constantPool;
+    private Constant[] constantPool;
     private Node accessFlags;
     private Node thisClass;
     private Node superClass;
     private Node interfacesCount;
     private Node[] interfaces;
     private Node fieldsCount;
-    private Node[] fields;
+    private Member[] fields;
     private Node methodsCount;
-    private Node[] methods;
+    private Member[] methods;
     private Node attributesCount;
-    private Node[] attributes;
+    private Attribute[] attributes;
+
 }

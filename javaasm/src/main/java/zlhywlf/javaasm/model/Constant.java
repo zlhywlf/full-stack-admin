@@ -4,14 +4,15 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * ClassFile 节点
+ * 常量基类
  * 
  * @author zlhywlf
  */
 @Getter
 @Setter
-public class Node {
+public class Constant {
 
-    private byte[] bytes;
+    private int id;
+    private byte tag;
 
 }
