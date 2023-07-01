@@ -40,7 +40,7 @@ public class ClassFile {
     private Node thisClass;
     private Node superClass;
     private Node interfacesCount;
-    private Node[] interfaces;
+    private Interface[] interfaces;
     private Node fieldsCount;
     private Member[] fields;
     private Node methodsCount;

@@ -18,6 +18,7 @@ import lombok.Setter;
 @Setter
 public class Attribute {
 
+    private int id;
     private byte[] attributeNameIndexBytes;
     private byte[] attributeLengthBytes;
     private byte[] infoBytes;

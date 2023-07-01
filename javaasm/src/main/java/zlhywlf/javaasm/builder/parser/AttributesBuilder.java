@@ -20,6 +20,7 @@ public class AttributesBuilder {
         Attribute[] attributes = new Attribute[count];
         for (int i = 0; i < count; i++) {
             Attribute attribute = new Attribute();
+            attribute.setId(i + 1);
             attribute.setAttributeNameIndexBytes(reader.next2());
             attribute.setAttributeLengthBytes(reader.next4());
             attribute.setInfoBytes(reader.next(ByteUtil.toUnsignedInt(attribute.getAttributeLengthBytes())));

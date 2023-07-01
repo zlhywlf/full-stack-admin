@@ -25,7 +25,7 @@ import zlhywlf.javaasm.visitor.ConstantsVisitor;
 
 public class ConstantsRawVisitor implements ConstantsVisitor {
 
-    private void visit(Formatter f, int id, byte[]... bytes) {
+    protected void visit(Formatter f, int id, byte[]... bytes) {
         f.format("    |%03d| %s%n", id, HexUtil.format(ByteUtil.merge(bytes)));
     }
 

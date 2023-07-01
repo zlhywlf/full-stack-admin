@@ -4,6 +4,7 @@ import java.util.Formatter;
 
 import zlhywlf.javaasm.model.Attribute;
 import zlhywlf.javaasm.model.Constant;
+import zlhywlf.javaasm.model.Interface;
 import zlhywlf.javaasm.model.Member;
 import zlhywlf.javaasm.model.Node;
 
@@ -27,7 +28,7 @@ public interface ClassFileVisitor {
 
     void visitInterfacesCount(Formatter f, Node n);
 
-    void visitInterfaces(Formatter f, Node[] n);
+    void visitInterfaces(Formatter f, Interface[] n);
 
     void visitFieldsCount(Formatter f, Node n);
 

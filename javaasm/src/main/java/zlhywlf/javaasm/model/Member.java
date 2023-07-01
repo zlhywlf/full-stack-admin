@@ -20,6 +20,7 @@ import lombok.Setter;
 @Setter
 public class Member {
 
+    private int id;
     private byte[] accessFlagsBytes;
     private byte[] nameIndexBytes;
     private byte[] descriptorIndexBytes;

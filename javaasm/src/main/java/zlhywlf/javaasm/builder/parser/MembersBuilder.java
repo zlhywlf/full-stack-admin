@@ -20,6 +20,7 @@ public class MembersBuilder {
         Member[] members = new Member[count];
         for (int i = 0; i < count; i++) {
             Member member = new Member();
+            member.setId(i + 1);
             member.setAccessFlagsBytes(reader.next2());
             member.setNameIndexBytes(reader.next2());
             member.setDescriptorIndexBytes(reader.next2());

@@ -22,8 +22,11 @@ import zlhywlf.javaasm.classfile.ClassFile;
 import zlhywlf.javaasm.classfile.visitor.RawVisitor;
 import zlhywlf.javaasm.util.ClassFileUtil;
 import zlhywlf.javaasm.util.FileUtil;
+import zlhywlf.javaasm.visitor.raw.AttributeRawVisitor;
 import zlhywlf.javaasm.visitor.raw.ClassFileRawVisitor;
 import zlhywlf.javaasm.visitor.raw.ConstantsRawVisitor;
+import zlhywlf.javaasm.visitor.raw.InterfaceRawVisitor;
+import zlhywlf.javaasm.visitor.raw.MemberRawVisitor;
 
 @Slf4j
 @TestInstance(Lifecycle.PER_CLASS)
@@ -88,7 +91,8 @@ public class JavaAsmTest {
     void parseRaw() {
         ConstantsRawVisitor constantsRawVisitor = new ConstantsRawVisitor();
         var constantsVisitorStrategy = new ConstantsVisitorStrategyBuilder(constantsRawVisitor).build();
-        ClassFileRawVisitor classFileRawVisitor = new ClassFileRawVisitor(constantsVisitorStrategy);
+        ClassFileRawVisitor classFileRawVisitor = new ClassFileRawVisitor(constantsVisitorStrategy,
+                new InterfaceRawVisitor(), new MemberRawVisitor(), new AttributeRawVisitor());
         var classFileVisitorConsumer = new ClassFileVisitorConsumerBuilder(classFileRawVisitor).build();
         log.debug("{} bytes\n{}", bytes.length, ClassFileUtil.parse(bytes, classFileVisitorConsumer));
     }
