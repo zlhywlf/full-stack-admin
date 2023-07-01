@@ -1,4 +1,4 @@
-package zlhywlf.javaasm.builder;
+package zlhywlf.javaasm.builder.parser;
 
 import java.util.function.BiFunction;
 

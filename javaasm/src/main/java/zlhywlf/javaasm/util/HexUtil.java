@@ -6,6 +6,10 @@ import lombok.RequiredArgsConstructor;
 
 public final class HexUtil {
 
+    public static String format(byte[] bytes) {
+        return format(bytes, HexFormat.FORMAT_FF_FF);
+    }
+
     public static String format(byte[] bytes, HexFormat format) {
         if (bytes == null || bytes.length < 1) {
             return "";

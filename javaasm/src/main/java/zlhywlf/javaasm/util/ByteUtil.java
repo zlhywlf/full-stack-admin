@@ -6,7 +6,7 @@ import java.nio.ByteBuffer;
 
 public final class ByteUtil {
 
-    public static int toInt(byte[] bytes) {
+    public static int toUnsignedInt(byte[] bytes) {
         if (bytes == null || bytes.length < 1) {
             return 0;
         }
@@ -71,6 +71,13 @@ public final class ByteUtil {
         buffer.put(bytes);
         buffer.flip();
         return buffer.getLong();
+    }
+
+    public static int toInt(byte[] bytes) {
+        ByteBuffer buffer = ByteBuffer.allocate(Integer.BYTES);
+        buffer.put(bytes);
+        buffer.flip();
+        return buffer.getInt();
     }
 
 }

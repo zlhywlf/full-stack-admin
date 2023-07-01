@@ -2,6 +2,8 @@ package zlhywlf.javaasm.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import zlhywlf.javaasm.cnst.ClassFileConst;
+import zlhywlf.javaasm.util.ByteUtil;
 
 /**
  * ClassFile {
@@ -45,5 +47,13 @@ public class ClassFile {
     private Member[] methods;
     private Node attributesCount;
     private Attribute[] attributes;
+
+    public void setMagic(Node magic) {
+        int value = ByteUtil.toInt(magic.getBytes());
+        if (value != ClassFileConst.MAGIC_VALUE) {
+            throw new RuntimeException("不是标准的 .class 文件");
+        }
+        this.magic = magic;
+    }
 
 }

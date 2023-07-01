@@ -1,4 +1,4 @@
-package zlhywlf.javaasm.builder;
+package zlhywlf.javaasm.builder.parser;
 
 import lombok.RequiredArgsConstructor;
 import zlhywlf.javaasm.helper.BytesReader;
@@ -22,7 +22,7 @@ public class AttributesBuilder {
             Attribute attribute = new Attribute();
             attribute.setAttributeNameIndexBytes(reader.next2());
             attribute.setAttributeLengthBytes(reader.next4());
-            attribute.setInfoBytes(reader.next(ByteUtil.toInt(attribute.getAttributeLengthBytes())));
+            attribute.setInfoBytes(reader.next(ByteUtil.toUnsignedInt(attribute.getAttributeLengthBytes())));
             attributes[i] = attribute;
         }
         return attributes;

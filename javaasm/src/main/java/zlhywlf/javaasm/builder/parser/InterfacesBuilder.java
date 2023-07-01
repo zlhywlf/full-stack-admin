@@ -1,4 +1,4 @@
-package zlhywlf.javaasm.builder;
+package zlhywlf.javaasm.builder.parser;
 
 import lombok.RequiredArgsConstructor;
 import zlhywlf.javaasm.helper.BytesReader;

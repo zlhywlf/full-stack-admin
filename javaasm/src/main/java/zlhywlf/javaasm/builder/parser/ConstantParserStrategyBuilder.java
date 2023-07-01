@@ -1,4 +1,4 @@
-package zlhywlf.javaasm.builder;
+package zlhywlf.javaasm.builder.parser;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -44,7 +44,7 @@ public class ConstantParserStrategyBuilder {
         constant.setId(id);
         constant.setTag(reader.next1());
         constant.setLengthBytes(reader.next2());
-        constant.setBytes(reader.next(ByteUtil.toInt(constant.getLengthBytes())));
+        constant.setBytes(reader.next(ByteUtil.toUnsignedInt(constant.getLengthBytes())));
         return constant;
     };
 

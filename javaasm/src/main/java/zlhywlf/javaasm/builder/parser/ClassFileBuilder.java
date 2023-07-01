@@ -1,4 +1,4 @@
-package zlhywlf.javaasm.builder;
+package zlhywlf.javaasm.builder.parser;
 
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -33,7 +33,7 @@ public class ClassFileBuilder {
         classFile.setConstantPoolCount(sup.get());
         classFile.setConstantPool(
                 new ConstantsBuilder(
-                        ByteUtil.toInt(classFile.getConstantPoolCount().getBytes()),
+                        ByteUtil.toUnsignedInt(classFile.getConstantPoolCount().getBytes()),
                         reader).build());
         classFile.setAccessFlags(sup.get());
         classFile.setThisClass(sup.get());
@@ -41,22 +41,22 @@ public class ClassFileBuilder {
         classFile.setInterfacesCount(sup.get());
         classFile.setInterfaces(
                 new InterfacesBuilder(
-                        ByteUtil.toInt(classFile.getInterfacesCount().getBytes()),
+                        ByteUtil.toUnsignedInt(classFile.getInterfacesCount().getBytes()),
                         reader).build());
         classFile.setFieldsCount(sup.get());
         classFile.setFields(
                 new MembersBuilder(
-                        ByteUtil.toInt(classFile.getFieldsCount().getBytes()),
+                        ByteUtil.toUnsignedInt(classFile.getFieldsCount().getBytes()),
                         reader).build());
         classFile.setMethodsCount(sup.get());
         classFile.setMethods(
                 new MembersBuilder(
-                        ByteUtil.toInt(classFile.getMethodsCount().getBytes()),
+                        ByteUtil.toUnsignedInt(classFile.getMethodsCount().getBytes()),
                         reader).build());
         classFile.setAttributesCount(sup.get());
         classFile.setAttributes(
                 new AttributesBuilder(
-                        ByteUtil.toInt(classFile.getAttributesCount().getBytes()),
+                        ByteUtil.toUnsignedInt(classFile.getAttributesCount().getBytes()),
                         reader).build());
         return classFile;
     }

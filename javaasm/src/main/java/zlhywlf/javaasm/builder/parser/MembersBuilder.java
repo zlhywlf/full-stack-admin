@@ -1,4 +1,4 @@
-package zlhywlf.javaasm.builder;
+package zlhywlf.javaasm.builder.parser;
 
 import lombok.RequiredArgsConstructor;
 import zlhywlf.javaasm.helper.BytesReader;
@@ -26,7 +26,7 @@ public class MembersBuilder {
             member.setAttributesCountBytes(reader.next2());
             member.setAttributes(
                     new AttributesBuilder(
-                            ByteUtil.toInt(member.getAttributesCountBytes()),
+                            ByteUtil.toUnsignedInt(member.getAttributesCountBytes()),
                             reader).build());
             members[i] = member;
         }

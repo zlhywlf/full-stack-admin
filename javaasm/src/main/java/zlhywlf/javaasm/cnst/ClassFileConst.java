@@ -26,6 +26,4 @@ public final class ClassFileConst {
     public static final byte CONSTANT_MODULE = 19;
     public static final byte CONSTANT_PACKAGE = 20;
 
-    public static final byte CLASS_FILE_NODE_SIZE = 16;
-
 }
