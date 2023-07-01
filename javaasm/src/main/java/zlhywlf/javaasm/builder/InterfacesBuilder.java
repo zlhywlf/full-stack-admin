@@ -17,7 +17,10 @@ public class InterfacesBuilder {
 
     public Node[] build() {
         Node[] nodes = new Node[count];
-        for (int i = 1; i < count; i++) {
+        for (int i = 0; i < count; i++) {
+            Node node = new Node();
+            node.setBytes(reader.next2());
+            nodes[i] = node;
         }
         return nodes;
     }

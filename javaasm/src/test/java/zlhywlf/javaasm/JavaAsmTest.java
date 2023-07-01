@@ -16,8 +16,10 @@ import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
 import lombok.extern.slf4j.Slf4j;
+import zlhywlf.javaasm.builder.ClassFileBuilder;
 import zlhywlf.javaasm.classfile.ClassFile;
 import zlhywlf.javaasm.classfile.visitor.RawVisitor;
+import zlhywlf.javaasm.helper.BytesReader;
 import zlhywlf.javaasm.util.FileUtil;
 
 @Slf4j
@@ -76,6 +78,13 @@ public class JavaAsmTest {
     @Test
     void getRaw() {
         log.debug("{} bytes\n{}", bytes.length, ClassFile.parse(bytes, new RawVisitor()));
+    }
+
+    @DisplayName("解析字节码数据")
+    @Test
+    void parseBytes() {
+        zlhywlf.javaasm.model.ClassFile build = new ClassFileBuilder(new BytesReader(bytes)).build();
+        log.debug("");
     }
 
     @BeforeAll
