@@ -24,6 +24,22 @@ public class ClassFileRawVisitor implements ClassFileVisitor {
         f.format("%n");
     }
 
+    private void visitMember(String name, Formatter f, Member[] n) {
+        f.format("%s:%n", name);
+        for (int i = 0; i < n.length; i++) {
+            Member c = n[i];
+            byte[] bytes = ByteUtil.merge(c.getAccessFlagsBytes(), c.getNameIndexBytes(),
+                    c.getDescriptorIndexBytes(), c.getAttributesCountBytes());
+            Attribute[] attributes = c.getAttributes();
+            for (Attribute a : attributes) {
+                bytes = ByteUtil.merge(bytes, a.getAttributeNameIndexBytes(), a.getAttributeLengthBytes(),
+                        a.getInfoBytes());
+            }
+            f.format("    |%03d| %s%n", i + 1,
+                    HexUtil.format(bytes));
+        }
+    }
+
     @Override
     public void visitMagic(Formatter f, Node n) {
         visit("u4 magic", f, n);
@@ -79,8 +95,10 @@ public class ClassFileRawVisitor implements ClassFileVisitor {
 
     @Override
     public void visitInterfaces(Formatter f, Node[] n) {
-        // TODO Auto-generated method stub
-
+        f.format("%s:%n", "u2 interfaces[interfaces_count]");
+        for (int i = 0; i < n.length; i++) {
+            f.format("    |%03d| %s%n", i + 1, HexUtil.format(n[i].getBytes()));
+        }
     }
 
     @Override
@@ -90,8 +108,7 @@ public class ClassFileRawVisitor implements ClassFileVisitor {
 
     @Override
     public void visitFields(Formatter f, Member[] n) {
-        // TODO Auto-generated method stub
-
+        visitMember("field_info fields[fields_count]", f, n);
     }
 
     @Override
@@ -101,8 +118,7 @@ public class ClassFileRawVisitor implements ClassFileVisitor {
 
     @Override
     public void visitMethods(Formatter f, Member[] n) {
-        // TODO Auto-generated method stub
-
+        visitMember("method_info methods[methods_count]", f, n);
     }
 
     @Override
@@ -112,8 +128,13 @@ public class ClassFileRawVisitor implements ClassFileVisitor {
 
     @Override
     public void visitAttributes(Formatter f, Attribute[] n) {
-        // TODO Auto-generated method stub
-
+        f.format("%s:%n", "attribute_info attributes[attributes_count]");
+        for (int i = 0; i < n.length; i++) {
+            Attribute a = n[i];
+            f.format("    |%03d| %s%n", i + 1,
+                    HexUtil.format(ByteUtil.merge(a.getAttributeNameIndexBytes(), a.getAttributeLengthBytes(),
+                            a.getInfoBytes())));
+        }
     }
 
 }
