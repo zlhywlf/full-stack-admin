@@ -19,7 +19,7 @@ public class InterfacesBuilder {
         Interface[] interfaces = new Interface[count];
         for (int i = 0; i < count; i++) {
             Interface inter = new Interface();
-            inter.setId(i + 1);
+            inter.setId(i);
             inter.setBytes(reader.next2());
             interfaces[i] = inter;
         }

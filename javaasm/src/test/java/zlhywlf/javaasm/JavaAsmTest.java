@@ -89,12 +89,13 @@ public class JavaAsmTest {
     @DisplayName("格式化字节码十六进制")
     @Test
     void parseRaw() {
-        ConstantsRawVisitor constantsRawVisitor = new ConstantsRawVisitor();
-        var constantsVisitorStrategy = new ConstantsVisitorStrategyBuilder(constantsRawVisitor).build();
-        ClassFileRawVisitor classFileRawVisitor = new ClassFileRawVisitor(constantsVisitorStrategy,
-                new InterfaceRawVisitor(), new MemberRawVisitor(), new AttributeRawVisitor());
-        var classFileVisitorConsumer = new ClassFileVisitorConsumerBuilder(classFileRawVisitor).build();
-        log.debug("{} bytes\n{}", bytes.length, ClassFileUtil.parse(bytes, classFileVisitorConsumer));
+        log.debug("{} bytes\n{}", bytes.length, ClassFileUtil.parseRaw(bytes));
+    }
+
+    @DisplayName("字节码一般解析")
+    @Test
+    void parseSimple() {
+        log.debug("{} bytes\n{}", bytes.length, ClassFileUtil.parseSimple(bytes));
     }
 
     @BeforeAll

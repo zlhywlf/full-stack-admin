@@ -10,7 +10,7 @@ public class InterfaceRawVisitor implements BiConsumer<Formatter, Interface> {
 
     @Override
     public void accept(Formatter t, Interface u) {
-        t.format("    |%03d| %s%n", u.getId(), HexUtil.format(u.getBytes()));
+        t.format("    %03d: %s%n", u.getId(), HexUtil.format(u.getBytes()));
     }
 
 }

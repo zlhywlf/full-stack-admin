@@ -19,7 +19,7 @@ public class MemberRawVisitor implements BiConsumer<Formatter, Member> {
             bytes = ByteUtil.merge(bytes, a.getAttributeNameIndexBytes(), a.getAttributeLengthBytes(),
                     a.getInfoBytes());
         }
-        t.format("    |%03d| %s%n", u.getId(), HexUtil.format(bytes));
+        t.format("    %03d: %s%n", u.getId(), HexUtil.format(bytes));
     }
 
 }
