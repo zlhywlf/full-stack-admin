@@ -18,18 +18,10 @@ public class ClassFileRawVisitor implements ClassFileVisitor {
 
     private final Map<Byte, BiConsumer<Formatter, Constant>> strategyMap;
 
-    private void visit(String name, Formatter f, byte[] bytes) {
-        visit(name, f, bytes, false);
-    }
-
-    private void visit(String name, Formatter f, byte[] bytes, boolean isId) {
-        if (isId) {
-            f.format("%s: %s --> cp[%03d]%n", name, HexUtil.format(bytes),
-                    ByteUtil.toUnsignedInt(bytes));
-            return;
-        }
-        f.format("%s: %s --> %d%n", name, HexUtil.format(bytes),
-                ByteUtil.toUnsignedInt(bytes));
+    private void visit(String name, Formatter f, Node n) {
+        f.format("%s: ", name);
+        f.format("%s", HexUtil.format(n.getBytes()));
+        f.format("%n");
     }
 
     private void visitMember(String name, Formatter f, Member[] n) {
@@ -50,22 +42,22 @@ public class ClassFileRawVisitor implements ClassFileVisitor {
 
     @Override
     public void visitMagic(Formatter f, Node n) {
-        f.format("%s: %s --> 咖啡馆宝贝%n", "u4 magic", HexUtil.format(n.getBytes()));
+        visit("u4 magic", f, n);
     }
 
     @Override
     public void visitMinorVersion(Formatter f, Node n) {
-        visit("u2 minor_version", f, n.getBytes());
+        visit("u2 minor_version", f, n);
     }
 
     @Override
     public void visitMajorVersion(Formatter f, Node n) {
-        visit("u2 major_version", f, n.getBytes());
+        visit("u2 major_version", f, n);
     }
 
     @Override
     public void visitConstantPoolCount(Formatter f, Node n) {
-        visit("u2 constant_pool_count", f, n.getBytes());
+        visit("u2 constant_pool_count", f, n);
     }
 
     @Override
@@ -83,38 +75,35 @@ public class ClassFileRawVisitor implements ClassFileVisitor {
 
     @Override
     public void visitAccessFlags(Formatter f, Node n) {
-        byte[] bytes = n.getBytes();
-        f.format("%s: %s --> 0B%s%n", "u2 access_flags", HexUtil.format(bytes),
-                Integer.toBinaryString(ByteUtil.toUnsignedInt(bytes)));
+        visit("u2 access_flags", f, n);
     }
 
     @Override
     public void visitThisClass(Formatter f, Node n) {
-        visit("u2 this_class", f, n.getBytes(), true);
+        visit("u2 this_class", f, n);
     }
 
     @Override
     public void visitSuperClass(Formatter f, Node n) {
-        visit("u2 super_class", f, n.getBytes(), true);
+        visit("u2 super_class", f, n);
     }
 
     @Override
     public void visitInterfacesCount(Formatter f, Node n) {
-        visit("u2 interfaces_count", f, n.getBytes());
+        visit("u2 interfaces_count", f, n);
     }
 
     @Override
     public void visitInterfaces(Formatter f, Node[] n) {
         f.format("%s:%n", "u2 interfaces[interfaces_count]");
         for (int i = 0; i < n.length; i++) {
-            byte[] bytes = n[i].getBytes();
-            f.format("    |%03d| %s --> cp[%03d]%n", i + 1, HexUtil.format(bytes), ByteUtil.toUnsignedInt(bytes));
+            f.format("    |%03d| %s%n", i + 1, HexUtil.format(n[i].getBytes()));
         }
     }
 
     @Override
     public void visitFieldsCount(Formatter f, Node n) {
-        visit("u2 fields_count", f, n.getBytes());
+        visit("u2 fields_count", f, n);
     }
 
     @Override
@@ -124,7 +113,7 @@ public class ClassFileRawVisitor implements ClassFileVisitor {
 
     @Override
     public void visitMethodsCount(Formatter f, Node n) {
-        visit("u2 methods_count", f, n.getBytes());
+        visit("u2 methods_count", f, n);
     }
 
     @Override
@@ -134,7 +123,7 @@ public class ClassFileRawVisitor implements ClassFileVisitor {
 
     @Override
     public void visitAttributesCount(Formatter f, Node n) {
-        visit("u2 attributes_count", f, n.getBytes());
+        visit("u2 attributes_count", f, n);
     }
 
     @Override
