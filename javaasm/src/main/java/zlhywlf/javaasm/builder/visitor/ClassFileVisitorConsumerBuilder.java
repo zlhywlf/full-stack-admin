@@ -3,16 +3,21 @@ package zlhywlf.javaasm.builder.visitor;
 import java.util.Formatter;
 import java.util.function.BiConsumer;
 
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import zlhywlf.javaasm.model.ClassFile;
-import zlhywlf.javaasm.model.Node;
-import zlhywlf.javaasm.util.HexUtil;
+import zlhywlf.javaasm.visitor.ClassFileVisitor;
 
 /**
- * 按文件结构格式化为十六进制数
+ * ClassFile 格式化构建
  * 
  * @author zlhywlf
  */
-public class ClassFileRawVisitorBuilder {
+@RequiredArgsConstructor
+public class ClassFileVisitorConsumerBuilder {
+
+    @NonNull
+    private ClassFileVisitor visitor;
 
     public BiConsumer<ClassFile, Formatter> build() {
         return magic.andThen(minorVersion).andThen(majorVersion).andThen(constantPoolCount).andThen(constantPool)
@@ -22,71 +27,67 @@ public class ClassFileRawVisitorBuilder {
     }
 
     private BiConsumer<ClassFile, Formatter> attributes = (c, f) -> {
-        // TODO
+        visitor.visitAttributes(f, c.getAttributes());
     };
 
     private BiConsumer<ClassFile, Formatter> attributesCount = (c, f) -> {
-        format(f, "u2 methods_count", c.getAttributesCount());
+        visitor.visitAttributesCount(f, c.getAttributesCount());
     };
 
     private BiConsumer<ClassFile, Formatter> methods = (c, f) -> {
-        // TODO
+        visitor.visitMethods(f, c.getMethods());
     };
 
     private BiConsumer<ClassFile, Formatter> methodsCount = (c, f) -> {
-        format(f, "u2 methods_count", c.getMethodsCount());
+        visitor.visitMethodsCount(f, c.getMethodsCount());
     };
 
     private BiConsumer<ClassFile, Formatter> fields = (c, f) -> {
-        // TODO
+        visitor.visitFields(f, c.getFields());
     };
 
     private BiConsumer<ClassFile, Formatter> fieldsCount = (c, f) -> {
-        format(f, "u2 fields_count", c.getFieldsCount());
+        visitor.visitFieldsCount(f, c.getFieldsCount());
     };
 
     private BiConsumer<ClassFile, Formatter> interfaces = (c, f) -> {
-        // TODO
+        visitor.visitInterfaces(f, c.getInterfaces());
     };
 
     private BiConsumer<ClassFile, Formatter> interfacesCount = (c, f) -> {
-        format(f, "u2 interfaces_count", c.getInterfacesCount());
+        visitor.visitInterfacesCount(f, c.getInterfacesCount());
     };
 
     private BiConsumer<ClassFile, Formatter> superClass = (c, f) -> {
-        format(f, "u2 super_class", c.getSuperClass());
+        visitor.visitSuperClass(f, c.getSuperClass());
     };
 
     private BiConsumer<ClassFile, Formatter> thisClass = (c, f) -> {
-        format(f, "u2 this_class", c.getThisClass());
+        visitor.visitThisClass(f, c.getThisClass());
     };
 
     private BiConsumer<ClassFile, Formatter> accessFlags = (c, f) -> {
-        format(f, "u2 access_flags", c.getAccessFlags());
+        visitor.visitAccessFlags(f, c.getAccessFlags());
     };
 
     private BiConsumer<ClassFile, Formatter> constantPool = (c, f) -> {
-        // TODO
+        visitor.visitConstantPool(f, c.getConstantPool());
     };
 
     private BiConsumer<ClassFile, Formatter> constantPoolCount = (c, f) -> {
-        format(f, "u2 constant_pool_count", c.getConstantPoolCount());
+        visitor.visitConstantPoolCount(f, c.getConstantPoolCount());
     };
 
     private BiConsumer<ClassFile, Formatter> majorVersion = (c, f) -> {
-        format(f, "u2 major_version", c.getMajorVersion());
+        visitor.visitMajorVersion(f, c.getMajorVersion());
     };
 
     private BiConsumer<ClassFile, Formatter> magic = (c, f) -> {
-        format(f, "u4 magic", c.getMagic());
+        visitor.visitMagic(f, c.getMagic());
     };
 
     private BiConsumer<ClassFile, Formatter> minorVersion = (c, f) -> {
-        format(f, "u2 minor_version", c.getMinorVersion());
+        visitor.visitMinorVersion(f, c.getMinorVersion());
     };
-
-    private void format(Formatter f, String name, Node node) {
-        f.format("%s: %s%n", name, HexUtil.format(node.getBytes()));
-    }
 
 }

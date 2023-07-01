@@ -16,11 +16,14 @@ import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
 import lombok.extern.slf4j.Slf4j;
-import zlhywlf.javaasm.builder.visitor.ClassFileRawVisitorBuilder;
+import zlhywlf.javaasm.builder.visitor.ClassFileVisitorConsumerBuilder;
+import zlhywlf.javaasm.builder.visitor.ConstantsVisitorStrategyBuilder;
 import zlhywlf.javaasm.classfile.ClassFile;
 import zlhywlf.javaasm.classfile.visitor.RawVisitor;
 import zlhywlf.javaasm.util.ClassFileUtil;
 import zlhywlf.javaasm.util.FileUtil;
+import zlhywlf.javaasm.visitor.raw.ClassFileRawVisitor;
+import zlhywlf.javaasm.visitor.raw.ConstantsRawVisitor;
 
 @Slf4j
 @TestInstance(Lifecycle.PER_CLASS)
@@ -83,7 +86,11 @@ public class JavaAsmTest {
     @DisplayName("格式化字节码十六进制")
     @Test
     void parseRaw() {
-        log.debug("{} bytes\n{}", bytes.length, ClassFileUtil.parse(bytes, new ClassFileRawVisitorBuilder().build()));
+        ConstantsRawVisitor constantsRawVisitor = new ConstantsRawVisitor();
+        var constantsVisitorStrategy = new ConstantsVisitorStrategyBuilder(constantsRawVisitor).build();
+        ClassFileRawVisitor classFileRawVisitor = new ClassFileRawVisitor(constantsVisitorStrategy);
+        var classFileVisitorConsumer = new ClassFileVisitorConsumerBuilder(classFileRawVisitor).build();
+        log.debug("{} bytes\n{}", bytes.length, ClassFileUtil.parse(bytes, classFileVisitorConsumer));
     }
 
     @BeforeAll

@@ -9,11 +9,11 @@ import zlhywlf.javaasm.model.ClassFile;
 
 public class ClassFileUtil {
 
-    public static String parse(byte[] bytes, BiConsumer<ClassFile, Formatter> visitor) {
+    public static String parse(byte[] bytes, BiConsumer<ClassFile, Formatter> visitorConsumer) {
         ClassFile classFile = new ClassFileBuilder(new BytesReader(bytes)).build();
         StringBuilder sb = new StringBuilder();
         Formatter fm = new Formatter(sb);
-        visitor.accept(classFile, fm);
+        visitorConsumer.accept(classFile, fm);
         fm.close();
         return sb.toString();
     }
