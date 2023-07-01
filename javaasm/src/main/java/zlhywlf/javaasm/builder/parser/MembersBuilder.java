@@ -2,6 +2,7 @@ package zlhywlf.javaasm.builder.parser;
 
 import lombok.RequiredArgsConstructor;
 import zlhywlf.javaasm.helper.BytesReader;
+import zlhywlf.javaasm.model.Constant;
 import zlhywlf.javaasm.model.Member;
 import zlhywlf.javaasm.util.ByteUtil;
 
@@ -15,6 +16,7 @@ public class MembersBuilder {
 
     private final int count;
     private final BytesReader reader;
+    private final Constant[] constantPool;
 
     public Member[] build() {
         Member[] members = new Member[count];
@@ -28,7 +30,8 @@ public class MembersBuilder {
             member.setAttributes(
                     new AttributesBuilder(
                             ByteUtil.toUnsignedInt(member.getAttributesCountBytes()),
-                            reader).build());
+                            reader,
+                            constantPool).build());
             members[i] = member;
         }
         return members;

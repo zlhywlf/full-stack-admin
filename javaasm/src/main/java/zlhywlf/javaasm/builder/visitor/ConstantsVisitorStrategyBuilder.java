@@ -114,7 +114,7 @@ public class ConstantsVisitorStrategyBuilder {
     };
 
     @SuppressWarnings("unchecked")
-    private <T> T cast(Constant c, Class<T> act) {
+    public static <T> T cast(Constant c, Class<T> act) {
         if (c.getClass().equals(act)) {
             return (T) c;
         }

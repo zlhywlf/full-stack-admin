@@ -3,6 +3,7 @@ package zlhywlf.javaasm.builder.parser;
 import lombok.RequiredArgsConstructor;
 import zlhywlf.javaasm.helper.BytesReader;
 import zlhywlf.javaasm.model.Attribute;
+import zlhywlf.javaasm.model.Constant;
 import zlhywlf.javaasm.util.ByteUtil;
 
 /**
@@ -15,12 +16,14 @@ public class AttributesBuilder {
 
     private final int count;
     private final BytesReader reader;
+    private final Constant[] constantPool;
 
     public Attribute[] build() {
         Attribute[] attributes = new Attribute[count];
         for (int i = 0; i < count; i++) {
             Attribute attribute = new Attribute();
             attribute.setId(i);
+            attribute.setConstantPool(constantPool);
             attribute.setAttributeNameIndexBytes(reader.next2());
             attribute.setAttributeLengthBytes(reader.next4());
             attribute.setInfoBytes(reader.next(ByteUtil.toUnsignedInt(attribute.getAttributeLengthBytes())));

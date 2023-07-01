@@ -47,17 +47,20 @@ public class ClassFileBuilder {
         classFile.setFields(
                 new MembersBuilder(
                         ByteUtil.toUnsignedInt(classFile.getFieldsCount().getBytes()),
-                        reader).build());
+                        reader,
+                        classFile.getConstantPool()).build());
         classFile.setMethodsCount(sup.get());
         classFile.setMethods(
                 new MembersBuilder(
                         ByteUtil.toUnsignedInt(classFile.getMethodsCount().getBytes()),
-                        reader).build());
+                        reader,
+                        classFile.getConstantPool()).build());
         classFile.setAttributesCount(sup.get());
         classFile.setAttributes(
                 new AttributesBuilder(
                         ByteUtil.toUnsignedInt(classFile.getAttributesCount().getBytes()),
-                        reader).build());
+                        reader,
+                        classFile.getConstantPool()).build());
         return classFile;
     }
 
