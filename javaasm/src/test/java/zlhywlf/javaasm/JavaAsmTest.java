@@ -16,17 +16,10 @@ import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
 import lombok.extern.slf4j.Slf4j;
-import zlhywlf.javaasm.builder.visitor.ClassFileVisitorConsumerBuilder;
-import zlhywlf.javaasm.builder.visitor.ConstantsVisitorStrategyBuilder;
 import zlhywlf.javaasm.classfile.ClassFile;
 import zlhywlf.javaasm.classfile.visitor.RawVisitor;
 import zlhywlf.javaasm.util.ClassFileUtil;
 import zlhywlf.javaasm.util.FileUtil;
-import zlhywlf.javaasm.visitor.raw.AttributeRawVisitor;
-import zlhywlf.javaasm.visitor.raw.ClassFileRawVisitor;
-import zlhywlf.javaasm.visitor.raw.ConstantsRawVisitor;
-import zlhywlf.javaasm.visitor.raw.InterfaceRawVisitor;
-import zlhywlf.javaasm.visitor.raw.MemberRawVisitor;
 
 @Slf4j
 @TestInstance(Lifecycle.PER_CLASS)

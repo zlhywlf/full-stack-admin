@@ -26,4 +26,35 @@ public final class ClassFileConst {
     public static final byte CONSTANT_MODULE = 19;
     public static final byte CONSTANT_PACKAGE = 20;
 
+    public static final String ATTRIBUTE_CONSTANTVALUE = "ConstantValue";
+    public static final String ATTRIBUTE_CODE = "Code";
+    public static final String ATTRIBUTE_STACKMAPTABLE = "StackMapTable";
+    public static final String ATTRIBUTE_EXCEPTIONS = "Exceptions";
+    public static final String ATTRIBUTE_INNERCLASSES = "InnerClasses";
+    public static final String ATTRIBUTE_ENCLOSINGMETHOD = "EnclosingMethod";
+    public static final String ATTRIBUTE_SYNTHETIC = "Synthetic";
+    public static final String ATTRIBUTE_SIGNATURE = "Signature";
+    public static final String ATTRIBUTE_SOURCEFILE = "SourceFile";
+    public static final String ATTRIBUTE_SOURCEDEBUGEXTENSION = "SourceDebugExtension";
+    public static final String ATTRIBUTE_LINENUMBERTABLE = "LineNumberTable";
+    public static final String ATTRIBUTE_LOCALVARIABLETABLE = "LocalVariableTable";
+    public static final String ATTRIBUTE_LOCALVARIABLETYPETABLE = "LocalVariableTypeTable";
+    public static final String ATTRIBUTE_DEPRECATED = "Deprecated";
+    public static final String ATTRIBUTE_RUNTIMEVISIBLEANNOTATIONS = "RuntimeVisibleAnnotations";
+    public static final String ATTRIBUTE_RUNTIMEINVISIBLEANNOTATIONS = "RuntimeInvisibleAnnotations";
+    public static final String ATTRIBUTE_RUNTIMEVISIBLEPARAMETERANNOTATIONS = "RuntimeVisibleParameterAnnotations";
+    public static final String ATTRIBUTE_RUNTIMEINVISIBLEPARAMETERANNOTATIONS = "RuntimeInvisibleParameterAnnotations";
+    public static final String ATTRIBUTE_RUNTIMEVISIBLETYPEANNOTATIONS = "RuntimeVisibleTypeAnnotations";
+    public static final String ATTRIBUTE_RUNTIMEINVISIBLETYPEANNOTATIONS = "RuntimeInvisibleTypeAnnotations";
+    public static final String ATTRIBUTE_ANNOTATIONDEFAULT = "AnnotationDefault";
+    public static final String ATTRIBUTE_BOOTSTRAPMETHODS = "BootstrapMethods";
+    public static final String ATTRIBUTE_METHODPARAMETERS = "MethodParameters";
+    public static final String ATTRIBUTE_MODULE = "Module";
+    public static final String ATTRIBUTE_MODULEPACKAGES = "ModulePackages";
+    public static final String ATTRIBUTE_MODULEMAINCLASS = "ModuleMainClass";
+    public static final String ATTRIBUTE_NESTHOST = "NestHost";
+    public static final String ATTRIBUTE_NESTMEMBERS = "NestMembers";
+    public static final String ATTRIBUTE_RECORD = "Record";
+    public static final String ATTRIBUTE_PERMITTEDSUBCLASSES = "PermittedSubclasses";
+
 }
