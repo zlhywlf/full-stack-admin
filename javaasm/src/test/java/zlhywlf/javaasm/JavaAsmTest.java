@@ -16,8 +16,6 @@ import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
 import lombok.extern.slf4j.Slf4j;
-import zlhywlf.javaasm.classfile.ClassFile;
-import zlhywlf.javaasm.classfile.visitor.RawVisitor;
 import zlhywlf.javaasm.util.ClassFileUtil;
 import zlhywlf.javaasm.util.FileUtil;
 
@@ -71,12 +69,6 @@ public class JavaAsmTest {
     @Test
     void getHex() {
         log.debug("{} bytes\n{}", bytes.length, ClassFileUtil.parse(bytes));
-    }
-
-    @DisplayName("输出字节码原始数据")
-    @Test
-    void getRaw() {
-        log.debug("{} bytes\n{}", bytes.length, ClassFile.parse(bytes, new RawVisitor()));
     }
 
     @DisplayName("格式化字节码十六进制")

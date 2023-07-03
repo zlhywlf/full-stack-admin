@@ -3,10 +3,6 @@ package zlhywlf.javaasm.cnst;
 public final class ClassFileConst {
 
     public static final int MAGIC_VALUE = 0xCAFEBABE;
-    public static final int MAGIC_SIZE = 4;
-    public static final int MINOR_VERSION_SIZE = 2;
-    public static final int MAJOR_VERSION_SIZE = 2;
-    public static final int CONSTANT_POOL_COUNT_SIZE = 2;
 
     public static final byte CONSTANT_CLASS = 7;
     public static final byte CONSTANT_FIELDREF = 9;
