@@ -19,7 +19,7 @@ import lombok.Setter;
 public class Attribute {
 
     private int id;
-    private Constant[] constantPool;
+    private String name;
     private byte[] attributeNameIndexBytes;
     private byte[] attributeLengthBytes;
     private byte[] infoBytes;
