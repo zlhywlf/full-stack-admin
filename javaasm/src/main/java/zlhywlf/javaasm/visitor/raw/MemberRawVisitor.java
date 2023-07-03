@@ -6,7 +6,7 @@ import java.util.function.BiConsumer;
 import zlhywlf.javaasm.model.Attribute;
 import zlhywlf.javaasm.model.Member;
 import zlhywlf.javaasm.util.ByteUtil;
-import zlhywlf.javaasm.util.HexUtil;
+import zlhywlf.javaasm.util.FormatUtil;
 
 public class MemberRawVisitor implements BiConsumer<Formatter, Member> {
 
@@ -19,7 +19,7 @@ public class MemberRawVisitor implements BiConsumer<Formatter, Member> {
             bytes = ByteUtil.merge(bytes, a.getAttributeNameIndexBytes(), a.getAttributeLengthBytes(),
                     a.getInfoBytes());
         }
-        t.format("    %03d: %s%n", u.getId(), HexUtil.format(bytes));
+        FormatUtil.formatItem(t, u.getId(), bytes);
     }
 
 }

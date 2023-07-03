@@ -5,7 +5,7 @@ import java.util.function.BiConsumer;
 
 import lombok.RequiredArgsConstructor;
 import zlhywlf.javaasm.model.Interface;
-import zlhywlf.javaasm.util.ByteUtil;
+import zlhywlf.javaasm.util.FormatUtil;
 
 @RequiredArgsConstructor
 public class InterfaceSimpleVisitor implements BiConsumer<Formatter, Interface> {
@@ -15,7 +15,7 @@ public class InterfaceSimpleVisitor implements BiConsumer<Formatter, Interface> 
     @Override
     public void accept(Formatter t, Interface u) {
         raw.accept(t, u);
-        t.format("          --> #%03d%n", ByteUtil.toUnsignedInt(u.getBytes()));
+        FormatUtil.formatIndex(t, "nameIndex", u.getBytes());
     }
 
 }

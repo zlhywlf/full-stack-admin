@@ -1,7 +1,6 @@
 package zlhywlf.javaasm.visitor.simple;
 
 import java.util.Formatter;
-import java.util.function.BiConsumer;
 
 import lombok.RequiredArgsConstructor;
 import zlhywlf.javaasm.model.Attribute;
@@ -10,38 +9,36 @@ import zlhywlf.javaasm.model.Interface;
 import zlhywlf.javaasm.model.Member;
 import zlhywlf.javaasm.model.Node;
 import zlhywlf.javaasm.util.ByteUtil;
+import zlhywlf.javaasm.util.FormatUtil;
 import zlhywlf.javaasm.visitor.ClassFileVisitor;
 
 @RequiredArgsConstructor
 public class ClassFileSimpleVisitor implements ClassFileVisitor {
 
     private final ClassFileVisitor raw;
-    private BiConsumer<Formatter, Node> getValue = (f, n) -> {
-        f.format("   %d%n", ByteUtil.toUnsignedInt(n.getBytes()));
-    };
 
     @Override
     public void visitMagic(Formatter f, Node n) {
         raw.visitMagic(f, n);
-        f.format("   咖啡馆宝贝%n");
+        FormatUtil.formatString(f, "Magic", "咖啡馆宝贝");
     }
 
     @Override
     public void visitMinorVersion(Formatter f, Node n) {
         raw.visitMinorVersion(f, n);
-        getValue.accept(f, n);
+        FormatUtil.formatString(f, "MinorVersion", String.valueOf(ByteUtil.toUnsignedInt(n.getBytes())));
     }
 
     @Override
     public void visitMajorVersion(Formatter f, Node n) {
         raw.visitMajorVersion(f, n);
-        getValue.accept(f, n);
+        FormatUtil.formatString(f, "MajorVersion", String.valueOf(ByteUtil.toUnsignedInt(n.getBytes())));
     }
 
     @Override
     public void visitConstantPoolCount(Formatter f, Node n) {
         raw.visitConstantPoolCount(f, n);
-        getValue.accept(f, n);
+        FormatUtil.formatString(f, "ConstantPoolCount", String.valueOf(ByteUtil.toUnsignedInt(n.getBytes())));
     }
 
     @Override
@@ -52,25 +49,25 @@ public class ClassFileSimpleVisitor implements ClassFileVisitor {
     @Override
     public void visitAccessFlags(Formatter f, Node n) {
         raw.visitAccessFlags(f, n);
-        f.format("   0b%s%n", Integer.toBinaryString(1 << 16 | ByteUtil.toUnsignedInt(n.getBytes())).substring(1));
+        FormatUtil.formatBinary(f, "AccessFlags", n.getBytes());
     }
 
     @Override
     public void visitThisClass(Formatter f, Node n) {
         raw.visitThisClass(f, n);
-        f.format("   --> #%03d%n", ByteUtil.toUnsignedInt(n.getBytes()));
+        FormatUtil.formatIndex(f, "ThisClass", n.getBytes());
     }
 
     @Override
     public void visitSuperClass(Formatter f, Node n) {
         raw.visitSuperClass(f, n);
-        f.format("   --> #%03d%n", ByteUtil.toUnsignedInt(n.getBytes()));
+        FormatUtil.formatIndex(f, "SuperClass", n.getBytes());
     }
 
     @Override
     public void visitInterfacesCount(Formatter f, Node n) {
         raw.visitInterfacesCount(f, n);
-        getValue.accept(f, n);
+        FormatUtil.formatString(f, "InterfacesCount", String.valueOf(ByteUtil.toUnsignedInt(n.getBytes())));
     }
 
     @Override
@@ -81,7 +78,7 @@ public class ClassFileSimpleVisitor implements ClassFileVisitor {
     @Override
     public void visitFieldsCount(Formatter f, Node n) {
         raw.visitFieldsCount(f, n);
-        getValue.accept(f, n);
+        FormatUtil.formatString(f, "FieldsCount", String.valueOf(ByteUtil.toUnsignedInt(n.getBytes())));
     }
 
     @Override
@@ -92,7 +89,7 @@ public class ClassFileSimpleVisitor implements ClassFileVisitor {
     @Override
     public void visitMethodsCount(Formatter f, Node n) {
         raw.visitMethodsCount(f, n);
-        getValue.accept(f, n);
+        FormatUtil.formatString(f, "MethodsCount", String.valueOf(ByteUtil.toUnsignedInt(n.getBytes())));
     }
 
     @Override
@@ -103,7 +100,7 @@ public class ClassFileSimpleVisitor implements ClassFileVisitor {
     @Override
     public void visitAttributesCount(Formatter f, Node n) {
         raw.visitAttributesCount(f, n);
-        getValue.accept(f, n);
+        FormatUtil.formatString(f, "AttributesCount", String.valueOf(ByteUtil.toUnsignedInt(n.getBytes())));
     }
 
     @Override

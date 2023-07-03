@@ -4,6 +4,10 @@ public final class ClassFileConst {
 
     public static final int MAGIC_VALUE = 0xCAFEBABE;
 
+    public static final String BASE_INDENT = "    ";
+    public static final String BASE_FORMAT = "%-20s \t %s";
+    public static final String BASE_FORMAT_V = BASE_FORMAT + " --> ";
+
     public static final byte CONSTANT_CLASS = 7;
     public static final byte CONSTANT_FIELDREF = 9;
     public static final byte CONSTANT_METHODREF = 10;
