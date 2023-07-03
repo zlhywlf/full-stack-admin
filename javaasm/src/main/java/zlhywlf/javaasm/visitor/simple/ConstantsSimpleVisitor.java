@@ -145,7 +145,7 @@ public class ConstantsSimpleVisitor implements ConstantsVisitor {
     public void visitConstantUtf8(Formatter f, ConstantUtf8 c) {
         raw.visitConstantUtf8(f, c);
         f.format("          Utf8 length = %d, bytes = %s%n",
-                ByteUtil.toUnsignedInt(c.getLengthBytes()), ByteUtil.toUtf8(c.getBytes()));
+                ByteUtil.toUnsignedInt(c.getLengthBytes()), ByteUtil.toString(c.getBytes()));
     }
 
 }

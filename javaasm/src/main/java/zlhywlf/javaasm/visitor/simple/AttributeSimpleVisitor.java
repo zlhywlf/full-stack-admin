@@ -21,7 +21,7 @@ public class AttributeSimpleVisitor implements BiConsumer<Formatter, Attribute> 
         int index = ByteUtil.toUnsignedInt(u.getAttributeNameIndexBytes());
         Constant[] constantPool = u.getConstantPool();
         ConstantUtf8 constant = ConstantsVisitorStrategyBuilder.cast(constantPool[index], ConstantUtf8.class);
-        String name = ByteUtil.toUtf8(constant.getBytes());
+        String name = ByteUtil.toString(constant.getBytes());
         t.format("          attributeName --> #%03d(%s), length = %d%n", index, name,
                 ByteUtil.toUnsignedInt(u.getAttributeLengthBytes()));
 
