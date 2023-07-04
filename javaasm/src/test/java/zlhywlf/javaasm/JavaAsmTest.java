@@ -2,6 +2,8 @@ package zlhywlf.javaasm;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.util.function.Consumer;
@@ -11,9 +13,14 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
+import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.util.ASMifier;
+import org.objectweb.asm.util.Printer;
+import org.objectweb.asm.util.Textifier;
+import org.objectweb.asm.util.TraceClassVisitor;
 
 import lombok.extern.slf4j.Slf4j;
 import zlhywlf.javaasm.util.ClassFileUtil;
@@ -81,6 +88,16 @@ public class JavaAsmTest {
     @Test
     void parseSimple() {
         log.debug("{} bytes\n{}", bytes.length, ClassFileUtil.parseSimple(bytes));
+    }
+
+    @DisplayName("打印 asm")
+    @Test
+    void printAsm() throws IOException {
+        boolean asmCode = true;
+        Printer printer = asmCode ? new ASMifier() : new Textifier();
+        TraceClassVisitor traceClassVisitor = new TraceClassVisitor(null, printer, new PrintWriter(System.out, true));
+        new ClassReader(Demo.class.getName()).accept(traceClassVisitor,
+                ClassReader.SKIP_FRAMES | ClassReader.SKIP_DEBUG);
     }
 
     @BeforeAll
