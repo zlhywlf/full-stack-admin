@@ -1,38 +1,31 @@
 package zlhywlf.javaagent;
 
-import java.lang.instrument.ClassFileTransformer;
-import java.lang.instrument.IllegalClassFormatException;
+import java.io.File;
 import java.lang.instrument.Instrumentation;
-import java.security.ProtectionDomain;
-import java.util.Arrays;
+import java.net.URL;
+import java.util.jar.JarFile;
 
-import lombok.extern.slf4j.Slf4j;
+import zlhywlf.javaagent.filter.BigIntegerFilter;
+import zlhywlf.javaagent.filter.HttpClientFilter;
+import zlhywlf.javaagent.filter.InetAddressFilter;
 
-@Slf4j
 public class Main {
 
     public static void main(String[] args) {
-        log.debug("main args : {}", Arrays.toString(args));
     }
 
-    public static void premain(String args, Instrumentation inst) {
-        log.debug("premain args : {}", args);
-        String name = "zlhywlf/javaagent/AppTest";
-        inst.addTransformer(new ClassFileTransformer() {
-            @Override
-            public byte[] transform(ClassLoader loader, String className, Class<?> classBeingRedefined,
-                    ProtectionDomain protectionDomain, byte[] classfileBuffer)
-                    throws IllegalClassFormatException {
-                if (name.equals(className)) {
-                    log.debug("premain load Class : {}", className);
-                }
-                return classfileBuffer;
-            }
-        }, true);
+    public static void premain(String args, Instrumentation inst) throws Exception {
+        System.out.println("premain args : " + args);
+        String resourcePath = "/simplelogger.properties";
+        String path = Main.class.getResource(resourcePath).getPath();
+        path = path.substring(0, path.length() - resourcePath.length() - 1);
+        inst.appendToBootstrapClassLoaderSearch(new JarFile(new File(new URL(path).getPath())));
+        inst.addTransformer(new BigIntegerFilter(), true);
+        inst.addTransformer(new HttpClientFilter(), true);
+        inst.addTransformer(new InetAddressFilter(), true);
     }
 
     public static void agentmain(String args, Instrumentation inst) {
-        log.debug("agentmain args : {}", args);
     }
 
 }
