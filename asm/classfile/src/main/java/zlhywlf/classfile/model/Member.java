@@ -5,7 +5,7 @@ import lombok.Setter;
 
 /**
  * 字段与方法
- * 
+ * <p>
  * field_info and method_info {
  * u2 access_flags;
  * u2 name_index;
@@ -13,7 +13,7 @@ import lombok.Setter;
  * u2 attributes_count;
  * attribute_info attributes[attributes_count];
  * }
- * 
+ *
  * @author zlhywlf
  */
 @Getter

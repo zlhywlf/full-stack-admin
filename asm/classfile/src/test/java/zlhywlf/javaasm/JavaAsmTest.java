@@ -44,20 +44,31 @@ public class JavaAsmTest {
 
     byte[] bytes = null;
 
-    class Demo implements Serializable, Cloneable {
+    static class Demo implements Serializable, Cloneable {
         public static final int a = Integer.MAX_VALUE;
         public static final double b = Double.MAX_VALUE;
         public static final float c = Float.MAX_VALUE;
         public static final long d = Long.MAX_VALUE;
         public static final String e = "hello world!";
-        private int f = 2;
+        private final int f = 2;
         private A g;
+
         {
-            g.run(f);
+            System.out.println(f);
         }
+
 
         Consumer<Integer> h = System.out::println;
 
+        @Override
+        public Demo clone() {
+            g.run(f);
+            try {
+                return (Demo) super.clone();
+            } catch (CloneNotSupportedException e) {
+                throw new AssertionError();
+            }
+        }
     }
 
 }

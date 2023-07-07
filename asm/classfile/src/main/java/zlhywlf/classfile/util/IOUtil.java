@@ -10,11 +10,11 @@ public final class IOUtil {
 
     private static final int DEFAULT_BUFFER_SIZE = 1024 * 8;
 
-    public static long copy(final InputStream input, final OutputStream output) throws IOException {
-        return copy(input, output, new byte[DEFAULT_BUFFER_SIZE]);
+    public static void copy(final InputStream input, final OutputStream output) throws IOException {
+        copy(input, output, new byte[DEFAULT_BUFFER_SIZE]);
     }
 
-    public static long copy(final InputStream input, final OutputStream output, final byte[] buffer)
+    public static void copy(final InputStream input, final OutputStream output, final byte[] buffer)
             throws IOException {
         long count = 0;
         int n;
@@ -22,7 +22,6 @@ public final class IOUtil {
             output.write(buffer, 0, n);
             count += n;
         }
-        return count;
     }
 
 }

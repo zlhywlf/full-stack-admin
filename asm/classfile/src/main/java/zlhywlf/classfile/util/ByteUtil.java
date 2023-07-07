@@ -22,8 +22,7 @@ public final class ByteUtil {
             return null;
         }
         try (ByteArrayOutputStream bao = new ByteArrayOutputStream()) {
-            for (int i = 0; i < bytesArr.length; i++) {
-                byte[] bytes = bytesArr[i];
+            for (byte[] bytes : bytesArr) {
                 if (bytes != null && bytes.length > 0) {
                     bao.write(bytes);
                 }

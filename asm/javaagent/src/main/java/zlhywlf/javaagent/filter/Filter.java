@@ -1,7 +1,6 @@
 package zlhywlf.javaagent.filter;
 
 import java.lang.instrument.ClassFileTransformer;
-import java.lang.instrument.IllegalClassFormatException;
 import java.security.ProtectionDomain;
 import java.util.function.Consumer;
 
@@ -13,7 +12,7 @@ import jdk.internal.org.objectweb.asm.tree.MethodNode;
 
 public abstract class Filter extends ClassNode implements ClassFileTransformer, Consumer<MethodNode> {
 
-    private String targetName;
+    private final String targetName;
 
     public Filter(String targetName) {
         super(Opcodes.ASM8);
@@ -22,8 +21,7 @@ public abstract class Filter extends ClassNode implements ClassFileTransformer, 
 
     @Override
     public byte[] transform(ClassLoader loader, String className, Class<?> classBeingRedefined,
-            ProtectionDomain protectionDomain, byte[] classfileBuffer)
-            throws IllegalClassFormatException {
+            ProtectionDomain protectionDomain, byte[] classfileBuffer) {
         if (targetName.equals(className)) {
             System.out.println("premain load Class :  " + className);
             ClassReader cr = new ClassReader(classfileBuffer);
@@ -37,7 +35,7 @@ public abstract class Filter extends ClassNode implements ClassFileTransformer, 
 
     @Override
     public void visitEnd() {
-        methods.forEach(this::accept);
+        methods.forEach(this);
         super.visitEnd();
         accept(cv);
     }

@@ -14,7 +14,7 @@ import zlhywlf.classfile.visitor.ConstantsVisitor;
 
 /**
  * 常量池格式化策略构建
- * 
+ *
  * @author zlhywlf
  */
 @RequiredArgsConstructor
@@ -45,71 +45,57 @@ public class ConstantsVisitorStrategyBuilder {
         return strategyMap;
     }
 
-    private BiConsumer<Formatter, Constant> constantUtf8 = (f, c) -> {
-        visitor.visitConstantUtf8(f, cast(c, ConstantUtf8.class));
-    };
+    private final BiConsumer<Formatter, Constant> constantUtf8 = (f, c) -> visitor.visitConstantUtf8(f, cast(c, ConstantUtf8.class));
 
-    private BiConsumer<Formatter, Constant> constantString = (f, c) -> {
-        visitor.visitConstantString(f, cast(c, ConstantString.class));
-    };
+    private final BiConsumer<Formatter, Constant> constantString = (f, c) -> visitor.visitConstantString(f, cast(c, ConstantString.class));
 
-    private BiConsumer<Formatter, Constant> constantPackage = (f, c) -> {
-        visitor.visitConstantPackage(f, cast(c, ConstantPackage.class));
-    };
+    private final BiConsumer<Formatter, Constant> constantPackage = (f, c) -> visitor.visitConstantPackage(f, cast(c, ConstantPackage.class));
 
-    private BiConsumer<Formatter, Constant> constantNameAndType = (f, c) -> {
-        visitor.visitConstantNameAndType(f, cast(c, ConstantNameAndType.class));
-    };
+    private final BiConsumer<Formatter, Constant> constantNameAndType = (f, c) -> visitor.visitConstantNameAndType(f, cast(c, ConstantNameAndType.class));
 
-    private BiConsumer<Formatter, Constant> constantModule = (f, c) -> {
-        visitor.visitConstantModule(f, cast(c, ConstantModule.class));
-    };
+    private final BiConsumer<Formatter, Constant> constantModule = (f, c) -> visitor.visitConstantModule(f, cast(c, ConstantModule.class));
 
-    private BiConsumer<Formatter, Constant> constantMethodType = (f, c) -> {
-        visitor.visitConstantMethodType(f, cast(c, ConstantMethodType.class));
-    };
+    private final BiConsumer<Formatter, Constant> constantMethodType = (f, c) -> visitor.visitConstantMethodType(f, cast(c, ConstantMethodType.class));
 
-    private BiConsumer<Formatter, Constant> constantMethodref = (f, c) -> {
-        visitor.visitConstantMethodref(f, cast(c, ConstantMethodref.class));
-    };
+    private final BiConsumer<Formatter, Constant> constantMethodref = (f, c) -> visitor.visitConstantMethodref(f, cast(c, ConstantMethodref.class));
 
-    private BiConsumer<Formatter, Constant> constantMethodHandle = (f, c) -> {
+    private final BiConsumer<Formatter, Constant> constantMethodHandle = (f, c) -> {
         visitor.visitConstantMethodHandle(f, cast(c, ConstantMethodHandle.class));
     };
 
-    private BiConsumer<Formatter, Constant> constantLong = (f, c) -> {
+    private final BiConsumer<Formatter, Constant> constantLong = (f, c) -> {
         visitor.visitConstantLong(f, cast(c, ConstantLong.class));
     };
 
-    private BiConsumer<Formatter, Constant> constantInvokeDynamic = (f, c) -> {
+    private final BiConsumer<Formatter, Constant> constantInvokeDynamic = (f, c) -> {
         visitor.visitConstantInvokeDynamic(f, cast(c, ConstantInvokeDynamic.class));
     };
 
-    private BiConsumer<Formatter, Constant> constantInterfaceMethodref = (f, c) -> {
+    private final BiConsumer<Formatter, Constant> constantInterfaceMethodref = (f, c) -> {
         visitor.visitConstantInterfaceMethodref(f, cast(c, ConstantInterfaceMethodref.class));
     };
 
-    private BiConsumer<Formatter, Constant> constantInteger = (f, c) -> {
+    private final BiConsumer<Formatter, Constant> constantInteger = (f, c) -> {
         visitor.visitConstantInteger(f, cast(c, ConstantInteger.class));
     };
 
-    private BiConsumer<Formatter, Constant> constantFloat = (f, c) -> {
+    private final BiConsumer<Formatter, Constant> constantFloat = (f, c) -> {
         visitor.visitConstantFloat(f, cast(c, ConstantFloat.class));
     };
 
-    private BiConsumer<Formatter, Constant> constantFieldref = (f, c) -> {
+    private final BiConsumer<Formatter, Constant> constantFieldref = (f, c) -> {
         visitor.visitConstantFieldref(f, cast(c, ConstantFieldref.class));
     };
 
-    private BiConsumer<Formatter, Constant> constantDynamic = (f, c) -> {
+    private final BiConsumer<Formatter, Constant> constantDynamic = (f, c) -> {
         visitor.visitConstantDynamic(f, cast(c, ConstantDynamic.class));
     };
 
-    private BiConsumer<Formatter, Constant> constantDouble = (f, c) -> {
+    private final BiConsumer<Formatter, Constant> constantDouble = (f, c) -> {
         visitor.visitConstantDouble(f, cast(c, ConstantDouble.class));
     };
 
-    private BiConsumer<Formatter, Constant> constantClass = (f, c) -> {
+    private final BiConsumer<Formatter, Constant> constantClass = (f, c) -> {
         visitor.visitConstantClass(f, cast(c, ConstantClass.class));
     };
 

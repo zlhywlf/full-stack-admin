@@ -22,19 +22,19 @@ public class ConstantParserStrategyBuilder {
         strategyMap.put(ClassFileConst.CONSTANT_CLASS, constantClass);
         strategyMap.put(ClassFileConst.CONSTANT_DOUBLE, constantDouble);
         strategyMap.put(ClassFileConst.CONSTANT_DYNAMIC, constantDynamic);
-        strategyMap.put(ClassFileConst.CONSTANT_FIELDREF, constantFieldref);
         strategyMap.put(ClassFileConst.CONSTANT_FLOAT, constantFloat);
+        strategyMap.put(ClassFileConst.CONSTANT_FIELDREF, constantFieldref);
         strategyMap.put(ClassFileConst.CONSTANT_INTEGER, constantInteger);
         strategyMap.put(ClassFileConst.CONSTANT_INTERFACEMETHODREF, constantInterfaceMethodref);
         strategyMap.put(ClassFileConst.CONSTANT_INVOKEDYNAMIC, constantInvokeDynamic);
         strategyMap.put(ClassFileConst.CONSTANT_LONG, constantLong);
         strategyMap.put(ClassFileConst.CONSTANT_METHODHANDLE, constantMethodHandle);
-        strategyMap.put(ClassFileConst.CONSTANT_METHODREF, constantMethodref);
         strategyMap.put(ClassFileConst.CONSTANT_METHODTYPE, constantMethodType);
+        strategyMap.put(ClassFileConst.CONSTANT_METHODREF, constantMethodref);
         strategyMap.put(ClassFileConst.CONSTANT_MODULE, constantModule);
         strategyMap.put(ClassFileConst.CONSTANT_NAMEANDTYPE, constantNameAndType);
-        strategyMap.put(ClassFileConst.CONSTANT_PACKAGE, constantPackage);
         strategyMap.put(ClassFileConst.CONSTANT_STRING, constantString);
+        strategyMap.put(ClassFileConst.CONSTANT_PACKAGE, constantPackage);
         strategyMap.put(ClassFileConst.CONSTANT_UTF8, constantUtf8);
         return strategyMap;
     }

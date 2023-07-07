@@ -18,7 +18,7 @@ import zlhywlf.classfile.util.ByteUtil;
 public class ClassFileBuilder {
 
     private final BytesReader reader;
-    private Function<byte[], Node> func = b -> {
+    private final Function<byte[], Node> func = b -> {
         Node node = new Node();
         node.setBytes(b);
         return node;

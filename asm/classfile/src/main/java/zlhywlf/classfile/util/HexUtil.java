@@ -32,7 +32,7 @@ public final class HexUtil {
     }
 
     @RequiredArgsConstructor
-    public static enum HexFormat {
+    public enum HexFormat {
         FORMAT_FF_FF("", 0),
         FORMAT_FF_SPACE_FF_32(" ", 32);
 
