@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>zlhywlf</groupId>
-    <artifactId>full-stack-admin</artifactId>
+    <artifactId>asm</artifactId>
     <version>1.0.0</version>
 
     <packaging>pom</packaging>
 
-    <name>full-stack-admin</name>
-    <description>全栈学习</description>
-    <url>https://github.com/zlhywlf/full-stack-admin</url>
+    <name>asm</name>
+    <description>java 字节码学习</description>
+    <url>https://github.com/zlhywlf/full-stack-admin/asm</url>
 
     <licenses>
         <license>
@@ -23,7 +23,7 @@
 
     <developers>
         <developer>
-            <name>善假于PC也</name>
+            <name>善假于PC也(zlhywlf)</name>
             <email>tommietanghao@zlhywlf.onmicrosoft.com</email>
         </developer>
     </developers>
@@ -46,6 +46,7 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
             <version>2.0.7</version>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
