@@ -3,6 +3,7 @@ package zlhywlf.javaagent;
 import java.io.File;
 import java.lang.instrument.Instrumentation;
 import java.net.URL;
+import java.util.Objects;
 import java.util.jar.JarFile;
 
 import zlhywlf.javaagent.filter.BigIntegerFilter;
@@ -23,7 +24,7 @@ public class Main {
 
     public static void premain(String args, Instrumentation inst) throws Exception {
         String resourcePath = "/certificate.py";
-        String path = Main.class.getResource(resourcePath).getPath();
+        String path = Objects.requireNonNull(Main.class.getResource(resourcePath)).getPath();
         path = path.substring(0, path.length() - resourcePath.length() - 1);
         inst.appendToBootstrapClassLoaderSearch(new JarFile(new File(new URL(path).getPath())));
         inst.addTransformer(new BigIntegerFilter(), true);

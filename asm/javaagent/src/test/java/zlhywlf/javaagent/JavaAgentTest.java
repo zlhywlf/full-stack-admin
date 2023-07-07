@@ -10,7 +10,6 @@ import org.junit.jupiter.api.TestInstance.Lifecycle;
 import jdk.internal.org.objectweb.asm.ClassReader;
 import jdk.internal.org.objectweb.asm.util.ASMifier;
 import jdk.internal.org.objectweb.asm.util.Printer;
-import jdk.internal.org.objectweb.asm.util.Textifier;
 import jdk.internal.org.objectweb.asm.util.TraceClassVisitor;
 
 @TestInstance(Lifecycle.PER_CLASS)
@@ -19,8 +18,7 @@ public class JavaAgentTest {
     @DisplayName("打印 asm")
     @Test
     void printAsm() throws Exception {
-        boolean asmCode = true;
-        Printer printer = asmCode ? new ASMifier() : new Textifier();
+        Printer printer = new ASMifier();
         TraceClassVisitor traceClassVisitor = new TraceClassVisitor(null, printer, new PrintWriter(System.out, true));
         new ClassReader(JavaAgentTest.class.getName()).accept(traceClassVisitor,
                 ClassReader.SKIP_FRAMES | ClassReader.SKIP_DEBUG);

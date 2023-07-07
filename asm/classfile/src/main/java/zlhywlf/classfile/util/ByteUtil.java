@@ -35,7 +35,7 @@ public final class ByteUtil {
     }
 
     public static String toString(byte[] bytes) {
-        return new String(bytes, 0, bytes.length);
+        return new String(bytes);
     }
 
     public static double toDouble(byte[] bytes) {

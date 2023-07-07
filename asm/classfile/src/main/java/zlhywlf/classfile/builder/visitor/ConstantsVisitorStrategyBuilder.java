@@ -59,45 +59,25 @@ public class ConstantsVisitorStrategyBuilder {
 
     private final BiConsumer<Formatter, Constant> constantMethodref = (f, c) -> visitor.visitConstantMethodref(f, cast(c, ConstantMethodref.class));
 
-    private final BiConsumer<Formatter, Constant> constantMethodHandle = (f, c) -> {
-        visitor.visitConstantMethodHandle(f, cast(c, ConstantMethodHandle.class));
-    };
+    private final BiConsumer<Formatter, Constant> constantMethodHandle = (f, c) -> visitor.visitConstantMethodHandle(f, cast(c, ConstantMethodHandle.class));
 
-    private final BiConsumer<Formatter, Constant> constantLong = (f, c) -> {
-        visitor.visitConstantLong(f, cast(c, ConstantLong.class));
-    };
+    private final BiConsumer<Formatter, Constant> constantLong = (f, c) -> visitor.visitConstantLong(f, cast(c, ConstantLong.class));
 
-    private final BiConsumer<Formatter, Constant> constantInvokeDynamic = (f, c) -> {
-        visitor.visitConstantInvokeDynamic(f, cast(c, ConstantInvokeDynamic.class));
-    };
+    private final BiConsumer<Formatter, Constant> constantInvokeDynamic = (f, c) -> visitor.visitConstantInvokeDynamic(f, cast(c, ConstantInvokeDynamic.class));
 
-    private final BiConsumer<Formatter, Constant> constantInterfaceMethodref = (f, c) -> {
-        visitor.visitConstantInterfaceMethodref(f, cast(c, ConstantInterfaceMethodref.class));
-    };
+    private final BiConsumer<Formatter, Constant> constantInterfaceMethodref = (f, c) -> visitor.visitConstantInterfaceMethodref(f, cast(c, ConstantInterfaceMethodref.class));
 
-    private final BiConsumer<Formatter, Constant> constantInteger = (f, c) -> {
-        visitor.visitConstantInteger(f, cast(c, ConstantInteger.class));
-    };
+    private final BiConsumer<Formatter, Constant> constantInteger = (f, c) -> visitor.visitConstantInteger(f, cast(c, ConstantInteger.class));
 
-    private final BiConsumer<Formatter, Constant> constantFloat = (f, c) -> {
-        visitor.visitConstantFloat(f, cast(c, ConstantFloat.class));
-    };
+    private final BiConsumer<Formatter, Constant> constantFloat = (f, c) -> visitor.visitConstantFloat(f, cast(c, ConstantFloat.class));
 
-    private final BiConsumer<Formatter, Constant> constantFieldref = (f, c) -> {
-        visitor.visitConstantFieldref(f, cast(c, ConstantFieldref.class));
-    };
+    private final BiConsumer<Formatter, Constant> constantFieldref = (f, c) -> visitor.visitConstantFieldref(f, cast(c, ConstantFieldref.class));
 
-    private final BiConsumer<Formatter, Constant> constantDynamic = (f, c) -> {
-        visitor.visitConstantDynamic(f, cast(c, ConstantDynamic.class));
-    };
+    private final BiConsumer<Formatter, Constant> constantDynamic = (f, c) -> visitor.visitConstantDynamic(f, cast(c, ConstantDynamic.class));
 
-    private final BiConsumer<Formatter, Constant> constantDouble = (f, c) -> {
-        visitor.visitConstantDouble(f, cast(c, ConstantDouble.class));
-    };
+    private final BiConsumer<Formatter, Constant> constantDouble = (f, c) -> visitor.visitConstantDouble(f, cast(c, ConstantDouble.class));
 
-    private final BiConsumer<Formatter, Constant> constantClass = (f, c) -> {
-        visitor.visitConstantClass(f, cast(c, ConstantClass.class));
-    };
+    private final BiConsumer<Formatter, Constant> constantClass = (f, c) -> visitor.visitConstantClass(f, cast(c, ConstantClass.class));
 
     @SuppressWarnings("unchecked")
     public static <T> T cast(Constant c, Class<T> act) {

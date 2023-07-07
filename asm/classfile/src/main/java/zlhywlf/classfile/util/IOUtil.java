@@ -16,11 +16,9 @@ public final class IOUtil {
 
     public static void copy(final InputStream input, final OutputStream output, final byte[] buffer)
             throws IOException {
-        long count = 0;
         int n;
         while (EOF != (n = input.read(buffer))) {
             output.write(buffer, 0, n);
-            count += n;
         }
     }
 
