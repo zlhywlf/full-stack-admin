@@ -5,18 +5,18 @@ import java.lang.instrument.IllegalClassFormatException;
 import java.security.ProtectionDomain;
 import java.util.function.Consumer;
 
-import org.objectweb.asm.ClassReader;
-import org.objectweb.asm.ClassWriter;
-import org.objectweb.asm.Opcodes;
-import org.objectweb.asm.tree.ClassNode;
-import org.objectweb.asm.tree.MethodNode;
+import jdk.internal.org.objectweb.asm.ClassReader;
+import jdk.internal.org.objectweb.asm.ClassWriter;
+import jdk.internal.org.objectweb.asm.Opcodes;
+import jdk.internal.org.objectweb.asm.tree.ClassNode;
+import jdk.internal.org.objectweb.asm.tree.MethodNode;
 
 public abstract class Filter extends ClassNode implements ClassFileTransformer, Consumer<MethodNode> {
 
     private String targetName;
 
     public Filter(String targetName) {
-        super(Opcodes.ASM9);
+        super(Opcodes.ASM8);
         this.targetName = targetName;
     }
 

@@ -1,12 +1,12 @@
 package zlhywlf.javaagent.filter;
 
-import org.objectweb.asm.tree.FieldInsnNode;
-import org.objectweb.asm.tree.InsnList;
-import org.objectweb.asm.tree.MethodInsnNode;
-import org.objectweb.asm.tree.MethodNode;
-import org.objectweb.asm.tree.VarInsnNode;
+import jdk.internal.org.objectweb.asm.tree.FieldInsnNode;
+import jdk.internal.org.objectweb.asm.tree.InsnList;
+import jdk.internal.org.objectweb.asm.tree.MethodInsnNode;
+import jdk.internal.org.objectweb.asm.tree.MethodNode;
+import jdk.internal.org.objectweb.asm.tree.VarInsnNode;
 
-import static org.objectweb.asm.Opcodes.*;
+import static jdk.internal.org.objectweb.asm.Opcodes.*;
 
 import java.io.IOException;
 import java.net.SocketTimeoutException;
@@ -35,7 +35,7 @@ public class HttpClientFilter extends Filter {
             return;
         }
         String str = url.toString();
-        if ("https://account.jetbrains.com/lservice/rpc/validateKey.action".equals(str)) {
+        if (str.startsWith("https://account.jetbrains.com/lservice/rpc/validateKey.action")) {
             throw new SocketTimeoutException("connect timed out");
         }
     }
