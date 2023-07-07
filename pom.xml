@@ -30,7 +30,7 @@
 
     <modules>
         <module>javaagent</module>
-        <module>javaasm</module>
+        <module>classfile</module>
     </modules>
 
     <properties>

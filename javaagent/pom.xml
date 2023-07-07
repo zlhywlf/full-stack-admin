@@ -49,6 +49,9 @@
                         <arg>
                             --add-exports=java.base/jdk.internal.org.objectweb.asm.tree=zlhywlf.javaagent
                         </arg>
+                        <arg>
+                            --add-exports=java.base/jdk.internal.org.objectweb.asm.util=zlhywlf.javaagent
+                        </arg>
                     </compilerArgs>
                 </configuration>
             </plugin>
