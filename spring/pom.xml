@@ -6,22 +6,41 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.1.0</version>
+        <version>3.1.1</version>
         <relativePath/>
     </parent>
-
-    <packaging>pom</packaging>
-
-    <modules>
-        <module>subscription</module>
-    </modules>
 
     <groupId>zlhywlf</groupId>
     <artifactId>spring</artifactId>
     <version>1.0.0</version>
 
+    <packaging>pom</packaging>
+
+    <name>spring</name>
+    <description>spring 相关框架学习</description>
+    <url>https://github.com/zlhywlf/full-stack-admin/asm</url>
+
+    <licenses>
+        <license>
+            <name>MIT</name>
+            <url>https://github.com/zlhywlf/full-stack-admin/blob/master/LICENSE</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>善假于PC也(zlhywlf)</name>
+            <email>tommietanghao@zlhywlf.onmicrosoft.com</email>
+        </developer>
+    </developers>
+
+    <modules>
+        <module>subscription</module>
+    </modules>
+
     <properties>
         <java.version>17</java.version>
+        <snakeyaml.version>2.0</snakeyaml.version>
     </properties>
 
     <dependencies>
