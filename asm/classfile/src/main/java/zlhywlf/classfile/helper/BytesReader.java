@@ -4,11 +4,12 @@ import lombok.RequiredArgsConstructor;
 
 /**
  * 辅助按序解析字节码数据
- * 
+ *
  * @author zlhywlf
  */
 @RequiredArgsConstructor
 public class BytesReader {
+
     private final byte[] bytes;
     private int index;
 
