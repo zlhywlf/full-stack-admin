@@ -1,9 +1,6 @@
 package zlhywlf.subscription.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
@@ -13,8 +10,11 @@ public class Info {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String clientId;
-    private String secret;
-    private Boolean valid;
+    @Lob
+    private String code;
+    @Lob
+    private String accessToken;
+    @Lob
+    private String refreshToken;
 
 }
