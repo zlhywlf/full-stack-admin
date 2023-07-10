@@ -38,7 +38,7 @@ public class InfoServiceImpl implements InfoService {
     };
     private final ObjectMapper mapper = new ObjectMapper();
     @Getter
-    private List<Map<String, String>> data = new CopyOnWriteArrayList<>();
+    private final List<Map<String, String>> data = new CopyOnWriteArrayList<>();
 
     @Override
     public String getAuthorityPath() {
