@@ -1,0 +1,21 @@
+{
+  "name": "@fs/admin",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc && vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@fs/util": "workspace:^",
+    "@types/node": "^20.4.1",
+    "@vitejs/plugin-vue": "^4.2.3",
+    "vite": "^4.4.2",
+    "vue-tsc": "^1.8.4"
+  },
+  "dependencies": {
+    "vue": "^3.3.4"
+  }
+}
