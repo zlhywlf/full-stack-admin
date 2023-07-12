@@ -232,4 +232,4 @@ void handleKey(Buffer *buffer, char *str);
  * @param buffer
  * @param str
  */
-void handleString(Buffer *buffer, char *str);
+void handleString(Buffer *buffer, Value *v);

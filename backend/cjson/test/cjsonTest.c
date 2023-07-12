@@ -12,7 +12,7 @@ int main(int argc, char const* argv[]) {
   Json* strItem3 = newStringItem();
   Value* strV3 = newValue();
   strV3->str = "hello";
-  strItem3->v = strV3;
+  // strItem3->v = strV3;
   strItem3->k = "str";
 
   strItem->next = strItem3;

@@ -122,7 +122,7 @@ char *toString(Json *json) {
       case J_TRUE:
         break;
       case J_STRING:
-        handleString(&buffer, stack->json->v->str);
+        handleString(&buffer, stack->json->v);
         break;
       default:
         break;
@@ -235,9 +235,9 @@ void handleKey(Buffer *buffer, char *str) {
   }
 }
 
-void handleString(Buffer *buffer, char *str) {
-  if (str) {
-    handleKey(buffer, str);
+void handleString(Buffer *buffer, Value *v) {
+  if (v) {
+    handleKey(buffer, v->str);
     return;
   }
   addChar(buffer, '\"');
