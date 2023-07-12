@@ -93,6 +93,13 @@ void *newMem(size_t size);
 Json *newJson();
 
 /**
+ * @brief 创建值
+ *
+ * @return Value*
+ */
+Value *newValue();
+
+/**
  * @brief 创建 json 节点
  *
  * @param t 节点类型
@@ -156,3 +163,73 @@ Json *newObjectItem();
  * @return char* 需要释放指针
  */
 char *toString(Json *json);
+
+/**
+ * @brief 创建 Stack 对象
+ *
+ * @return Stack* 出栈时释放指针
+ */
+Stack *newStack();
+
+/**
+ * @brief 入栈
+ *
+ * @param stack
+ * @param json
+ * @return Stack* 出栈时释放指针
+ */
+Stack *push(Stack *stack, Json *json);
+
+/**
+ * @brief 出栈
+ *
+ * @param stack
+ * @param buffer
+ * @return Stack* 出栈时释放指针
+ */
+Stack *pop(Stack *stack);
+
+/**
+ * @brief 处理 J_OBJECT 或 J_ARRAY
+ *
+ * @param stack
+ * @param buffer
+ * @param s
+ * @param e
+ * @return Stack*
+ */
+Stack *handleObjectOrArray(Stack *stack, Buffer *buffer, char s, char e);
+
+/**
+ * @brief 添加字符
+ *
+ * @param buffer
+ * @param c
+ */
+void addChar(Buffer *buffer, char c);
+
+/**
+ * @brief 添加字符串
+ *
+ * @param buffer
+ * @param str
+ * @param len
+ */
+void addChars(Buffer *buffer, char *str, size_t len);
+
+/**
+ * @brief 处理键
+ *
+ * @param buffer
+ * @param str
+ * @return Stack*
+ */
+void handleKey(Buffer *buffer, char *str);
+
+/**
+ * @brief 处理 J_STRING
+ *
+ * @param buffer
+ * @param str
+ */
+void handleString(Buffer *buffer, char *str);
