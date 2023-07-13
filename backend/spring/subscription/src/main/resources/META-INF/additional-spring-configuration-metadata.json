@@ -1,0 +1,34 @@
+{
+  "properties": [
+    {
+      "name": "ds.authorityUrl",
+      "type": "java.lang.String",
+      "description": "认证链接."
+    },
+    {
+      "name": "ds.tokenUrl",
+      "type": "java.lang.String",
+      "description": "token 链接."
+    },
+    {
+      "name": "ds.scope",
+      "type": "java.lang.String",
+      "description": "应用权限."
+    },
+    {
+      "name": "ds.redirectUrl",
+      "type": "java.lang.String",
+      "description": "自定义链接，接受认证的 code 与 token."
+    },
+    {
+      "name": "ds.clientId",
+      "type": "java.lang.String",
+      "description": "客户端id."
+    },
+    {
+      "name": "ds.secret",
+      "type": "java.lang.String",
+      "description": "客户端密码."
+    }
+  ]
+}
