@@ -11,7 +11,23 @@
 
     <artifactId>jni</artifactId>
 
+    <properties>
+        <asm.version>9.5</asm.version>
+    </properties>
+
     <dependencies>
+        <dependency>
+            <groupId>org.ow2.asm</groupId>
+            <artifactId>asm-util</artifactId>
+            <version>${asm.version}</version>
+        </dependency>
+
+<!--        <dependency>-->
+<!--            <groupId>org.ow2.asm</groupId>-->
+<!--            <artifactId>asm-commons</artifactId>-->
+<!--            <version>${asm.version}</version>-->
+<!--        </dependency>-->
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
@@ -55,22 +71,6 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.11.0</version>
-                <configuration>
-                    <compilerArgs>
-                        <arg>
-                            --add-exports=java.base/jdk.internal.org.objectweb.asm=ALL-UNNAMED
-                        </arg>
-                        <arg>
-                            --add-exports=java.base/jdk.internal.org.objectweb.asm.tree=ALL-UNNAMED
-                        </arg>
-                    </compilerArgs>
-                </configuration>
             </plugin>
         </plugins>
     </build>
