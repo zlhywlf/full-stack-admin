@@ -1,17 +1,16 @@
 package zlhywlf.jni;
 
-import org.objectweb.asm.ClassReader;
-import org.objectweb.asm.util.ASMifier;
-import org.objectweb.asm.util.Printer;
-import org.objectweb.asm.util.TraceClassVisitor;
+import jdk.internal.org.objectweb.asm.ClassReader;
+import jdk.internal.org.objectweb.asm.util.ASMifier;
+import jdk.internal.org.objectweb.asm.util.Printer;
+import jdk.internal.org.objectweb.asm.util.TraceClassVisitor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import zlhywlf.jni.model.NativeMethod;
-import zlhywlf.jni.model.NativeMethodImpl;
-import zlhywlf.jni.model.NativeMethodImplProxy;
+import zlhywlf.jni.model.NativeMethodTmp;
 
 import javax.tools.ToolProvider;
 import java.io.IOException;
@@ -34,12 +33,12 @@ public class JniTest {
 
     @BeforeAll
     void beforeAllTest() throws IOException {
-        context = new AnnotationConfigApplicationContext(JniTest.class);
+//        context = new AnnotationConfigApplicationContext(JniTest.class);
     }
 
     @AfterAll
     void afterAllTest() {
-        context.close();
+//        context.close();
     }
 
     @DisplayName("编译")
@@ -52,14 +51,14 @@ public class JniTest {
     @RepeatedTest(3)
     void runForSpringTest() {
         NativeMethod bean = context.getBean(NativeMethod.class);
-        String result = bean.demo(param);
+        String result = bean.demo(param, 2);
         log.info(result);
     }
 
     public static void main(String[] args) throws IOException {
         Printer printer = new ASMifier();
         TraceClassVisitor traceClassVisitor = new TraceClassVisitor(null, printer, new PrintWriter(System.out, true));
-        new ClassReader(NativeMethodImpl.class.getName()).accept(traceClassVisitor,
+        new ClassReader(NativeMethodTmp.class.getName()).accept(traceClassVisitor,
                 ClassReader.SKIP_FRAMES | ClassReader.SKIP_DEBUG);
     }
 

@@ -5,6 +5,6 @@ import zlhywlf.jni.NativeInterface;
 @NativeInterface
 public interface NativeMethod {
 
-    String demo(String param);
+    String demo(String param,Integer app);
 
 }

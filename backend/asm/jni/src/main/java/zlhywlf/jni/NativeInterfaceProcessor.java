@@ -1,6 +1,8 @@
 package zlhywlf.jni;
 
-import org.objectweb.asm.*;
+import com.sun.tools.javac.util.List;
+import jdk.internal.org.objectweb.asm.*;
+import com.sun.tools.javac.code.Type;
 
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.RoundEnvironment;
@@ -10,13 +12,15 @@ import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.TypeElement;
+import javax.lang.model.type.TypeMirror;
 import javax.tools.JavaFileObject;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Set;
+import java.util.UUID;
 
 import static java.lang.String.format;
-import static org.objectweb.asm.Opcodes.*;
+import static jdk.internal.org.objectweb.asm.Opcodes.*;
 
 @SupportedAnnotationTypes("zlhywlf.jni.NativeInterface")
 @SupportedSourceVersion(SourceVersion.RELEASE_17)
@@ -50,6 +54,16 @@ public class NativeInterfaceProcessor extends AbstractProcessor {
 
             inter.getEnclosedElements().forEach(
                     interMethod -> {
+                        TypeMirror type = interMethod.asType();
+                        if (type instanceof Type.MethodType methodType) {
+                            List<Type> typeArguments = methodType.getParameterTypes();
+                            typeArguments.forEach(t -> {
+                                jdk.internal.org.objectweb.asm.Type returnType1 = jdk.internal.org.objectweb.asm.Type.getObjectType(t.toString().replace(".", "/"));
+                            });
+                            Type returnType = methodType.getReturnType();
+                            jdk.internal.org.objectweb.asm.Type returnType1 = jdk.internal.org.objectweb.asm.Type.getObjectType(returnType.toString().replace(".", "/"));
+                            System.out.println("1");
+                        }
                         String actSignature = interMethod.asType().toString();
                         String expSignature = "(java.lang.String)java.lang.String";
                         String name = interMethod.getSimpleName().toString();
@@ -66,7 +80,7 @@ public class NativeInterfaceProcessor extends AbstractProcessor {
             classWriter.visitEnd();
 
             try {
-                JavaFileObject source = processingEnv.getFiler().createClassFile(inter.getEnclosingElement().toString() + "." + interName + "Impl2");
+                JavaFileObject source = processingEnv.getFiler().createClassFile(inter.getEnclosingElement().toString() + "." + interName + UUID.randomUUID());
                 OutputStream out = source.openOutputStream();
                 out.write(classWriter.toByteArray());
                 out.flush();
