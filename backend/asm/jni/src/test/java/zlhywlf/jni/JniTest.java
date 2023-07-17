@@ -49,10 +49,9 @@ public class JniTest {
 
     @DisplayName("spring, 重复执行多次, 默认全局对象只会创建与删除一次")
     @RepeatedTest(3)
-    void runForSpringTest() {
+    void runForSpringTest() throws IOException {
         NativeMethod bean = context.getBean(NativeMethod.class);
-        String result = bean.demo(param, 2);
-        log.info(result);
+        bean.demo(param, 1, (char) 2, (byte) 3, (short) 4, 5L, 6F, 7D, true, new String[0]);
     }
 
     public static void main(String[] args) throws IOException {

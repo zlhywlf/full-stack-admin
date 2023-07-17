@@ -12,12 +12,12 @@ import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.TypeElement;
-import javax.lang.model.type.TypeMirror;
 import javax.tools.JavaFileObject;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Set;
 import java.util.UUID;
+import java.util.function.Consumer;
 
 import static java.lang.String.format;
 import static jdk.internal.org.objectweb.asm.Opcodes.*;
@@ -36,60 +36,80 @@ public class NativeInterfaceProcessor extends AbstractProcessor {
             // 获取注解信息
             NativeInterface interAnno = inter.getAnnotation(NativeInterface.class);
             // 获取接口信息
-            String interName = inter.getSimpleName().toString();
-            String pkgName = inter.getEnclosingElement().toString().replace(".", "/");
-
-            ClassWriter classWriter = new ClassWriter(0);
-            MethodVisitor methodVisitor;
-            classWriter.visit(V17, ACC_PUBLIC | ACC_SUPER, pkgName + "/" + interName + "Impl2", null, "java/lang/Object", new String[]{pkgName + "/" + interName});
-            {
-                methodVisitor = classWriter.visitMethod(ACC_PUBLIC, "<init>", "()V", null, null);
-                methodVisitor.visitCode();
-                methodVisitor.visitVarInsn(ALOAD, 0);
-                methodVisitor.visitMethodInsn(INVOKESPECIAL, "java/lang/Object", "<init>", "()V", false);
-                methodVisitor.visitInsn(RETURN);
-                methodVisitor.visitMaxs(1, 1);
-                methodVisitor.visitEnd();
-            }
-
-            inter.getEnclosedElements().forEach(
+            jdk.internal.org.objectweb.asm.Type clzType = transJavacTypeToAsmType(inter.getEnclosingElement() + "." + inter.getSimpleName());
+            String suffix = UUID.randomUUID().toString().replace("-", "_");
+            // 创建本地方法实现
+            createClass(clzType, suffix, classWriter -> inter.getEnclosedElements().forEach(
                     interMethod -> {
-                        TypeMirror type = interMethod.asType();
-                        if (type instanceof Type.MethodType methodType) {
-                            List<Type> typeArguments = methodType.getParameterTypes();
+                        if (interMethod.asType() instanceof Type.MethodType m) {
+                            StringBuilder builder = new StringBuilder("(");
+                            List<Type> typeArguments = m.getParameterTypes();
                             typeArguments.forEach(t -> {
-                                jdk.internal.org.objectweb.asm.Type returnType1 = jdk.internal.org.objectweb.asm.Type.getObjectType(t.toString().replace(".", "/"));
+                                builder.append(transJavacTypeToAsmType(t).getDescriptor());
                             });
-                            Type returnType = methodType.getReturnType();
-                            jdk.internal.org.objectweb.asm.Type returnType1 = jdk.internal.org.objectweb.asm.Type.getObjectType(returnType.toString().replace(".", "/"));
-                            System.out.println("1");
+                            builder.append(")");
+                            List<Type> thrownTypes = m.getThrownTypes();
+                            String[] exceptions = new String[thrownTypes.size()];
+                            for (int i = 0; i < exceptions.length; i++) {
+                                exceptions[i] = transJavacTypeToAsmType(thrownTypes.get(i)).getInternalName();
+                            }
+                            builder.append(transJavacTypeToAsmType(m.getReturnType()));
+                            classWriter.visitMethod(ACC_PUBLIC | ACC_NATIVE, interMethod.getSimpleName().toString(), builder.toString(), null, exceptions).visitEnd();
                         }
-                        String actSignature = interMethod.asType().toString();
-                        String expSignature = "(java.lang.String)java.lang.String";
-                        String name = interMethod.getSimpleName().toString();
-                        if ((interMethod.getKind() == ElementKind.METHOD) && expSignature.equals(actSignature)) {
-                            MethodVisitor mv = classWriter.visitMethod(ACC_PUBLIC | ACC_NATIVE, name, "(Ljava/lang/String;)Ljava/lang/String;", null, null);
-                            mv.visitEnd();
-                            return;
-                        }
-                        throw new RuntimeException(format(
-                                "注解 @NativeInterface 只实现返回类型且存在唯一参数类型均为 java.lang.String 的成员方法，[%s] 不支持的成员定义",
-                                interMethod.asType()));
                     }
-            );
-            classWriter.visitEnd();
-
-            try {
-                JavaFileObject source = processingEnv.getFiler().createClassFile(inter.getEnclosingElement().toString() + "." + interName + UUID.randomUUID());
-                OutputStream out = source.openOutputStream();
-                out.write(classWriter.toByteArray());
-                out.flush();
-                out.close();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            ));
         });
         return true;
+    }
+
+    private void createClass(jdk.internal.org.objectweb.asm.Type clzType, String suffix, Consumer<ClassWriter> createMethods) {
+        final ClassWriter classWriter = new ClassWriter(ClassWriter.COMPUTE_FRAMES);
+        classWriter.visit(V17, ACC_PUBLIC | ACC_SUPER, clzType.getInternalName() + suffix, null, "java/lang/Object", new String[]{clzType.getInternalName()});
+        MethodVisitor mv = classWriter.visitMethod(ACC_PUBLIC, "<init>", "()V", null, null);
+        mv.visitCode();
+        mv.visitVarInsn(ALOAD, 0);
+        mv.visitMethodInsn(INVOKESPECIAL, "java/lang/Object", "<init>", "()V", false);
+        mv.visitInsn(RETURN);
+        mv.visitMaxs(1, 1);
+        mv.visitEnd();
+        createMethods.accept(classWriter);
+        classWriter.visitEnd();
+        try {
+            JavaFileObject source = processingEnv.getFiler().createClassFile(clzType.getClassName() + suffix);
+            OutputStream out = source.openOutputStream();
+            out.write(classWriter.toByteArray());
+            out.flush();
+            out.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private jdk.internal.org.objectweb.asm.Type transJavacTypeToAsmType(Type javacType) {
+        return transJavacTypeToAsmType(javacType.toString());
+    }
+
+    private jdk.internal.org.objectweb.asm.Type transJavacTypeToAsmType(String t) {
+        boolean isArr = t.contains("[]");
+        if (isArr) {
+            t = t.replace("[]", "");
+        }
+        var asmType = switch (t) {
+            case "int" -> jdk.internal.org.objectweb.asm.Type.INT_TYPE;
+            case "double" -> jdk.internal.org.objectweb.asm.Type.DOUBLE_TYPE;
+            case "float" -> jdk.internal.org.objectweb.asm.Type.FLOAT_TYPE;
+            case "long" -> jdk.internal.org.objectweb.asm.Type.LONG_TYPE;
+            case "short" -> jdk.internal.org.objectweb.asm.Type.SHORT_TYPE;
+            case "char" -> jdk.internal.org.objectweb.asm.Type.CHAR_TYPE;
+            case "boolean" -> jdk.internal.org.objectweb.asm.Type.BOOLEAN_TYPE;
+            case "byte" -> jdk.internal.org.objectweb.asm.Type.BYTE_TYPE;
+            case "void" -> jdk.internal.org.objectweb.asm.Type.VOID_TYPE;
+            default -> jdk.internal.org.objectweb.asm.Type.getObjectType(t.replace(".", "/"));
+        };
+        if (isArr) {
+            return jdk.internal.org.objectweb.asm.Type.getType("[" + asmType.getDescriptor());
+        }
+        return asmType;
     }
 
 }
