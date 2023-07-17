@@ -12,15 +12,6 @@
 
     <artifactId>jni</artifactId>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-            <version>6.0.10</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
-
     <build>
         <resources>
             <resource>
@@ -66,9 +57,6 @@
                     <compilerArgs>
                         <arg>
                             --add-exports=java.base/jdk.internal.org.objectweb.asm=ALL-UNNAMED
-                        </arg>
-                        <arg>
-                            --add-exports=java.base/jdk.internal.org.objectweb.asm.util=ALL-UNNAMED
                         </arg>
                         <arg>
                             --add-exports=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED
