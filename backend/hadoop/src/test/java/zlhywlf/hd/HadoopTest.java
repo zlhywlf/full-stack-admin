@@ -4,10 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.*;
 
 import java.io.IOException;
 import java.net.URI;
@@ -32,8 +29,9 @@ public class HadoopTest {
     }
 
     @Test
-    void base() throws IOException {
-        boolean isOk = fs.mkdirs(new Path("/test"));
+    @DisplayName("创建目录")
+    void mkdirs() throws IOException {
+        boolean isOk = fs.mkdirs(new Path("/test/dir"));
         log.info("创建目录: {}", isOk);
     }
 
