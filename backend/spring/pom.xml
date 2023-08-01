@@ -36,6 +36,7 @@
 
     <modules>
         <module>subscription</module>
+        <module>cloud</module>
     </modules>
 
     <properties>
