@@ -13,4 +13,8 @@
     <artifactId>cloud</artifactId>
 
     <packaging>pom</packaging>
+
+    <modules>
+        <module>member</module>
+    </modules>
 </project>
