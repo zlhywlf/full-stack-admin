@@ -5,16 +5,17 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>zlhywlf</groupId>
+        <groupId>zlhywlf.spring</groupId>
         <artifactId>cloud</artifactId>
         <version>1.0.0</version>
     </parent>
 
+    <groupId>zlhywlf.spring.cloud</groupId>
     <artifactId>member</artifactId>
 
     <dependencies>
         <dependency>
-            <groupId>zlhywlf</groupId>
+            <groupId>zlhywlf.spring.cloud</groupId>
             <artifactId>common</artifactId>
         </dependency>
     </dependencies>

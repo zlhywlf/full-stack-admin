@@ -1,4 +1,4 @@
-package zlhywlf.cloud.gateway;
+package zlhywlf.spring.cloud.gateway;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;

@@ -1,4 +1,4 @@
-package zlhywlf.cloud.common.aspect;
+package zlhywlf.spring.cloud.common.aspect;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

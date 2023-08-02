@@ -1,9 +1,9 @@
-package zlhywlf.cloud.member.controller;
+package zlhywlf.spring.cloud.member.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import zlhywlf.cloud.member.service.MemberService;
+import zlhywlf.spring.cloud.member.service.MemberService;
 
 @AllArgsConstructor
 @RestController

@@ -1,4 +1,4 @@
-package zlhywlf.cloud.member;
+package zlhywlf.spring.cloud.member;
 
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.annotation.MapperScan;
@@ -9,8 +9,8 @@ import org.springframework.core.env.ConfigurableEnvironment;
 
 @Slf4j
 @SpringBootApplication
-@ComponentScan("zlhywlf.cloud")
-@MapperScan("zlhywlf.cloud.member.mapper")
+@ComponentScan("zlhywlf.spring.cloud")
+@MapperScan("zlhywlf.spring.cloud.member.mapper")
 public class MemberApplication {
 
     public static void main(String[] args) {

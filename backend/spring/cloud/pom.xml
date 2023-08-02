@@ -10,6 +10,7 @@
         <version>1.0.0</version>
     </parent>
 
+    <groupId>zlhywlf.spring</groupId>
     <artifactId>cloud</artifactId>
 
     <packaging>pom</packaging>
@@ -18,14 +19,21 @@
         <module>member</module>
         <module>common</module>
         <module>gateway</module>
+        <module>generator</module>
     </modules>
 
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>zlhywlf</groupId>
+                <groupId>zlhywlf.spring.cloud</groupId>
                 <artifactId>common</artifactId>
                 <version>1.0.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.mybatis.generator</groupId>
+                <artifactId>mybatis-generator-core</artifactId>
+                <version>1.4.2</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

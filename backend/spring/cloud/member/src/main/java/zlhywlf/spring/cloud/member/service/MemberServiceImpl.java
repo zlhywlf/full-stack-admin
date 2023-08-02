@@ -1,8 +1,9 @@
-package zlhywlf.cloud.member.service;
+package zlhywlf.spring.cloud.member.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import zlhywlf.cloud.member.mapper.MemberMapper;
+import zlhywlf.spring.cloud.member.mapper.MemberMapper;
+import zlhywlf.spring.cloud.member.model.MemberExample;
 
 @Service
 @AllArgsConstructor
@@ -12,7 +13,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public int count() {
-        return memberMapper.count();
+        return (int)memberMapper.countByExample(new MemberExample());
     }
 
 }

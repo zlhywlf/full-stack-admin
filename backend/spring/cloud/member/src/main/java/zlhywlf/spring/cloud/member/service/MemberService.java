@@ -1,4 +1,4 @@
-package zlhywlf.cloud.member.service;
+package zlhywlf.spring.cloud.member.service;
 
 public interface MemberService {
 
