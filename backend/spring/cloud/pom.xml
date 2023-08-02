@@ -16,5 +16,6 @@
 
     <modules>
         <module>member</module>
+        <module>common</module>
     </modules>
 </project>
