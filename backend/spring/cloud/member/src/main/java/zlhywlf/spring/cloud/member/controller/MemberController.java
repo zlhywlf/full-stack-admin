@@ -1,5 +1,6 @@
 package zlhywlf.spring.cloud.member.controller;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +22,7 @@ public class MemberController {
     }
 
     @PostMapping("/register")
-    public Long register(MemberRequest request) {
+    public Long register(@Valid MemberRequest request) {
         return memberService.register(request);
     }
 }
