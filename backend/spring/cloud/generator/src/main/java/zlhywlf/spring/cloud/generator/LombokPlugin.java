@@ -9,7 +9,6 @@ import org.mybatis.generator.api.dom.java.TopLevelClass;
 import java.util.List;
 
 public class LombokPlugin extends PluginAdapter {
-
     @Override
     public boolean validate(List<String> warnings) {
         return true;
@@ -31,5 +30,4 @@ public class LombokPlugin extends PluginAdapter {
     public boolean modelGetterMethodGenerated(Method method, TopLevelClass topLevelClass, IntrospectedColumn introspectedColumn, IntrospectedTable introspectedTable, ModelClassType modelClassType) {
         return false;
     }
-
 }

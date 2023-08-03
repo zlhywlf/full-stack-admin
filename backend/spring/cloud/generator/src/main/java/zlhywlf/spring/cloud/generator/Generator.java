@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class Generator {
-
     public static void main(String[] args) throws Exception {
         List<String> warnings = new ArrayList<>();
         boolean overwrite = true;
@@ -22,5 +21,4 @@ public class Generator {
         MyBatisGenerator generator = new MyBatisGenerator(config, callback, warnings);
         generator.generate(null);
     }
-
 }

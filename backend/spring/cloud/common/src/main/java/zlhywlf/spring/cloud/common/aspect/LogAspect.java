@@ -26,8 +26,7 @@ import java.util.UUID;
 @Component
 @Aspect
 public class LogAspect {
-
-    @Pointcut("execution(public * zlhywlf.cloud..*Controller.*(..))")
+    @Pointcut("execution(public * zlhywlf.spring.cloud..*Controller.*(..))")
     public void controllerPointcut() {
     }
 
@@ -61,5 +60,4 @@ public class LogAspect {
         log.info("------------- 结束 耗时：{} ms -------------", System.currentTimeMillis() - startTime);
         return result;
     }
-
 }
