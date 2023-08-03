@@ -1,5 +1,6 @@
 package zlhywlf.spring.cloud.common.aspect;
 
+import cn.hutool.core.util.IdUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletRequest;
@@ -20,7 +21,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Objects;
-import java.util.UUID;
 
 @Slf4j
 @Component
@@ -32,7 +32,7 @@ public class LogAspect {
 
     @Before("controllerPointcut()")
     public void doBefore(JoinPoint joinPoint) throws JsonProcessingException {
-        MDC.put("LOG_ID", UUID.randomUUID().toString());
+        MDC.put("LOG_ID", IdUtil.getSnowflake(1, 1).nextIdStr());
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = Objects.requireNonNull(attributes).getRequest();
         Signature signature = joinPoint.getSignature();

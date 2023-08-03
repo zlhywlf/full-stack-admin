@@ -1,5 +1,6 @@
 package zlhywlf.spring.cloud.member.service;
 
+import cn.hutool.core.util.IdUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import zlhywlf.spring.cloud.member.mapper.MemberMapper;
@@ -21,7 +22,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public Long register(MemberRequest request) {
         Member member = new Member();
-        member.setId(System.currentTimeMillis());
+        member.setId(IdUtil.getSnowflake(1, 1).nextId());
         member.setMobile(request.getMobile());
         memberMapper.insert(member);
         return member.getId();
