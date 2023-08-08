@@ -1,7 +1,7 @@
 import sqlite3
 import pathlib
 from sqlite3 import Connection
-from openpyxl import load_workbook
+from openpyxl import load_workbook, Workbook
 from openpyxl.worksheet.worksheet import Worksheet
 
 
@@ -46,7 +46,7 @@ def insert_data(connection: Connection, source_name: str, table_name: str) -> No
     :param table_name: 写入数据库表名
     :return: None
     """
-    wb = load_workbook(get_path(source_name), True)
+    wb: Workbook = load_workbook(get_path(source_name), True)
     ws: Worksheet = wb.active
     titles = tuple()
     print('*' * 10, table_name, 'start', '*' * 10)
@@ -59,6 +59,7 @@ def insert_data(connection: Connection, source_name: str, table_name: str) -> No
                 connection.execute(get_insert_sql(table_name, titles), row)
     print('写入记录:', (ws.max_row - 1))
     print('*' * 10, table_name, 'end  ', '*' * 10)
+    wb.close()
 
 
 if __name__ == '__main__':
