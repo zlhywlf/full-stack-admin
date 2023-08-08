@@ -1,0 +1,12 @@
+cmake_minimum_required(VERSION 3.20)
+
+project(json)
+add_library(${PROJECT_NAME} INTERFACE)
+add_library(zlhywlf::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
+target_include_directories(${PROJECT_NAME} INTERFACE src)
+
+if (CMAKE_BUILD_TYPE STREQUAL Debug)
+    include(CTest)
+    enable_testing()
+    add_subdirectory(test)
+endif()

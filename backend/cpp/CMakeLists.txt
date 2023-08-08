@@ -25,3 +25,5 @@ if (CMAKE_BUILD_TYPE STREQUAL Debug)
     enable_testing()
     add_subdirectory(test)
 endif()
+
+add_subdirectory(json)
