@@ -8,9 +8,8 @@ namespace json {
  * @brief CRTP（Curiously Recurring Template Prattern）
  *
  * @tparam T 子类
- * @tparam K 含 json 数据的对象
  */
-template <typename T, typename K>
+template <typename T>
 class Adapter {
   /******************************************************
    *
@@ -37,21 +36,44 @@ class Adapter {
  public:
   ~Adapter() = default;
 
- public:
   /******************************************************
    *
-   * getters and setters
+   * methods
    *
    ******************************************************/
-  K model() const;
+ public:
+  /**
+   * @brief 将 json 数据映射到实体对象
+   *
+   * @tparam B 任意类型
+   * @param obj 实体对象
+   */
+  template <typename B>
+  void readValue(B &obj);
+
+  /**
+   * @brief 将实体对象映射到 json
+   *
+   * @tparam B 任意类型
+   * @param obj 实体对象
+   */
+  template <typename B>
+  void writeValueAsString(const B &obj);
 };
 
-template <typename T, typename K>
-Adapter<T, K>::Adapter(const std::string &jsonStr) {}
+template <typename T>
+Adapter<T>::Adapter(const std::string &jsonStr) {}
 
-template <typename T, typename K>
-K Adapter<T, K>::model() const {
-  return static_cast<const T *>(this)->model();
+template <typename T>
+template <typename B>
+void Adapter<T>::readValue(B &obj) {
+  static_cast<T *>(this)->readValue(obj);
+}
+
+template <typename T>
+template <typename B>
+void Adapter<T>::writeValueAsString(const B &obj) {
+  static_cast<T *>(this)->writeValueAsString(obj);
 }
 }  // namespace json
 }  // namespace zlhywlf
