@@ -45,17 +45,17 @@ class Mapper {
    * @brief 将 json 数据映射到实体对象
    *
    * @param obj 实体对象
-   * @param adapter 具体的处理对象
+   * @param model json 模型
    */
-  virtual void readValue(T &obj, const K &adapter) = 0;
+  virtual void readValue(T &obj, const K &model) = 0;
 
   /**
    * @brief 将实体对象映射到 json
    *
    * @param obj 实体对象
-   * @param adapter 具体的处理对象
+   * @param model json 模型
    */
-  virtual void writeValueAsString(const T &obj, K &adapter) = 0;
+  virtual void writeValueAsString(const T &obj, K &model) = 0;
 };
 }  // namespace json
 }  // namespace zlhywlf

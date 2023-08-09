@@ -1,7 +1,7 @@
 #pragma once
 
-#include <string>
-
+#include "Adapter.H"
+#include "json/model/RapidjsonModel.H"
 #include "rapidjson/document.h"
 
 namespace zlhywlf {
@@ -10,15 +10,16 @@ namespace json {
  * @brief 使用 rapidjson 处理 json
  *
  */
-class RapidjsonAdapter final {
+class RapidjsonAdapter final
+    : public Adapter<RapidjsonAdapter, RapidjsonModel> {
   /******************************************************
    *
    * fields
    *
    ******************************************************/
  private:
-  rapidjson::Value *value_;
-  rapidjson::Document::AllocatorType *allocator_;  // 指针无需释放
+  rapidjson::Document *doc_;
+  RapidjsonModel model_;
 
   /******************************************************
    *
@@ -56,29 +57,21 @@ class RapidjsonAdapter final {
    *
    ******************************************************/
  public:
-  rapidjson::Value &value();
-  const rapidjson::Value &value() const;
-  rapidjson::Document::AllocatorType &allocator();
+  RapidjsonModel model() const;
 };
 
-RapidjsonAdapter::RapidjsonAdapter(const std::string &jsonStr) {
-  rapidjson::Document *doc = new rapidjson::Document;
-  doc->Parse(jsonStr.c_str());
-  value_ = doc;
+RapidjsonAdapter::RapidjsonAdapter(const std::string &jsonStr)
+    : Adapter(jsonStr), doc_(new rapidjson::Document) {
+  doc_->Parse(jsonStr.c_str());
+  model_.value = doc_;
 }
 
 RapidjsonAdapter::~RapidjsonAdapter() {
-  if (value_ != nullptr) {
-    delete value_;
+  if (doc_ != nullptr) {
+    delete doc_;
   }
 }
 
-rapidjson::Value &RapidjsonAdapter::value() { return *value_; }
-
-const rapidjson::Value &RapidjsonAdapter::value() const { return *value_; }
-
-rapidjson::Document::AllocatorType &RapidjsonAdapter::allocator() {
-  return *allocator_;
-}
+RapidjsonModel RapidjsonAdapter::model() const { return model_; }
 }  // namespace json
 }  // namespace zlhywlf
