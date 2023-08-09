@@ -2,6 +2,8 @@
 
 #include <string>
 
+#include "logger/LoggerFactory.H"
+
 namespace zlhywlf {
 namespace json {
 /**
@@ -11,13 +13,15 @@ namespace json {
  */
 template <typename T>
 class Adapter {
+ protected:
+  logger::Logger *log_;
   /******************************************************
    *
    * constructors
    *
    ******************************************************/
  public:
-  Adapter(const std::string &jsonStr);
+  Adapter(const std::string &jsonStr, const logger::LoggerFactory &factory);
   Adapter(const Adapter &) = delete;
 
   /******************************************************
@@ -34,7 +38,7 @@ class Adapter {
    *
    ******************************************************/
  public:
-  ~Adapter() = default;
+  ~Adapter();
 
   /******************************************************
    *
@@ -62,7 +66,17 @@ class Adapter {
 };
 
 template <typename T>
-Adapter<T>::Adapter(const std::string &jsonStr) {}
+Adapter<T>::Adapter(const std::string &jsonStr,
+                    const logger::LoggerFactory &factory)
+    : log_(factory.createLogger()) {}
+
+template <typename T>
+Adapter<T>::~Adapter() {
+  if (log_ != nullptr) {
+    delete log_;
+    log_ = nullptr;
+  }
+}
 
 template <typename T>
 template <typename B>

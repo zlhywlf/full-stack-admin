@@ -1,10 +1,11 @@
 #pragma once
 
+#include "DefaultLoggerAdapter.H"
 #include "Logger.H"
 
 namespace zlhywlf {
 namespace logger {
-class LoggerFactory {
+class LoggerFactory final {
   /******************************************************
    *
    * constructors
@@ -28,7 +29,7 @@ class LoggerFactory {
    *
    ******************************************************/
  public:
-  virtual ~LoggerFactory() = default;
+  ~LoggerFactory() = default;
 
   /******************************************************
    *
@@ -36,7 +37,11 @@ class LoggerFactory {
    *
    ******************************************************/
  public:
-  virtual Logger *createLogger() const = 0;
+  Logger *createLogger() const;
 };
+
+Logger *LoggerFactory::createLogger() const {
+  return new DefaultLoggerAdapter();
+}
 }  // namespace logger
 }  // namespace zlhywlf

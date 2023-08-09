@@ -1,5 +1,6 @@
 #pragma once
 
+#include "logger/Logger.H"
 #include "rapidjson/document.h"
 
 namespace zlhywlf {
@@ -7,6 +8,7 @@ namespace json {
 struct RapidjsonModel {
   rapidjson::Value *value;
   rapidjson::Document::AllocatorType *allocator;
+  logger::Logger *log;
 
   RapidjsonModel operator[](const char *key) {
     RapidjsonModel sub;

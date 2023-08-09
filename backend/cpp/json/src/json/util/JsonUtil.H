@@ -11,18 +11,24 @@ namespace json {
 namespace JsonUtil {
 template <typename T, typename K = RapidjsonAdapter>
 void readValue(T& obj, const std::string& jsonStr) {
-  Adapter<K>* adapter = new K(jsonStr);
+  logger::LoggerFactory f;
+  Adapter<K>* adapter = new K(jsonStr, f);
   adapter->readValue(obj);
   delete static_cast<K*>(adapter);
 }
 
 template <typename T, typename F, typename... FF>
-void readValue(const T& model, const std::vector<std::string>& keysVector,
-               int keyIndex, F& field) {}
+void readValue(const logger::Logger& log, const T& model,
+               const std::vector<std::string>& keysVector, int keyIndex,
+               F& field) {
+  auto& name = keysVector[keyIndex];
+  log.info(name);
+}
 
 template <typename T, typename F, typename... FF>
-void readValue(const T& model, const std::vector<std::string>& keysVector,
-               int keyIndex, F& field, FF&... fields) {
+void readValue(const logger::Logger& log, const T& model,
+               const std::vector<std::string>& keysVector, int keyIndex,
+               F& field, FF&... fields) {
   readValue(model, keysVector, keyIndex, field);
   return readValue(model, keysVector, ++keyIndex, fields...);
 }
@@ -70,10 +76,11 @@ void splitStrToVector(std::vector<std::string>& strVector,
 #define ZLHYWLF_JSON_REGISTER(keys, fields)                                \
   const char* serializedKey() const { return keys; }                       \
   template <typename T>                                                    \
-  void readValue(const T& model, std::vector<std::string>& keysVector) {   \
+  void readValue(const T& model, std::vector<std::string>& keysVector,     \
+                 const zlhywlf::logger::Logger& log) {                     \
     zlhywlf::json::JsonUtil::splitStrToVector(keysVector, serializedKey(), \
                                               ',');                        \
-    zlhywlf::json::JsonUtil::readValue(model, keysVector, 0, fields);      \
+    zlhywlf::json::JsonUtil::readValue(log, model, keysVector, 0, fields); \
   }
 #endif
 

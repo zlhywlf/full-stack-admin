@@ -1,12 +1,12 @@
 #include <iostream>
 
-#include "logger/DefaultLoggerFactory.H"
+#include "logger/LoggerFactory.H"
 
 using std::cout;
 using std::endl;
 
 int main(int argc, char const *argv[]) {
-  zlhywlf::logger::DefaultLoggerFactory f;
+  zlhywlf::logger::LoggerFactory f;
   auto *log = f.createLogger();
   log->trace("msg");
   log->debug("msg");

@@ -31,8 +31,10 @@ class RapidjsonAdapter final : public Adapter<RapidjsonAdapter> {
    * @brief Construct a new Rapidjson Adapter object
    *
    * @param jsonStr json 字符串
+   * @param jsonStr factory 日志工厂
    */
-  RapidjsonAdapter(const std::string &jsonStr);
+  RapidjsonAdapter(const std::string &jsonStr,
+                   const logger::LoggerFactory &factory);
   RapidjsonAdapter(const RapidjsonAdapter &) = delete;
 
   /******************************************************
@@ -64,15 +66,18 @@ class RapidjsonAdapter final : public Adapter<RapidjsonAdapter> {
   void writeValueAsString(const T &obj);
 };
 
-RapidjsonAdapter::RapidjsonAdapter(const std::string &jsonStr)
-    : Adapter(jsonStr), doc_(new rapidjson::Document) {
+RapidjsonAdapter::RapidjsonAdapter(const std::string &jsonStr,
+                                   const logger::LoggerFactory &factory)
+    : Adapter(jsonStr, factory), doc_(new rapidjson::Document) {
   doc_->Parse(jsonStr.c_str());
   model_.value = doc_;
+  model_.log = log_;
 }
 
 RapidjsonAdapter::~RapidjsonAdapter() {
   if (doc_ != nullptr) {
     delete doc_;
+    doc_ = nullptr;
   }
 }
 

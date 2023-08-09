@@ -18,8 +18,8 @@ template <typename T,
           typename std::enable_if_t<!hasNecessaryMethod<T>::has, int> = 0>
 void readValue(T &obj, const RapidjsonModel &model);
 
-template <typename T, typename std::enable_if_t<
-                          !hasNecessaryMethod<T>::has, int> = 0>
+template <typename T,
+          typename std::enable_if_t<!hasNecessaryMethod<T>::has, int> = 0>
 void writeValueAsString(const T &obj, RapidjsonModel &model);
 
 /******************************************************
@@ -31,8 +31,8 @@ template <typename T,
           typename std::enable_if_t<hasNecessaryMethod<T>::has, int> = 0>
 void readValue(T &obj, const RapidjsonModel &model);
 
-template <typename T, typename std::enable_if_t<
-                          hasNecessaryMethod<T>::has, int> = 0>
+template <typename T,
+          typename std::enable_if_t<hasNecessaryMethod<T>::has, int> = 0>
 void writeValueAsString(const T &obj, RapidjsonModel &model);
 
 /******************************************************
@@ -63,7 +63,7 @@ template <typename T,
           typename std::enable_if_t<hasNecessaryMethod<T>::has, int>>
 void readValue(T &obj, const RapidjsonModel &model) {
   std::vector<std::string> keysVector;
-  obj.readValue(model, keysVector);
+  obj.readValue(model, keysVector, *model.log);
 }
 
 template <typename T,

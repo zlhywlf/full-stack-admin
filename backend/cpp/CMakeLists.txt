@@ -18,7 +18,7 @@ add_library(${PROJECT_NAME} INTERFACE)
 add_library(zlhywlf::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 target_compile_features(${PROJECT_NAME} INTERFACE cxx_std_17)
 target_compile_options(${PROJECT_NAME} INTERFACE "$<$<COMPILE_LANG_AND_ID:CXX,ARMClang,AppleClang,Clang,GNU,LCC>:$<BUILD_INTERFACE:${OPTION}>>")
-target_include_directories(${PROJECT_NAME} INTERFACE src)
+target_include_directories(${PROJECT_NAME} INTERFACE common)
 
 if (CMAKE_BUILD_TYPE STREQUAL Debug)
     include(CTest)
