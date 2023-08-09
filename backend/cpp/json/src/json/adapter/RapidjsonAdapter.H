@@ -78,7 +78,7 @@ RapidjsonAdapter::~RapidjsonAdapter() {
 
 template <typename T>
 void RapidjsonAdapter::readValue(T &obj) {
-  RapidjsonMapper::readValue(obj, model_["i"]);
+  RapidjsonMapper::readValue(obj, model_);
 }
 
 template <typename T>
