@@ -14,10 +14,10 @@ namespace json {
 namespace Mapper {
 template <typename T>
 inline void readValue(T &obj, const RapidjsonModel &model,
-                      const std::function<bool()> &func);
+                      const std::function<bool(const RapidjsonModel &)> &func);
 
 template <typename T>
-inline void writeValueAsString2(
+inline void writeValueAsString(
     const T &obj, RapidjsonModel &model,
     const std::function<void(RapidjsonModel &)> &func);
 /******************************************************
@@ -65,7 +65,7 @@ namespace json {
 namespace Mapper {
 template <typename T>
 inline void readValue(T &obj, const RapidjsonModel &model,
-                      const std::function<bool()> &func) {
+                      const std::function<bool(const RapidjsonModel &)> &func) {
   if (!model.value) {
     model.log.error(model.name + " 值不存在");
     return;
@@ -74,7 +74,21 @@ inline void readValue(T &obj, const RapidjsonModel &model,
     model.log.warn(model.name + " 值为 null");
     return;
   }
-  if (!func()) {
+  // 根节点
+  if (model.name.empty()) {
+    func(model);
+    return;
+  }
+  RapidjsonModel sub;
+  auto k = model.name.c_str();
+  if (model.value->HasMember(k)) {
+    sub.value = &model.value->operator[](k);
+    sub.name = model.name;
+  } else {
+    model.log.error("json 不存在成员:" + model.name);
+    return;
+  }
+  if (!func(sub)) {
     std::string actual;
     switch (model.value->GetType()) {
       case ::rapidjson::Type::kNullType:
@@ -107,7 +121,7 @@ inline void readValue(T &obj, const RapidjsonModel &model,
 }
 
 template <typename T>
-inline void writeValueAsString2(
+inline void writeValueAsString(
     const T &obj, RapidjsonModel &model,
     const std::function<void(RapidjsonModel &)> &func) {
   // 根节点
@@ -132,7 +146,7 @@ inline void writeValueAsString2(
 template <typename T,
           typename std::enable_if_t<!hasNecessaryMethod<T>::has, int>>
 inline void readValue(T &obj, const RapidjsonModel &model) {
-  readValue(obj, model, [&]() { return false; });
+  readValue(obj, model, [&](const RapidjsonModel &sub) { return false; });
 }
 
 template <typename T,
@@ -144,10 +158,10 @@ inline void writeValueAsString(const T &obj, RapidjsonModel &model) {
 template <typename T,
           typename std::enable_if_t<hasNecessaryMethod<T>::has, int>>
 inline void readValue(T &obj, const RapidjsonModel &model) {
-  readValue(obj, model, [&]() {
-    if (model.value && model.value->IsObject()) {
+  readValue(obj, model, [&](const RapidjsonModel &sub) {
+    if (sub.value->IsObject()) {
       std::vector<std::string> keysVector;
-      obj.readValue(model, keysVector);
+      obj.readValue(sub, keysVector);
       return true;
     }
     return false;
@@ -157,7 +171,7 @@ inline void readValue(T &obj, const RapidjsonModel &model) {
 template <typename T,
           typename std::enable_if_t<hasNecessaryMethod<T>::has, int>>
 inline void writeValueAsString(const T &obj, RapidjsonModel &model) {
-  writeValueAsString2(obj, model, [&](RapidjsonModel &sub) {
+  writeValueAsString(obj, model, [&](RapidjsonModel &sub) {
     sub.value->SetObject();
     std::vector<std::string> keysVector;
     obj.writeValueAsString(sub, keysVector);
@@ -166,9 +180,9 @@ inline void writeValueAsString(const T &obj, RapidjsonModel &model) {
 
 template <>
 inline void readValue(int &obj, const RapidjsonModel &model) {
-  readValue(obj, model, [&]() {
-    if (model.value->IsInt()) {
-      obj = model.value->GetInt();
+  readValue(obj, model, [&](const RapidjsonModel &sub) {
+    if (sub.value->IsInt()) {
+      obj = sub.value->GetInt();
       return true;
     }
     return false;
@@ -177,8 +191,8 @@ inline void readValue(int &obj, const RapidjsonModel &model) {
 
 template <>
 inline void writeValueAsString(const int &obj, RapidjsonModel &model) {
-  writeValueAsString2(obj, model,
-                      [&](RapidjsonModel &sub) { sub.value->SetInt(obj); });
+  writeValueAsString(obj, model,
+                     [&](RapidjsonModel &sub) { sub.value->SetInt(obj); });
 }
 }  // namespace Mapper
 }  // namespace json
