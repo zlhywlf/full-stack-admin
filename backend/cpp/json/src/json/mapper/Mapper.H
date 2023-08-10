@@ -4,6 +4,7 @@
 
 namespace zlhywlf {
 namespace json {
+namespace Mapper {
 /**
  * @brief SFINAE (Substitution Failure Is Not An Error)
  *
@@ -17,5 +18,8 @@ struct hasNecessaryMethod {
   static int fn(...);
   const static bool has = (sizeof(fn<T>(nullptr)) == sizeof(char));
 };
+}  // namespace Mapper
 }  // namespace json
 }  // namespace zlhywlf
+
+#include "RapidjsonMapper.H"

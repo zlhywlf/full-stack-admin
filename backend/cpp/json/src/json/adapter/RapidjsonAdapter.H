@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Adapter.H"
-#include "json/mapper/RapidjsonMapper.H"
+#include "json/mapper/Mapper.H"
 #include "json/model/RapidjsonModel.H"
 #include "rapidjson/document.h"
 
@@ -31,19 +31,9 @@ class RapidjsonAdapter final : public Adapter<RapidjsonAdapter> {
    * @brief Construct a new Rapidjson Adapter object
    *
    * @param jsonStr json 字符串
-   * @param jsonStr factory 日志工厂
+   * @param log 日志
    */
-  RapidjsonAdapter(const std::string &jsonStr,
-                   const logger::LoggerFactory &factory);
-  RapidjsonAdapter(const RapidjsonAdapter &) = delete;
-
-  /******************************************************
-   *
-   * operators
-   *
-   ******************************************************/
- public:
-  RapidjsonAdapter &operator=(const RapidjsonAdapter &) = delete;
+  RapidjsonAdapter(const std::string &jsonStr, logger::Logger *log);
 
   /******************************************************
    *
@@ -67,8 +57,8 @@ class RapidjsonAdapter final : public Adapter<RapidjsonAdapter> {
 };
 
 RapidjsonAdapter::RapidjsonAdapter(const std::string &jsonStr,
-                                   const logger::LoggerFactory &factory)
-    : Adapter(jsonStr, factory), doc_(new rapidjson::Document) {
+                                   logger::Logger *log)
+    : Adapter(jsonStr, log), doc_(new rapidjson::Document) {
   doc_->Parse(jsonStr.c_str());
   model_.value = doc_;
   model_.log = log_;
@@ -83,7 +73,7 @@ RapidjsonAdapter::~RapidjsonAdapter() {
 
 template <typename T>
 void RapidjsonAdapter::readValue(T &obj) {
-  RapidjsonMapper::readValue(obj, model_);
+  Mapper::readValue(obj, model_);
 }
 
 template <typename T>

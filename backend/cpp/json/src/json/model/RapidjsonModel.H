@@ -11,6 +11,7 @@ struct RapidjsonModel {
   logger::Logger *log;
 
   RapidjsonModel operator[](const char *key) {
+    // todo 封装到类
     RapidjsonModel sub;
     if (value->HasMember(key)) {
       sub.value = &value->operator[](key);

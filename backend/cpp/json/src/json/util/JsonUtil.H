@@ -5,6 +5,7 @@
 
 #include "json/adapter/Adapter.H"
 #include "json/adapter/RapidjsonAdapter.H"
+#include "logger/LoggerFactory.H"
 
 namespace zlhywlf {
 namespace json {
@@ -12,7 +13,7 @@ namespace JsonUtil {
 template <typename T, typename K = RapidjsonAdapter>
 void readValue(T& obj, const std::string& jsonStr) {
   logger::LoggerFactory f;
-  Adapter<K>* adapter = new K(jsonStr, f);
+  Adapter<K>* adapter = new K(jsonStr, f.createLogger());
   adapter->readValue(obj);
   delete static_cast<K*>(adapter);
 }
@@ -21,7 +22,7 @@ template <typename T, typename F, typename... FF>
 void readValue(const logger::Logger& log, const T& model,
                const std::vector<std::string>& keysVector, int keyIndex,
                F& field) {
-  auto& name = keysVector[keyIndex];
+  auto name = keysVector[keyIndex].c_str();
   log.info(name);
 }
 

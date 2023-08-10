@@ -3,12 +3,11 @@
 #include <string>
 #include <vector>
 
-#include "Mapper.H"
 #include "json/model/RapidjsonModel.H"
 
 namespace zlhywlf {
 namespace json {
-namespace RapidjsonMapper {
+namespace Mapper {
 /******************************************************
  *
  * 未知类型
@@ -45,8 +44,13 @@ void readValue(int &obj, const RapidjsonModel &model);
 
 template <>
 void writeValueAsString(const int &obj, RapidjsonModel &model);
+}  // namespace Mapper
+}  // namespace json
+}  // namespace zlhywlf
 
-// ------------------- implement -------------------
+namespace zlhywlf {
+namespace json {
+namespace Mapper {
 template <typename T,
           typename std::enable_if_t<!hasNecessaryMethod<T>::has, int>>
 void readValue(T &obj, const RapidjsonModel &model) {
@@ -62,6 +66,14 @@ void writeValueAsString(const T &obj, RapidjsonModel &model) {
 template <typename T,
           typename std::enable_if_t<hasNecessaryMethod<T>::has, int>>
 void readValue(T &obj, const RapidjsonModel &model) {
+  if (model.value->IsNull()) {
+    model.log->debug("当前 json 值为 null");
+    return;
+  }
+  if (!model.value->IsObject()) {
+    model.log->error("当前 json 类型不是 Object");
+    return;
+  }
   std::vector<std::string> keysVector;
   obj.readValue(model, keysVector, *model.log);
 }
@@ -79,6 +91,6 @@ void readValue(int &obj, const RapidjsonModel &model) {
 
 template <>
 void writeValueAsString(const int &obj, RapidjsonModel &model) {}
-}  // namespace RapidjsonMapper
+}  // namespace Mapper
 }  // namespace json
 }  // namespace zlhywlf

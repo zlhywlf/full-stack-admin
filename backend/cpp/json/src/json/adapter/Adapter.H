@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "logger/LoggerFactory.H"
+#include "logger/Logger.H"
 
 namespace zlhywlf {
 namespace json {
@@ -21,7 +21,7 @@ class Adapter {
    *
    ******************************************************/
  public:
-  Adapter(const std::string &jsonStr, const logger::LoggerFactory &factory);
+  Adapter(const std::string &jsonStr, logger::Logger *log);
   Adapter(const Adapter &) = delete;
 
   /******************************************************
@@ -66,9 +66,8 @@ class Adapter {
 };
 
 template <typename T>
-Adapter<T>::Adapter(const std::string &jsonStr,
-                    const logger::LoggerFactory &factory)
-    : log_(factory.createLogger()) {}
+Adapter<T>::Adapter(const std::string &jsonStr, logger::Logger *log)
+    : log_(log) {}
 
 template <typename T>
 Adapter<T>::~Adapter() {
