@@ -6,7 +6,6 @@
 #include "json/adapter/Adapter.H"
 #include "json/adapter/RapidjsonAdapter.H"
 #include "json/mapper/Mapper.H"
-#include "json/model/Model.H"
 
 namespace zlhywlf {
 namespace json {
@@ -23,42 +22,6 @@ void writeValueAsString(const T& obj, std::string& jsonStr) {
   Adapter<K>* adapter = new K();
   adapter->writeValueAsString(obj, jsonStr);
   delete static_cast<K*>(adapter);
-}
-
-template <typename T, typename F, typename... FF>
-void readValue(const Model<T>& model,
-               const std::vector<std::string>& keysVector, int keyIndex,
-               F& field) {
-  auto& log = logger::LoggerFactory::createLogger();
-  auto& name = keysVector[keyIndex];
-  log.debug("======= 解析: " + name + "=======");
-  Mapper::readValue(field, model.read(name));
-}
-
-template <typename T, typename F, typename... FF>
-void readValue(const Model<T>& model,
-               const std::vector<std::string>& keysVector, int keyIndex,
-               F& field, FF&... fields) {
-  readValue(model, keysVector, keyIndex, field);
-  readValue(model, keysVector, ++keyIndex, fields...);
-}
-
-template <typename T, typename F, typename... FF>
-void writeValueAsString(Model<T>& model,
-                        const std::vector<std::string> keysVector, int keyIndex,
-                        const F& field) {
-  auto& log = logger::LoggerFactory::createLogger();
-  auto& name = keysVector[keyIndex];
-  log.debug("======= 写出: " + name + "=======");
-  Mapper::writeValueAsString(field, model.write(name));
-}
-
-template <typename T, typename F, typename... FF>
-void writeValueAsString(Model<T>& model,
-                        const std::vector<std::string> keysVector, int keyIndex,
-                        const F& field, const FF&... fields) {
-  writeValueAsString(model, keysVector, keyIndex, field);
-  writeValueAsString(model, keysVector, ++keyIndex, fields...);
 }
 
 /**
@@ -101,20 +64,20 @@ void splitStrToVector(std::vector<std::string>& strVector,
 #endif
 
 #ifndef ZLHYWLF_JSON_REGISTER
-#define ZLHYWLF_JSON_REGISTER(keys, fields)                                    \
-  const char* serializedKey() const { return keys; }                           \
-  template <typename T>                                                        \
-  void readValue(const T& model, std::vector<std::string>& keysVector) {       \
-    zlhywlf::json::JsonUtil::splitStrToVector(keysVector, serializedKey(),     \
-                                              ',');                            \
-    zlhywlf::json::JsonUtil::readValue(model, keysVector, 0, fields);          \
-  }                                                                            \
-  template <typename T>                                                        \
-  void writeValueAsString(T& model, std::vector<std::string>& keysVector)      \
-      const {                                                                  \
-    zlhywlf::json::JsonUtil::splitStrToVector(keysVector, serializedKey(),     \
-                                              ',');                            \
-    zlhywlf::json::JsonUtil::writeValueAsString(model, keysVector, 0, fields); \
+#define ZLHYWLF_JSON_REGISTER(keys, fields)                                  \
+  const char* serializedKey() const { return keys; }                         \
+  template <typename T>                                                      \
+  void readValue(const T& model, std::vector<std::string>& keysVector) {     \
+    zlhywlf::json::JsonUtil::splitStrToVector(keysVector, serializedKey(),   \
+                                              ',');                          \
+    zlhywlf::json::Mapper::readValue(model, keysVector, 0, fields);          \
+  }                                                                          \
+  template <typename T>                                                      \
+  void writeValueAsString(T& model, std::vector<std::string>& keysVector)    \
+      const {                                                                \
+    zlhywlf::json::JsonUtil::splitStrToVector(keysVector, serializedKey(),   \
+                                              ',');                          \
+    zlhywlf::json::Mapper::writeValueAsString(model, keysVector, 0, fields); \
   }
 #endif
 

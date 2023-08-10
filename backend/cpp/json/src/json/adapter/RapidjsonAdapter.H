@@ -85,12 +85,12 @@ RapidjsonAdapter::~RapidjsonAdapter() {
 
 template <typename T>
 void RapidjsonAdapter::readValue(T &obj) {
-  Mapper::readValue(obj, model_);
+  Mapper::readValue("", obj, model_);
 }
 
 template <typename T>
 void RapidjsonAdapter::writeValueAsString(const T &obj, std::string &jsonStr) {
-  Mapper::writeValueAsString(obj, model_);
+  Mapper::writeValueAsString("", obj, model_);
   rapidjson::StringBuffer buffer;
   rapidjson::Writer<::rapidjson::StringBuffer> writer(buffer);
   doc_->Accept(writer);
