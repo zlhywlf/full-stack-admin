@@ -1,12 +1,12 @@
 #include <iostream>
 
-#include "json/util/JsonUtil.H"
+#include "json/util/Util.H"
 #include "model/Data.H"
 
 using std::cout;
 using std::endl;
-using zlhywlf::json::JsonUtil::readValue;
-using zlhywlf::json::JsonUtil::writeValueAsString;
+using zlhywlf::json::Util::readValue;
+using zlhywlf::json::Util::writeValueAsString;
 
 int main(int argc, char const *argv[]) {
   const char *json =
