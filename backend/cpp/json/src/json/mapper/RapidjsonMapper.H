@@ -90,17 +90,13 @@ template <typename T>
 inline void readValue(const std::string &key, T &obj,
                       const RapidjsonModel &model,
                       const std::function<bool(const RapidjsonModel &)> &func) {
-  if (!model.value) {
-    model.log.error("编码错误");
+  // 根节点
+  if (key.empty()) {
+    func(model);
     return;
   }
   if (model.value->IsNull()) {
     model.log.warn("字段 " + key + " json 值为 null");
-    return;
-  }
-  // 根节点
-  if (key.empty()) {
-    func(model);
     return;
   }
   RapidjsonModel sub;
@@ -147,10 +143,6 @@ template <typename T>
 inline void writeValueAsString(
     const std::string &key, const T &obj, RapidjsonModel &model,
     const std::function<void(RapidjsonModel &)> &func) {
-  if (!model.value || !model.allocator) {
-    model.log.error("编码错误");
-    return;
-  }
   // 根节点
   if (key.empty()) {
     func(model);
