@@ -28,18 +28,18 @@ inline void writeValueAsString(const T& obj, std::string& jsonStr) {
 #endif
 
 #ifndef ZLHYWLF_JSON_REGISTER
-#define ZLHYWLF_JSON_REGISTER(keys, fields)                                    \
-  const char* serializedKey() const { return keys; }                           \
-  template <typename T>                                                        \
-  void readValue(const T& model, std::vector<std::string>& keysVector) {       \
-    zlhywlf::string::Util::splitStrToVector(keysVector, serializedKey(), ','); \
-    zlhywlf::json::Mapper::readValue(model, keysVector, 0, fields);            \
-  }                                                                            \
-  template <typename T>                                                        \
-  void writeValueAsString(T& model, std::vector<std::string>& keysVector)      \
-      const {                                                                  \
-    zlhywlf::string::Util::splitStrToVector(keysVector, serializedKey(), ','); \
-    zlhywlf::json::Mapper::writeValueAsString(model, keysVector, 0, fields);   \
+#define ZLHYWLF_JSON_REGISTER(keys, fields)                                   \
+  const char* serializedKey() const { return keys; }                          \
+  template <typename T>                                                       \
+  void readValue(const T& model, std::vector<std::string>& keyVector) {       \
+    zlhywlf::string::Util::splitStrToVector(keyVector, serializedKey(), ','); \
+    zlhywlf::json::Mapper::readValue(model, keyVector, 0, fields);            \
+  }                                                                           \
+  template <typename T>                                                       \
+  void writeValueAsString(T& model, std::vector<std::string>& keyVector)      \
+      const {                                                                 \
+    zlhywlf::string::Util::splitStrToVector(keyVector, serializedKey(), ','); \
+    zlhywlf::json::Mapper::writeValueAsString(model, keyVector, 0, fields);   \
   }
 #endif
 

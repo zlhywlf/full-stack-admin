@@ -15,6 +15,7 @@ struct Data {
   double d;
   Sub sub;
   E e;
+  bool b;
 
-  ZLHYWLF_JSON_REGISTER_KF(i, d, sub, e)
+  ZLHYWLF_JSON_REGISTER_KF(i, d, sub, e, b)
 };

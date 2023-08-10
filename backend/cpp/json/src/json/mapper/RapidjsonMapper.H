@@ -92,6 +92,19 @@ inline void readValue(const std::string &key, double &obj,
 template <>
 inline void writeValueAsString(const std::string &key, const double &obj,
                                RapidjsonModel &model);
+
+/******************************************************
+ *
+ * bool
+ *
+ ******************************************************/
+template <>
+inline void readValue(const std::string &key, bool &obj,
+                      const RapidjsonModel &model);
+
+template <>
+inline void writeValueAsString(const std::string &key, const bool &obj,
+                               RapidjsonModel &model);
 }  // namespace Mapper
 }  // namespace json
 }  // namespace zlhywlf
@@ -212,8 +225,8 @@ inline void readValue(const std::string &key, T &obj,
                       const RapidjsonModel &model) {
   readValue(key, obj, model, [&](const RapidjsonModel &sub) {
     if (sub.value->IsObject()) {
-      std::vector<std::string> keysVector;
-      obj.readValue(sub, keysVector);
+      std::vector<std::string> keyVector;
+      obj.readValue(sub, keyVector);
       return true;
     }
     return false;
@@ -226,8 +239,8 @@ inline void writeValueAsString(const std::string &key, const T &obj,
                                RapidjsonModel &model) {
   writeValueAsString(key, obj, model, [&](RapidjsonModel &sub) {
     sub.value->SetObject();
-    std::vector<std::string> keysVector;
-    obj.writeValueAsString(sub, keysVector);
+    std::vector<std::string> keyVector;
+    obj.writeValueAsString(sub, keyVector);
   });
 }
 
@@ -302,6 +315,30 @@ inline void writeValueAsString(const std::string &key, const double &obj,
                                RapidjsonModel &model) {
   writeValueAsString(key, obj, model,
                      [&](RapidjsonModel &sub) { sub.value->SetDouble(obj); });
+}
+
+/******************************************************
+ *
+ * bool
+ *
+ ******************************************************/
+template <>
+inline void readValue(const std::string &key, bool &obj,
+                      const RapidjsonModel &model) {
+  readValue(key, obj, model, [&](const RapidjsonModel &sub) {
+    if (sub.value->IsBool()) {
+      obj = sub.value->GetBool();
+      return true;
+    }
+    return false;
+  });
+}
+
+template <>
+inline void writeValueAsString(const std::string &key, const bool &obj,
+                               RapidjsonModel &model) {
+  writeValueAsString(key, obj, model,
+                     [&](RapidjsonModel &sub) { sub.value->SetBool(obj); });
 }
 }  // namespace Mapper
 }  // namespace json

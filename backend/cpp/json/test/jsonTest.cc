@@ -10,9 +10,9 @@ using zlhywlf::json::Util::writeValueAsString;
 
 int main(int argc, char const *argv[]) {
   const char *json =
-      R"({"e":0,"hello":"world","t":true,"n":null,"i":123,"d":3.1415926,"a":[0,1,2,3],"sub":{"i":99}})";
+      R"({"e":0,"hello":"world","b":true,"n":null,"i":123,"d":3.1415926,"a":[0,1,2,3],"sub":{"i":99}})";
   Data data;
-  cout << data.serializedKey() << endl;
+  cout << "serializedKey: " << data.serializedKey() << endl;
   readValue(data, json);
   assert(data.i == 123);
   std::string js;
