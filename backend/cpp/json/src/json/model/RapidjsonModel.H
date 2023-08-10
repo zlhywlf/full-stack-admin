@@ -9,10 +9,9 @@ namespace json {
 struct RapidjsonModel : public Model<RapidjsonModel> {
   rapidjson::Value *value;
   rapidjson::Document::AllocatorType *allocator;
-  std::string name;
   const logger::Logger &log{logger::LoggerFactory::createLogger()};
 
-  RapidjsonModel operator[](const std::string &key) const {
+  RapidjsonModel read(const std::string &key) const {
     RapidjsonModel sub;
     auto k = key.c_str();
     if (value->HasMember(k)) {
@@ -23,6 +22,11 @@ struct RapidjsonModel : public Model<RapidjsonModel> {
       log.error("json 不存在成员:" + key);
     }
     return sub;
+  }
+
+  RapidjsonModel &write(const std::string &key) {
+    name = key;
+    return *this;
   }
 };
 }  // namespace json

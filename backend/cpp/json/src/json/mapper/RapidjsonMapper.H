@@ -15,6 +15,11 @@ namespace Mapper {
 template <typename T>
 inline void readValue(T &obj, const RapidjsonModel &model,
                       const std::function<bool()> &func);
+
+template <typename T>
+inline void writeValueAsString2(
+    const T &obj, RapidjsonModel &model,
+    const std::function<void(RapidjsonModel &)> &func);
 /******************************************************
  *
  * 未知类型
@@ -95,15 +100,39 @@ inline void readValue(T &obj, const RapidjsonModel &model,
         actual = "未知类型";
     }
     model.log.error(
-        model.name + " 类型不匹配, json 类型为 " + actual + ", 期待的类型为: " +
+        "字段" + model.name + ": 类型不匹配, json 类型为: " + actual +
+        ", 期待的类型为: " +
         abi::__cxa_demangle(typeid(obj).name(), nullptr, nullptr, nullptr));
   }
+}
+
+template <typename T>
+inline void writeValueAsString2(
+    const T &obj, RapidjsonModel &model,
+    const std::function<void(RapidjsonModel &)> &func) {
+  // 根节点
+  if (model.name.empty()) {
+    func(model);
+    return;
+  }
+  if (!model.value || !model.allocator) {
+    model.log.error(model.name + " 写入对象不存在");
+    return;
+  }
+  rapidjson::Value item;
+  RapidjsonModel sub;
+  sub.value = &item;
+  sub.allocator = model.allocator;
+  func(sub);
+  rapidjson::Value key;
+  key.SetString(model.name.c_str(), model.name.length(), *model.allocator);
+  model.value->AddMember(key, item, *model.allocator);
 }
 
 template <typename T,
           typename std::enable_if_t<!hasNecessaryMethod<T>::has, int>>
 inline void readValue(T &obj, const RapidjsonModel &model) {
-  // 未知类型
+  readValue(obj, model, [&]() { return false; });
 }
 
 template <typename T,
@@ -127,7 +156,13 @@ inline void readValue(T &obj, const RapidjsonModel &model) {
 
 template <typename T,
           typename std::enable_if_t<hasNecessaryMethod<T>::has, int>>
-inline void writeValueAsString(const T &obj, RapidjsonModel &model) {}
+inline void writeValueAsString(const T &obj, RapidjsonModel &model) {
+  writeValueAsString2(obj, model, [&](RapidjsonModel &sub) {
+    sub.value->SetObject();
+    std::vector<std::string> keysVector;
+    obj.writeValueAsString(sub, keysVector);
+  });
+}
 
 template <>
 inline void readValue(int &obj, const RapidjsonModel &model) {
@@ -141,7 +176,10 @@ inline void readValue(int &obj, const RapidjsonModel &model) {
 }
 
 template <>
-inline void writeValueAsString(const int &obj, RapidjsonModel &model) {}
+inline void writeValueAsString(const int &obj, RapidjsonModel &model) {
+  writeValueAsString2(obj, model,
+                      [&](RapidjsonModel &sub) { sub.value->SetInt(obj); });
+}
 }  // namespace Mapper
 }  // namespace json
 }  // namespace zlhywlf

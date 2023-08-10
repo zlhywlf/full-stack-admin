@@ -11,12 +11,14 @@ namespace json {
  */
 template <typename T>
 class Adapter {
+ protected:
   /******************************************************
    *
    * constructors
    *
    ******************************************************/
  public:
+  Adapter() = default;
   Adapter(const std::string &jsonStr);
   Adapter(const Adapter &) = delete;
 
@@ -58,7 +60,7 @@ class Adapter {
    * @param obj 实体对象
    */
   template <typename B>
-  void writeValueAsString(const B &obj);
+  void writeValueAsString(const B &obj, std::string &jsonStr);
 };
 
 template <typename T>
@@ -72,8 +74,8 @@ void Adapter<T>::readValue(B &obj) {
 
 template <typename T>
 template <typename B>
-void Adapter<T>::writeValueAsString(const B &obj) {
-  static_cast<T *>(this)->writeValueAsString(obj);
+void Adapter<T>::writeValueAsString(const B &obj, std::string &jsonStr) {
+  static_cast<T *>(this)->writeValueAsString(obj, jsonStr);
 }
 }  // namespace json
 }  // namespace zlhywlf

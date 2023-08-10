@@ -6,6 +6,8 @@ namespace zlhywlf {
 namespace json {
 template <typename T>
 class Model {
+ public:
+  std::string name;
   /******************************************************
    *
    * constructors
@@ -22,7 +24,6 @@ class Model {
    ******************************************************/
  public:
   Model &operator=(const Model &) = default;
-  T operator[](const std::string &key) const;
 
   /******************************************************
    *
@@ -31,11 +32,25 @@ class Model {
    ******************************************************/
  public:
   virtual ~Model() = default;
+
+  /******************************************************
+   *
+   * methods
+   *
+   ******************************************************/
+ public:
+  T read(const std::string &key) const;
+  T &write(const std::string &key);
 };
 
 template <typename T>
-T Model<T>::operator[](const std::string &key) const {
-  return static_cast<const T *>(this)->operator[](key);
+T Model<T>::read(const std::string &key) const {
+  return static_cast<const T *>(this)->read(key);
+}
+
+template <typename T>
+T &Model<T>::write(const std::string &key) {
+  return static_cast<T *>(this)->write(key);
 }
 }  // namespace json
 }  // namespace zlhywlf

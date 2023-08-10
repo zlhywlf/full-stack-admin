@@ -5,6 +5,8 @@
 #include "json/model/RapidjsonModel.H"
 #include "logger/LoggerFactory.H"
 #include "rapidjson/document.h"
+#include "rapidjson/stringbuffer.h"
+#include "rapidjson/writer.h"
 
 namespace zlhywlf {
 namespace json {
@@ -29,11 +31,12 @@ class RapidjsonAdapter final : public Adapter<RapidjsonAdapter> {
    *
    ******************************************************/
  public:
+  RapidjsonAdapter();
+
   /**
    * @brief Construct a new Rapidjson Adapter object
    *
    * @param jsonStr json 字符串
-   * @param log 日志
    */
   RapidjsonAdapter(const std::string &jsonStr);
 
@@ -55,7 +58,7 @@ class RapidjsonAdapter final : public Adapter<RapidjsonAdapter> {
   void readValue(T &obj);
 
   template <typename T>
-  void writeValueAsString(const T &obj);
+  void writeValueAsString(const T &obj, std::string &jsonStr);
 };
 
 RapidjsonAdapter::RapidjsonAdapter(const std::string &jsonStr)
@@ -64,6 +67,13 @@ RapidjsonAdapter::RapidjsonAdapter(const std::string &jsonStr)
       log_(logger::LoggerFactory::createLogger()) {
   doc_->Parse(jsonStr.c_str());
   model_.value = doc_;
+}
+
+RapidjsonAdapter::RapidjsonAdapter()
+    : doc_(new rapidjson::Document),
+      log_(logger::LoggerFactory::createLogger()) {
+  model_.value = doc_;
+  model_.allocator = &doc_->GetAllocator();
 }
 
 RapidjsonAdapter::~RapidjsonAdapter() {
@@ -79,6 +89,13 @@ void RapidjsonAdapter::readValue(T &obj) {
 }
 
 template <typename T>
-void RapidjsonAdapter::writeValueAsString(const T &obj) {}
+void RapidjsonAdapter::writeValueAsString(const T &obj, std::string &jsonStr) {
+  Mapper::writeValueAsString(obj, model_);
+  rapidjson::StringBuffer buffer;
+  rapidjson::Writer<::rapidjson::StringBuffer> writer(buffer);
+  doc_->Accept(writer);
+  std::string a(buffer.GetString());
+  jsonStr = buffer.GetString();
+}
 }  // namespace json
 }  // namespace zlhywlf

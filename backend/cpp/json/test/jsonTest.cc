@@ -5,12 +5,17 @@
 
 using std::cout;
 using std::endl;
+using zlhywlf::json::JsonUtil::readValue;
+using zlhywlf::json::JsonUtil::writeValueAsString;
 
 int main(int argc, char const *argv[]) {
   const char *json =
-      R"({"hello":"world","t":true,"n":null,"i":123,"pi":3.1415926,"a":[0,1,2,3]})";
+      R"({"hello":"world","t":true,"n":null,"i":123,"d":3.1415926,"a":[0,1,2,3],"sub":{"i":99}})";
   Data data;
   cout << data.serializedKey() << endl;
-  zlhywlf::json::JsonUtil::readValue(data, json);
+  readValue(data, json);
   assert(data.i == 123);
+  std::string js;
+  writeValueAsString(data, js);
+  cout << js << endl;
 }
