@@ -21,18 +21,21 @@ template <typename T>
 inline void writeValueAsString(
     const std::string &key, const T &obj, RapidjsonModel &model,
     const std::function<void(RapidjsonModel &)> &func);
+
 /******************************************************
  *
  * 未知类型
  *
  ******************************************************/
 template <typename T,
-          typename std::enable_if_t<!hasNecessaryMethod<T>::has, int> = 0>
+          typename std::enable_if_t<
+              !hasNecessaryMethod<T>::has && !std::is_enum_v<T>, int> = 0>
 inline void readValue(const std::string &key, T &obj,
                       const RapidjsonModel &model);
 
 template <typename T,
-          typename std::enable_if_t<!hasNecessaryMethod<T>::has, int> = 0>
+          typename std::enable_if_t<
+              !hasNecessaryMethod<T>::has && !std::is_enum_v<T>, int> = 0>
 inline void writeValueAsString(const std::string &key, const T &obj,
                                RapidjsonModel &model);
 
@@ -48,6 +51,19 @@ inline void readValue(const std::string &key, T &obj,
 
 template <typename T,
           typename std::enable_if_t<hasNecessaryMethod<T>::has, int> = 0>
+inline void writeValueAsString(const std::string &key, const T &obj,
+                               RapidjsonModel &model);
+
+/******************************************************
+ *
+ * enum
+ *
+ ******************************************************/
+template <typename T, typename std::enable_if_t<std::is_enum_v<T>, int> = 0>
+inline void readValue(const std::string &key, T &obj,
+                      const RapidjsonModel &model);
+
+template <typename T, typename std::enable_if_t<std::is_enum_v<T>, int> = 0>
 inline void writeValueAsString(const std::string &key, const T &obj,
                                RapidjsonModel &model);
 
@@ -159,7 +175,8 @@ inline void writeValueAsString(
  *
  ******************************************************/
 template <typename T,
-          typename std::enable_if_t<!hasNecessaryMethod<T>::has, int>>
+          typename std::enable_if_t<
+              !hasNecessaryMethod<T>::has && !std::is_enum_v<T>, int>>
 inline void readValue(const std::string &key, T &obj,
                       const RapidjsonModel &model) {
   model.log.warn(
@@ -169,7 +186,8 @@ inline void readValue(const std::string &key, T &obj,
 }
 
 template <typename T,
-          typename std::enable_if_t<!hasNecessaryMethod<T>::has, int>>
+          typename std::enable_if_t<
+              !hasNecessaryMethod<T>::has && !std::is_enum_v<T>, int>>
 inline void writeValueAsString(const std::string &key, const T &obj,
                                RapidjsonModel &model) {
   model.log.warn(
@@ -205,6 +223,31 @@ inline void writeValueAsString(const std::string &key, const T &obj,
     sub.value->SetObject();
     std::vector<std::string> keysVector;
     obj.writeValueAsString(sub, keysVector);
+  });
+}
+
+/******************************************************
+ *
+ * enum
+ *
+ ******************************************************/
+template <typename T, typename std::enable_if_t<std::is_enum_v<T>, int>>
+inline void readValue(const std::string &key, T &obj,
+                      const RapidjsonModel &model) {
+  readValue(key, obj, model, [&](const RapidjsonModel &sub) {
+    if (sub.value->IsInt()) {
+      obj = static_cast<T>(sub.value->GetInt());
+      return true;
+    }
+    return false;
+  });
+}
+
+template <typename T, typename std::enable_if_t<std::is_enum_v<T>, int>>
+inline void writeValueAsString(const std::string &key, const T &obj,
+                               RapidjsonModel &model) {
+  writeValueAsString(key, obj, model, [&](RapidjsonModel &sub) {
+    sub.value->SetInt(static_cast<int>(obj));
   });
 }
 
