@@ -5,29 +5,31 @@
 
 #include "json/adapter/Adapter.H"
 #include "json/adapter/RapidjsonAdapter.H"
-#include "logger/LoggerFactory.H"
+#include "json/mapper/Mapper.H"
+#include "json/model/Model.H"
 
 namespace zlhywlf {
 namespace json {
 namespace JsonUtil {
 template <typename T, typename K = RapidjsonAdapter>
 void readValue(T& obj, const std::string& jsonStr) {
-  logger::LoggerFactory f;
-  Adapter<K>* adapter = new K(jsonStr, f.createLogger());
+  Adapter<K>* adapter = new K(jsonStr);
   adapter->readValue(obj);
   delete static_cast<K*>(adapter);
 }
 
 template <typename T, typename F, typename... FF>
-void readValue(const logger::Logger& log, const T& model,
+void readValue(const Model<T>& model,
                const std::vector<std::string>& keysVector, int keyIndex,
                F& field) {
-  auto name = keysVector[keyIndex].c_str();
-  log.info(name);
+  auto& log = logger::LoggerFactory::createLogger();
+  auto& name = keysVector[keyIndex];
+  log.debug("======= 解析: " + name + "=======");
+  Mapper::readValue(field, model[name]);
 }
 
 template <typename T, typename F, typename... FF>
-void readValue(const logger::Logger& log, const T& model,
+void readValue(const Model<T>& model,
                const std::vector<std::string>& keysVector, int keyIndex,
                F& field, FF&... fields) {
   readValue(model, keysVector, keyIndex, field);
@@ -77,11 +79,10 @@ void splitStrToVector(std::vector<std::string>& strVector,
 #define ZLHYWLF_JSON_REGISTER(keys, fields)                                \
   const char* serializedKey() const { return keys; }                       \
   template <typename T>                                                    \
-  void readValue(const T& model, std::vector<std::string>& keysVector,     \
-                 const zlhywlf::logger::Logger& log) {                     \
+  void readValue(const T& model, std::vector<std::string>& keysVector) {   \
     zlhywlf::json::JsonUtil::splitStrToVector(keysVector, serializedKey(), \
                                               ',');                        \
-    zlhywlf::json::JsonUtil::readValue(log, model, keysVector, 0, fields); \
+    zlhywlf::json::JsonUtil::readValue(model, keysVector, 0, fields);      \
   }
 #endif
 

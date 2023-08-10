@@ -3,6 +3,7 @@
 #include "Adapter.H"
 #include "json/mapper/Mapper.H"
 #include "json/model/RapidjsonModel.H"
+#include "logger/LoggerFactory.H"
 #include "rapidjson/document.h"
 
 namespace zlhywlf {
@@ -19,6 +20,7 @@ class RapidjsonAdapter final : public Adapter<RapidjsonAdapter> {
    ******************************************************/
  private:
   rapidjson::Document *doc_;
+  const logger::Logger &log_;
   RapidjsonModel model_;
 
   /******************************************************
@@ -33,7 +35,7 @@ class RapidjsonAdapter final : public Adapter<RapidjsonAdapter> {
    * @param jsonStr json 字符串
    * @param log 日志
    */
-  RapidjsonAdapter(const std::string &jsonStr, logger::Logger *log);
+  RapidjsonAdapter(const std::string &jsonStr);
 
   /******************************************************
    *
@@ -56,12 +58,12 @@ class RapidjsonAdapter final : public Adapter<RapidjsonAdapter> {
   void writeValueAsString(const T &obj);
 };
 
-RapidjsonAdapter::RapidjsonAdapter(const std::string &jsonStr,
-                                   logger::Logger *log)
-    : Adapter(jsonStr, log), doc_(new rapidjson::Document) {
+RapidjsonAdapter::RapidjsonAdapter(const std::string &jsonStr)
+    : Adapter(jsonStr),
+      doc_(new rapidjson::Document),
+      log_(logger::LoggerFactory::createLogger()) {
   doc_->Parse(jsonStr.c_str());
   model_.value = doc_;
-  model_.log = log_;
 }
 
 RapidjsonAdapter::~RapidjsonAdapter() {

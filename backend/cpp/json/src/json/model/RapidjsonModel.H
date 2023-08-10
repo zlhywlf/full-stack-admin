@@ -1,21 +1,26 @@
 #pragma once
 
-#include "logger/Logger.H"
+#include "Model.H"
+#include "logger/LoggerFactory.H"
 #include "rapidjson/document.h"
 
 namespace zlhywlf {
 namespace json {
-struct RapidjsonModel {
+struct RapidjsonModel : public Model<RapidjsonModel> {
   rapidjson::Value *value;
   rapidjson::Document::AllocatorType *allocator;
-  logger::Logger *log;
+  std::string name;
+  const logger::Logger &log{logger::LoggerFactory::createLogger()};
 
-  RapidjsonModel operator[](const char *key) {
-    // todo 封装到类
+  RapidjsonModel operator[](const std::string &key) const {
     RapidjsonModel sub;
-    if (value->HasMember(key)) {
-      sub.value = &value->operator[](key);
+    auto k = key.c_str();
+    if (value->HasMember(k)) {
+      sub.value = &value->operator[](k);
       sub.allocator = allocator;
+      sub.name = key;
+    } else {
+      log.error("json 不存在成员:" + key);
     }
     return sub;
   }

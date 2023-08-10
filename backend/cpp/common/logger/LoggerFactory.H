@@ -2,46 +2,14 @@
 
 #include "DefaultLoggerAdapter.H"
 #include "Logger.H"
+#include "singleton/Singleton.H"
 
 namespace zlhywlf {
 namespace logger {
-class LoggerFactory final {
-  /******************************************************
-   *
-   * constructors
-   *
-   ******************************************************/
- public:
-  LoggerFactory() = default;
-  LoggerFactory(const LoggerFactory &) = delete;
-
-  /******************************************************
-   *
-   * operators
-   *
-   ******************************************************/
- public:
-  LoggerFactory &operator=(const LoggerFactory &) = delete;
-
-  /******************************************************
-   *
-   * destructor
-   *
-   ******************************************************/
- public:
-  ~LoggerFactory() = default;
-
-  /******************************************************
-   *
-   * methods
-   *
-   ******************************************************/
- public:
-  Logger *createLogger() const;
-};
-
-Logger *LoggerFactory::createLogger() const {
-  return new DefaultLoggerAdapter();
+namespace LoggerFactory {
+const Logger &createLogger() {
+  return singleton::Singleton<DefaultLoggerAdapter>::getInstance();
 }
+}  // namespace LoggerFactory
 }  // namespace logger
 }  // namespace zlhywlf

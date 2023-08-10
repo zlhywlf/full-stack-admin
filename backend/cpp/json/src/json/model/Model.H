@@ -1,7 +1,10 @@
 #pragma once
 
+#include <string>
+
 namespace zlhywlf {
 namespace json {
+template <typename T>
 class Model {
   /******************************************************
    *
@@ -10,7 +13,7 @@ class Model {
    ******************************************************/
  public:
   Model() = default;
-  Model(const Model &) = delete;
+  Model(const Model &) = default;
 
   /******************************************************
    *
@@ -18,7 +21,8 @@ class Model {
    *
    ******************************************************/
  public:
-  Model &operator=(const Model &) = delete;
+  Model &operator=(const Model &) = default;
+  T operator[](const std::string &key) const;
 
   /******************************************************
    *
@@ -28,5 +32,10 @@ class Model {
  public:
   virtual ~Model() = default;
 };
+
+template <typename T>
+T Model<T>::operator[](const std::string &key) const {
+  return static_cast<const T *>(this)->operator[](key);
+}
 }  // namespace json
 }  // namespace zlhywlf
