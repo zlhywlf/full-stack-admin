@@ -56,7 +56,7 @@ RapidjsonAdapter::RapidjsonAdapter() : doc_(new rapidjson::Document) {
 }
 
 RapidjsonAdapter::~RapidjsonAdapter() {
-  if (doc_ != nullptr) {
+  if (doc_) {
     delete doc_;
     doc_ = nullptr;
   }

@@ -79,6 +79,19 @@ inline void readValue(const std::string &key, int &obj,
 template <>
 inline void writeValueAsString(const std::string &key, const int &obj,
                                RapidjsonModel &model);
+
+/******************************************************
+ *
+ * double
+ *
+ ******************************************************/
+template <>
+inline void readValue(const std::string &key, double &obj,
+                      const RapidjsonModel &model);
+
+template <>
+inline void writeValueAsString(const std::string &key, const double &obj,
+                               RapidjsonModel &model);
 }  // namespace Mapper
 }  // namespace json
 }  // namespace zlhywlf
@@ -265,6 +278,30 @@ inline void writeValueAsString(const std::string &key, const int &obj,
                                RapidjsonModel &model) {
   writeValueAsString(key, obj, model,
                      [&](RapidjsonModel &sub) { sub.value->SetInt(obj); });
+}
+
+/******************************************************
+ *
+ * double
+ *
+ ******************************************************/
+template <>
+inline void readValue(const std::string &key, double &obj,
+                      const RapidjsonModel &model) {
+  readValue(key, obj, model, [&](const RapidjsonModel &sub) {
+    if (sub.value->IsNumber()) {
+      obj = sub.value->GetDouble();
+      return true;
+    }
+    return false;
+  });
+}
+
+template <>
+inline void writeValueAsString(const std::string &key, const double &obj,
+                               RapidjsonModel &model) {
+  writeValueAsString(key, obj, model,
+                     [&](RapidjsonModel &sub) { sub.value->SetDouble(obj); });
 }
 }  // namespace Mapper
 }  // namespace json
