@@ -6,8 +6,8 @@
 namespace zlhywlf {
 namespace json {
 struct RapidjsonModel {
-  rapidjson::Value *value;
-  rapidjson::Document::AllocatorType *allocator;
+  rapidjson::Value *value{nullptr};
+  rapidjson::Document::AllocatorType *allocator{nullptr};
   const logger::Logger &log{logger::LoggerFactory::createLogger()};
 };
 }  // namespace json

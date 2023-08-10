@@ -153,6 +153,11 @@ inline void writeValueAsString(
   model.value->AddMember(k, item, *model.allocator);
 }
 
+/******************************************************
+ *
+ * 未知类型
+ *
+ ******************************************************/
 template <typename T,
           typename std::enable_if_t<!hasNecessaryMethod<T>::has, int>>
 inline void readValue(const std::string &key, T &obj,
@@ -173,6 +178,11 @@ inline void writeValueAsString(const std::string &key, const T &obj,
       " 的映射规则, 被忽略");
 }
 
+/******************************************************
+ *
+ * class
+ *
+ ******************************************************/
 template <typename T,
           typename std::enable_if_t<hasNecessaryMethod<T>::has, int>>
 inline void readValue(const std::string &key, T &obj,
@@ -198,6 +208,11 @@ inline void writeValueAsString(const std::string &key, const T &obj,
   });
 }
 
+/******************************************************
+ *
+ * int
+ *
+ ******************************************************/
 template <>
 inline void readValue(const std::string &key, int &obj,
                       const RapidjsonModel &model) {

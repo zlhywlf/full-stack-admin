@@ -3,7 +3,6 @@
 #include "Adapter.H"
 #include "json/mapper/Mapper.H"
 #include "json/model/RapidjsonModel.H"
-#include "logger/LoggerFactory.H"
 #include "rapidjson/document.h"
 #include "rapidjson/stringbuffer.h"
 #include "rapidjson/writer.h"
@@ -22,7 +21,6 @@ class RapidjsonAdapter final : public Adapter<RapidjsonAdapter> {
    ******************************************************/
  private:
   rapidjson::Document *doc_;
-  const logger::Logger &log_;
   RapidjsonModel model_;
 
   /******************************************************
@@ -62,16 +60,12 @@ class RapidjsonAdapter final : public Adapter<RapidjsonAdapter> {
 };
 
 RapidjsonAdapter::RapidjsonAdapter(const std::string &jsonStr)
-    : Adapter(jsonStr),
-      doc_(new rapidjson::Document),
-      log_(logger::LoggerFactory::createLogger()) {
+    : Adapter(jsonStr), doc_(new rapidjson::Document) {
   doc_->Parse(jsonStr.c_str());
   model_.value = doc_;
 }
 
-RapidjsonAdapter::RapidjsonAdapter()
-    : doc_(new rapidjson::Document),
-      log_(logger::LoggerFactory::createLogger()) {
+RapidjsonAdapter::RapidjsonAdapter() : doc_(new rapidjson::Document) {
   model_.value = doc_;
   model_.allocator = &doc_->GetAllocator();
 }
@@ -94,7 +88,6 @@ void RapidjsonAdapter::writeValueAsString(const T &obj, std::string &jsonStr) {
   rapidjson::StringBuffer buffer;
   rapidjson::Writer<::rapidjson::StringBuffer> writer(buffer);
   doc_->Accept(writer);
-  std::string a(buffer.GetString());
   jsonStr = buffer.GetString();
 }
 }  // namespace json
