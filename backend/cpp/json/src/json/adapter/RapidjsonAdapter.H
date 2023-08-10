@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Adapter.H"
 #include "json/mapper/Mapper.H"
 #include "json/model/RapidjsonModel.H"
 #include "rapidjson/document.h"
@@ -13,7 +12,7 @@ namespace json {
  * @brief 使用 rapidjson 处理 json
  *
  */
-class RapidjsonAdapter final : public Adapter<RapidjsonAdapter> {
+class RapidjsonAdapter final {
   /******************************************************
    *
    * fields
@@ -31,13 +30,6 @@ class RapidjsonAdapter final : public Adapter<RapidjsonAdapter> {
  public:
   RapidjsonAdapter();
 
-  /**
-   * @brief Construct a new Rapidjson Adapter object
-   *
-   * @param jsonStr json 字符串
-   */
-  RapidjsonAdapter(const std::string &jsonStr);
-
   /******************************************************
    *
    * destructor
@@ -53,21 +45,14 @@ class RapidjsonAdapter final : public Adapter<RapidjsonAdapter> {
    ******************************************************/
  public:
   template <typename T>
-  void readValue(T &obj);
+  void readValue(T &obj, const std::string &jsonStr);
 
   template <typename T>
   void writeValueAsString(const T &obj, std::string &jsonStr);
 };
 
-RapidjsonAdapter::RapidjsonAdapter(const std::string &jsonStr)
-    : Adapter(jsonStr), doc_(new rapidjson::Document) {
-  doc_->Parse(jsonStr.c_str());
-  model_.value = doc_;
-}
-
 RapidjsonAdapter::RapidjsonAdapter() : doc_(new rapidjson::Document) {
   model_.value = doc_;
-  model_.allocator = &doc_->GetAllocator();
 }
 
 RapidjsonAdapter::~RapidjsonAdapter() {
@@ -78,12 +63,17 @@ RapidjsonAdapter::~RapidjsonAdapter() {
 }
 
 template <typename T>
-void RapidjsonAdapter::readValue(T &obj) {
+void RapidjsonAdapter::readValue(T &obj, const std::string &jsonStr) {
+  if (doc_->Parse(jsonStr.c_str()).HasParseError()) {
+    model_.log.error("json 格式不正确");
+    return;
+  }
   Mapper::readValue("", obj, model_);
 }
 
 template <typename T>
 void RapidjsonAdapter::writeValueAsString(const T &obj, std::string &jsonStr) {
+  model_.allocator = &doc_->GetAllocator();
   Mapper::writeValueAsString("", obj, model_);
   rapidjson::StringBuffer buffer;
   rapidjson::Writer<::rapidjson::StringBuffer> writer(buffer);

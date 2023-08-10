@@ -1,6 +1,5 @@
 #pragma once
 
-#include "json/adapter/Adapter.H"
 #include "json/adapter/RapidjsonAdapter.H"
 #include "json/mapper/Mapper.H"
 #include "string/Util.H"
@@ -10,16 +9,14 @@ namespace json {
 namespace Util {
 template <typename T, typename K = RapidjsonAdapter>
 inline void readValue(T& obj, const std::string& jsonStr) {
-  Adapter<K>* adapter = new K(jsonStr);
-  adapter->readValue(obj);
-  delete static_cast<K*>(adapter);
+  K adapter;
+  adapter.readValue(obj, jsonStr);
 }
 
 template <typename T, typename K = RapidjsonAdapter>
 inline void writeValueAsString(const T& obj, std::string& jsonStr) {
-  Adapter<K>* adapter = new K();
-  adapter->writeValueAsString(obj, jsonStr);
-  delete static_cast<K*>(adapter);
+  K adapter;
+  adapter.writeValueAsString(obj, jsonStr);
 }
 
 #ifndef ZLHYWLF_JSON_K
