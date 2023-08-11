@@ -5,9 +5,9 @@
 enum E { ONE, TWO };
 
 struct Sub {
-  int i;
+  int number;
 
-  ZLHYWLF_JSON_REGISTER_KF(i)
+  ZLHYWLF_JSON_REGISTER(ZLHYWLF_JSON_K(i), ZLHYWLF_JSON_F(number))
 };
 
 struct Data {
