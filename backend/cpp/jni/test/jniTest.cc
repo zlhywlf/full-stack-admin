@@ -1,3 +1,5 @@
+#include "jniTest.cpp"
+
 #include <iostream>
 
 #include "jni.h"
@@ -13,7 +15,8 @@ int main(int argc, char const *argv[]) {
   vmArgs.nOptions = 0;
   vmArgs.ignoreUnrecognized = JNI_TRUE;
   JNI_CreateJavaVM(&jvm, reinterpret_cast<void **>(&env), &vmArgs);
-  cout << "jniTest" << endl;
+  jstring res = cpp(env, nullptr, env->NewStringUTF("java"));
+  cout << endl << env->GetStringUTFChars(res, JNI_FALSE) << endl;
   jvm->DestroyJavaVM();
   return 0;
 }
