@@ -10,8 +10,6 @@ list(APPEND OPTION "-Wno-invalid-offsetof")
 list(APPEND OPTION "-Wno-attributes")
 list(APPEND OPTION "-fPIC")
 list(APPEND OPTION "-ftemplate-depth-100")
-list(APPEND OPTION "-fuse-ld=bfd")
-list(APPEND OPTION "-Wl,--add-needed,--no-as-needed")
 
 project(root)
 add_library(${PROJECT_NAME} INTERFACE)

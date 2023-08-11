@@ -4,15 +4,14 @@
 
 using std::cout;
 using std::endl;
+using zlhywlf::logger::LoggerFactory::createLogger;
 
 int main(int argc, char const *argv[]) {
-  zlhywlf::logger::LoggerFactory f;
-  auto *log = f.createLogger();
-  log->trace("msg");
-  log->debug("msg");
-  log->info("msg");
-  log->warn("msg");
-  log->error("msg");
-  delete log;
+  auto &log = createLogger();
+  log.trace("msg");
+  log.debug("msg");
+  log.info("msg");
+  log.warn("msg");
+  log.error("msg");
   return 0;
 }
