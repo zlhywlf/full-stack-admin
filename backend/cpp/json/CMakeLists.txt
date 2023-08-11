@@ -1,5 +1,3 @@
-cmake_minimum_required(VERSION 3.20)
-
 project(json)
 add_library(${PROJECT_NAME} INTERFACE)
 add_library(zlhywlf::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
