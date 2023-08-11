@@ -29,6 +29,15 @@ class RapidjsonAdapter final {
    ******************************************************/
  public:
   RapidjsonAdapter();
+  RapidjsonAdapter(const RapidjsonAdapter &) = delete;
+
+  /******************************************************
+   *
+   * operators
+   *
+   ******************************************************/
+ public:
+  RapidjsonAdapter &operator=(const RapidjsonAdapter &) = delete;
 
   /******************************************************
    *
@@ -76,7 +85,7 @@ void RapidjsonAdapter::writeValueAsString(const T &obj, std::string &jsonStr) {
   model_.allocator = &doc_->GetAllocator();
   Mapper::writeValueAsString("", obj, model_);
   rapidjson::StringBuffer buffer;
-  rapidjson::Writer<::rapidjson::StringBuffer> writer(buffer);
+  rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
   doc_->Accept(writer);
   jsonStr = buffer.GetString();
 }
