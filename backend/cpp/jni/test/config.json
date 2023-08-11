@@ -1,0 +1,16 @@
+{
+    "mappers": [
+        {
+            "clazz": "zlhywlf/jni/demo/Demo",
+            "methods": [
+                {
+                    "id": 0,
+                    "name": "run",
+                    "sign": "(Ljava/lang/String;)Ljava/lang/String;",
+                    "description": "使用的本地方法为 nativeDoSomething"
+                }
+            ],
+            "description": "安装后需要配置 clazz 与 methods.name; methods.sign 提供了本地方法需要的 java 方法签名, 不能修改;  methods.id 是本地方法注册的顺序, 从 0 开始计数"
+        }
+    ]
+}
