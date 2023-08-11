@@ -39,6 +39,16 @@ jint jniOnLoadLinkLibrary(JavaVM *vm, void *reserved, void **func,
   if (JNI_OK != vm->GetEnv(reinterpret_cast<void **>(&env), JNI_VERSION_1_8)) {
     return JNI_ERR;
   }
+  jclass logClazz = env->FindClass("org/slf4j/LoggerFactory");
+  if (logClazz) {
+    jmethodID id = env->GetStaticMethodID(
+        logClazz, "getLogger", "(Ljava/lang/String;)Lorg/slf4j/Logger;");
+    jobject logObj = env->CallStaticObjectMethod(
+        logClazz, id, env->NewStringUTF("nativeMethod"));
+    jclass clz = env->GetObjectClass(logObj);
+    jmethodID infoId = env->GetMethodID(clz, "info", "(Ljava/lang/String;)V");
+    env->CallVoidMethod(logObj, infoId, env->NewStringUTF("hello java!"));
+  }
   std::string confStr;
   file::Util::readFileAsString(confPath, confStr);
   Conf conf;
