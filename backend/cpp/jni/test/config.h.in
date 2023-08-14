@@ -1,1 +1,2 @@
 #define PATH "@PATH@"
+#define PROJECT_NAME "@PROJECT_NAME@"

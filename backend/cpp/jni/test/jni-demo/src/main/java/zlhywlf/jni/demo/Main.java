@@ -11,8 +11,7 @@ public class Main {
             System.load(libPath);
             Demo demo = new Demo();
             log.info("from c++: {}", demo.run("""
-                    {"info":"from java}
-                    """));
+                    {"info":"from java}"""));
         }
     }
 }

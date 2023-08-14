@@ -3,9 +3,12 @@
 #include <string>
 #include <vector>
 
+#include "config.h"
 #include "file/Util.H"
 #include "jni.h"
 #include "json/util/Util.H"
+#include "logger/JavaLoggerAdapter.H"
+#include "logger/LoggerFactory.H"
 
 namespace zlhywlf {
 namespace jni {
@@ -39,15 +42,18 @@ jint jniOnLoadLinkLibrary(JavaVM *vm, void *reserved, void **func,
   if (JNI_OK != vm->GetEnv(reinterpret_cast<void **>(&env), JNI_VERSION_1_8)) {
     return JNI_ERR;
   }
+  auto &log = logger::LoggerFactory::createLogger();
   jclass logClazz = env->FindClass("org/slf4j/LoggerFactory");
   if (logClazz) {
     jmethodID id = env->GetStaticMethodID(
         logClazz, "getLogger", "(Ljava/lang/String;)Lorg/slf4j/Logger;");
     jobject logObj = env->CallStaticObjectMethod(
-        logClazz, id, env->NewStringUTF("nativeMethod"));
-    jclass clz = env->GetObjectClass(logObj);
-    jmethodID infoId = env->GetMethodID(clz, "info", "(Ljava/lang/String;)V");
-    env->CallVoidMethod(logObj, infoId, env->NewStringUTF("hello java!"));
+        logClazz, id, env->NewStringUTF("Java.Native.Interface." PROJECT_NAME));
+    if (logObj) {
+      delete log.log_;
+      log.log_ = new logger::JavaLoggerAdapter(env, logObj);
+      log.info("获取java日志实例");
+    }
   }
   std::string confStr;
   file::Util::readFileAsString(confPath, confStr);
@@ -63,6 +69,7 @@ jint jniOnLoadLinkLibrary(JavaVM *vm, void *reserved, void **func,
     for (std::size_t i = 0; i < size; i++) {
       Method &m = d.methods[i];
       methods[i] = {m.name.data(), m.sign.data(), func[m.id]};
+      log.info("准备链接: [" + d.clazz + "/" + m.name + "]");
     }
     jint res = env->RegisterNatives(clazz, methods, size);
     if (res != JNI_OK) {

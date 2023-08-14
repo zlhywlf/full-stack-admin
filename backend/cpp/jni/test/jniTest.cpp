@@ -1,12 +1,11 @@
-#include <iostream>
 
 #include "jni/util/Util.H"
-
-using std::cout;
-using std::endl;
+#include "logger/LoggerFactory.H"
 
 jstring cpp(JNIEnv *env, jobject obj, jstring jsonStr) {
-  cout << "from java: " << env->GetStringUTFChars(jsonStr, JNI_FALSE);
+  auto &log = zlhywlf::logger::LoggerFactory::createLogger();
+  log.info("from java: " +
+           std::string(env->GetStringUTFChars(jsonStr, JNI_FALSE)));
   return env->NewStringUTF("hello java!-- 动态链接");
 }
 #include "config.h"

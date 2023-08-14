@@ -1,14 +1,14 @@
 #pragma once
 
-#include "DefaultLoggerAdapter.H"
 #include "Logger.H"
+#include "LoggerServer.H"
 #include "singleton/Singleton.H"
 
 namespace zlhywlf {
 namespace logger {
 namespace LoggerFactory {
-const Logger &createLogger() {
-  return singleton::Singleton<DefaultLoggerAdapter>::getInstance();
+LoggerServer &createLogger() {
+  return singleton::Singleton<LoggerServer>::getInstance();
 }
 }  // namespace LoggerFactory
 }  // namespace logger
