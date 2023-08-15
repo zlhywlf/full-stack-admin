@@ -10,8 +10,7 @@ public class Main {
             String libPath = args[0];
             System.load(libPath);
             Demo demo = new Demo();
-            log.info("from c++: {}", demo.run("""
-                    {"info":"from java}"""));
+            log.info("from c++: {}", demo.run("{\"info\":\"from java}"));
         }
     }
 }
