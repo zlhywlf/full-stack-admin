@@ -31,10 +31,11 @@ public class Main {
                 }
                 for (int i = 0; i < 12; i++) {
                     Sheet ws = wb.getSheetAt(i);
+                    String sheetName = ws.getSheetName();
 
                     // 工序
                     int sr = 15;
-                    for (int j = 0; j < 12; sr += 3, j++) {
+                    for (int j = 0; j < (sheetName.startsWith("2022") ? 13 : 12); sr += 3, j++) {
                         String p = ws.getRow(sr).getCell(1).getStringCellValue();
                         Date date = ws.getRow(55).getCell(0).getDateCellValue();
                         products.add(ExcelReader.handleProduct(p, date, ws, sr));

@@ -49,7 +49,11 @@ public class ExcelReader {
             product.setValue(cell.getNumericCellValue());
         }
         product.setName(getChinese(ws.getRow(0).getCell(col).getStringCellValue()));
-        product.setCoefficient(ws.getRow(51).getCell(col).getNumericCellValue());
+        int r = 51;
+        if (ws.getSheetName().startsWith("2022")) {
+            r = 54;
+        }
+        product.setCoefficient(ws.getRow(r).getCell(col).getNumericCellValue());
         return product;
     }
 
