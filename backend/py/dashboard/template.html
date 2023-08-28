@@ -1,0 +1,64 @@
+{% import 'macro' as macro %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ chart.page_title }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    {{ macro.render_chart_dependencies(chart) }}
+    {{ macro.render_chart_css(chart) }}
+</head>
+
+<body {% if chart.page_border_color !='' %}style="background-color: {{ chart.page_border_color }}" {% endif %}>
+    <div class="container">
+        <div class="row">
+            <div class="col mt-3 text-center">
+                <h1>
+                    自定义仪表板模板
+                </h1>
+            </div>
+        </div>
+
+        <div class="row">
+            {% for c in chart %}
+            <div class="col-lg-6 p-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{c.page_title}}</h5>
+                        {% if c._component_type in ("table", "image") %}
+                        {{ macro.gen_components_content(c) }}
+                        {% elif c._component_type == "myTable" %}
+                        <div id="{{ c.chart_id }}" class="chart-container"
+                            style="overflow: auto; width:{{ c.width }}; height:{{ c.height }}">
+                            <p class="title" {{ c.title_opts.title_style }}> {{ c.title_opts.title }}</p>
+                            <p class="subtitle" {{ c.title_opts.subtitle_style }}> {{ c.title_opts.subtitle }}</p>
+                            {{ c.html_content }}
+                        </div>
+                        {% else %}
+                        {{ macro.render_chart_content(c) }}
+                        {% endif %}
+
+                        {% for _ in range(chart.page_interval) %}
+                        {% if chart.remove_br is false %}<br />{% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+    <script>
+        {% for js in chart.js_functions.items %}
+        { { js } }
+        {% endfor %}
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
