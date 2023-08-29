@@ -1,0 +1,1 @@
+select 年||'年' as 年,GROUP_CONCAT(月||'月',',') as 月,GROUP_CONCAT(ROUND({},4),',') as 产品 from data where 工序='{}' group by 年;

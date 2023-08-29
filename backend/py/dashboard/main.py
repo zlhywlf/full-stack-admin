@@ -1,7 +1,6 @@
 import os
 from pyecharts import options as opts
 from pyecharts.charts import Bar, Line, Liquid, Page
-from pyecharts.charts.base import Base
 from pyecharts.commons.utils import JsCode
 from pyecharts.components import Table
 from pyecharts.faker import Faker
