@@ -7,6 +7,17 @@
 % 工具
 \RequirePackage{etoolbox}
 
+% 图
+\RequirePackage{graphicx}
+\graphicspath{{./asset/}}
+
+% 颜色
+\RequirePackage[table]{xcolor}
+\definecolor{tmp}{RGB}{0,201,167}
+
+% 绘图
+\RequirePackage{tikz}
+
 % 选项
 \input{config/option}
 
@@ -25,6 +36,9 @@
 
 % 字体
 \input{config/font}
+
+% 封面
+\input{config/cover}
 
 % 超链接
 \RequirePackage[hidelinks]{hyperref}

@@ -1,0 +1,27 @@
+\renewcommand*{\maketitle}{
+    \begin{titlepage}
+        \newgeometry{margin = 0in}\parindent=0pt
+        {\includegraphics[width=\linewidth]{cover}}
+        \begin{center}
+            \begin{tikzpicture}[samples=200]
+                \draw[domain=-pi:pi,rotate=270,color=tmp]plot({3*1.6*cos(\x/2 r)*cos(\x r)},{3*1.6*cos(\x/2 r)*sin(\x r)});
+                \node at(0,-1.7){$R=a(1-\sin\theta)$};
+            \end{tikzpicture}
+        \end{center}
+        {\vskip 20\p@}
+        {
+        \begin{center}
+            \ttfamily
+            {\LARGE \textbf{\@title} \par}
+            {\vskip 3em}
+            {\large \lineskip .75em
+                \begin{tabular}[t]{c}
+                    \@author
+                \end{tabular}
+            }
+            {\vskip 1.5em}
+            {\large \@date \par}
+        \end{center}\par
+        }
+    \end{titlepage}
+}
