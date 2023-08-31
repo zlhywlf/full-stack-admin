@@ -1,0 +1,40 @@
+% ====================================================
+% 自定义选项
+% ====================================================
+\RequirePackage{kvoptions}
+
+% 设置引用选项前缀
+\SetupKeyvalOptions{family=BOOK, prefix=BOOK@}
+
+% 字体
+% 英文衬线字体
+\DeclareStringOption[Luiss Serif Regular]{serif}
+\DeclareStringOption[Luiss Serif Bold]{serifBold}
+\DeclareStringOption[Luiss Serif Italic]{serifItalic}
+\DeclareStringOption[Luiss Serif Bold Italic]{serifBoldItalic}
+% 英文无衬线字体
+\DeclareStringOption[JetBrains Mono Regular]{sans}
+\DeclareStringOption[JetBrains Mono Bold]{sansBold}
+\DeclareStringOption[JetBrains Mono Italic]{sansItalic}
+\DeclareStringOption[JetBrains Mono Bold Italic]{sansBoldItalic}
+% 英文等宽字体
+\DeclareStringOption[JetBrains Mono Regular]{mono}
+\DeclareStringOption[JetBrains Mono Bold]{monoBold}
+\DeclareStringOption[JetBrains Mono Italic]{monoItalic}
+\DeclareStringOption[JetBrains Mono Bold Italic]{monoBoldItalic}
+% 中文衬线字体
+\DeclareStringOption[Source Han Serif CN Light]{serifCn}
+\DeclareStringOption[Source Han Serif CN Bold]{serifCnBold}
+% 中文无衬线字体
+\DeclareStringOption[Noto Sans CJK Light]{sansCn}
+\DeclareStringOption[Noto Sans CJK Bold Bold]{sansCnBold}
+% 中文等宽字体
+\DeclareStringOption[Noto Sans CJK Light]{monoCn}
+\DeclareStringOption[Noto Sans CJK Bold Bold]{monoCnBold}
+% 其他字体
+\DeclareStringOption[FZKai-Z03S]{kaishu}
+\DeclareStringOption[FZFangSong-Z02S]{fangsong}
+
+% 处理选项
+\ProcessKeyvalOptions*
+\relax

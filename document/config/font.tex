@@ -1,0 +1,42 @@
+% ====================================================
+% 中文支持，使用 xelatex 编译
+% ====================================================
+\RequirePackage[fontset=none,scheme=plain]{ctex}
+
+% CJK 衬线字体，影响 \rmfamily 和 \textrm 的字体
+\setCJKmainfont{\BOOK@serifCn}[
+    BoldFont = \BOOK@serifCnBold,
+]
+% CJK 无衬线字体，影响 \sffamily 和 \textsf
+\setCJKsansfont{\BOOK@sansCn}[
+    BoldFont = \BOOK@sansCnBold
+]
+% CJK 等宽字体，影响 \ttfamily 和 \texttt
+\setCJKmonofont{\BOOK@monoCn}[
+    BoldFont = \BOOK@monoCnBold
+]
+% 英文衬线字体，影响 \rmfamily 和 \textrm 的字体
+\setmainfont{\BOOK@serif}[
+    BoldFont = \BOOK@serifBold,
+    ItalicFont = \BOOK@serifItalic,
+    BoldItalicFont = \BOOK@serifBoldItalic
+]
+% 英文无衬线字体，影响 \sffamily 和 \textsf
+\setsansfont{\BOOK@sans}[
+    BoldFont = \BOOK@sansBold,
+    ItalicFont = \BOOK@sansItalic,
+    BoldItalicFont = \BOOK@sansBoldItalic
+]
+% 英文等宽字体，影响 \ttfamily 和 \texttt
+\setmonofont{\BOOK@mono}[
+    BoldFont = \BOOK@monoBold,
+    ItalicFont = \BOOK@monoItalic,
+    BoldItalicFont = \BOOK@monoBoldItalic
+]
+
+% 声明新的 CJK 字体族
+\setCJKfamilyfont{kaishu}{\BOOK@kaishu}
+\setCJKfamilyfont{fangsong}{\BOOK@fangsong}
+
+\newcommand*\kaishu{\CJKfamily{kaishu}}
+\newcommand*\fangsong{\CJKfamily{fangsong}}

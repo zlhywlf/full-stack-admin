@@ -1,11 +1,19 @@
 % 指定当前类必须使用的格式
 \NeedsTeXFormat{LaTeX2e}
+
 %  标识类
 \ProvidesClass{zlhywlfbook}[2022/12/12 v1.0.0 zlhywlfbook document class]
-% 加载类
-\LoadClass[UTF8]{ctexrep}
 
-% 页面大小
+% 工具
+\RequirePackage{etoolbox}
+
+% 选项
+\input{config/option}
+
+% 加载类
+\LoadClass[a4paper,oneside]{book}
+
+% 页面
 \RequirePackage[
     a4paper,
     top=25.4mm, bottom=25.4mm,
@@ -14,6 +22,9 @@
     headsep=4mm,
     footskip=12mm
 ]{geometry}
+
+% 字体
+\input{config/font}
 
 % 超链接
 \RequirePackage[hidelinks]{hyperref}
@@ -24,8 +35,6 @@
 \fancyhf{}
 \rhead{\textnormal{\rightmark}}
 \fancyfoot[C]{\thepage}
-\renewcommand\sectionmark[1]{
-    \markright{\CTEXifname{\CTEXthesection~--~}{}#1}}
 
 % 代码块
 \RequirePackage{listings}
