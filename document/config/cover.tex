@@ -1,19 +1,32 @@
+% ====================================================
+% 封面
+% ====================================================
+\definecolor{coverC1}{RGB}{184,0,78}
+\definecolor{coverC2}{RGB}{47,72,88}
+\newcommand\saying[1]{\gdef\@saying{#1}}
+\newcommand\drawCircle[3]{\draw[domain=-pi:pi,rotate=#1,color=#2,#3]plot({4*1.6*cos(\x/2 r)*cos(\x r)},{4*1.6*cos(\x/2 r)*sin(\x r)});}
+
 \renewcommand*{\maketitle}{
     \begin{titlepage}
         \newgeometry{margin = 0in}\parindent=0pt
-        {\includegraphics[width=\linewidth]{cover}}
+        {\null \vskip 5em}
         \begin{center}
-            \begin{tikzpicture}[samples=200]
-                \draw[domain=-pi:pi,rotate=270,color=tmp]plot({3*1.6*cos(\x/2 r)*cos(\x r)},{3*1.6*cos(\x/2 r)*sin(\x r)});
-                \node at(0,-1.7){$R=a(1-\sin\theta)$};
+            \begin{tikzpicture}[font=\large]
+                \draw[->,dashed,color=coverC2](-7.5,0)--(7.5,0)node[below]{$x$};
+                \draw[->,dashed,color=coverC2](0,-7.5)--(0,7.5)node[left]{$y$};
+                \drawCircle{0}{coverC2}{dashed,samples=200}
+                \drawCircle{90}{coverC2}{dashed,samples=200}
+                \drawCircle{180}{coverC2}{dashed,samples=200}
+                \drawCircle{270}{coverC1}{ultra thick}
+                \node at(1.6,-6.8){$R=a(1-\sin\theta)$};
             \end{tikzpicture}
         \end{center}
-        {\vskip 20\p@}
+        {\vskip 7em}
         {
         \begin{center}
             \ttfamily
-            {\LARGE \textbf{\@title} \par}
-            {\vskip 3em}
+            {\Huge \textbf{\@title} \par}
+            {\vskip 2em}
             {\large \lineskip .75em
                 \begin{tabular}[t]{c}
                     \@author
@@ -21,6 +34,8 @@
             }
             {\vskip 1.5em}
             {\large \@date \par}
+            {\null\vfill}
+            {\large\textrm{\@saying}}
         \end{center}\par
         }
     \end{titlepage}
