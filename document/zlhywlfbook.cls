@@ -4,6 +4,12 @@
 %  标识类
 \ProvidesClass{zlhywlfbook}[2022/12/12 v1.0.0 zlhywlfbook document class]
 
+% 选项
+\input{config/option}
+
+% 加载类
+\LoadClass[a4paper,oneside]{book}
+
 % 工具
 \RequirePackage{etoolbox}
 
@@ -13,16 +19,12 @@
 
 % 颜色
 \RequirePackage[table]{xcolor}
-\definecolor{tmp}{RGB}{0,201,167}
 
 % 绘图
 \RequirePackage{tikz}
 
-% 选项
-\input{config/option}
-
-% 加载类
-\LoadClass[a4paper,oneside]{book}
+% 超链接
+\RequirePackage[hidelinks]{hyperref}
 
 % 页面
 \RequirePackage[
@@ -40,35 +42,33 @@
 % 封面
 \input{config/cover}
 
-% 超链接
-\RequirePackage[hidelinks]{hyperref}
+% 目录
+\input{config/content}
+
+% 标题
+\input{config/title}
 
 % 页眉页脚
 \RequirePackage{fancyhdr}
-\pagestyle{fancy}
 \fancyhf{}
-\rhead{\textnormal{\rightmark}}
-\fancyfoot[C]{\thepage}
+\pagestyle{fancy}
+\fancyfoot[c]{\small\thepage}
+\fancyhead[R]{\rightmark}
 
-% 代码块
+% 代码块 \definecolor{winered}{rgb}{0.5,0,0}
 \RequirePackage{listings}
-\RequirePackage{color}
-\RequirePackage{xcolor}
 \definecolor{dkgreen}{rgb}{0,0.6,0}
-\definecolor{gray}{rgb}{0.5,0.5,0.5}
-\definecolor{mauve}{rgb}{0.58,0,0.82}
+\definecolor{winered}{rgb}{0.5,0,0}
 \lstset{
-    numbers=left,
     frame=tb,
     aboveskip=3mm,
     belowskip=3mm,
     showstringspaces=false,
     columns=flexible,
     basicstyle = \ttfamily\small,
-    numberstyle=\tiny\color{gray},
-    keywordstyle=\color{blue},
+    keywordstyle=\color{winered},
     commentstyle=\color{dkgreen},
-    stringstyle=\color{mauve},
+    stringstyle=\color{dkgreen},
     breaklines=true,
     breakatwhitespace=true,
     tabsize=2

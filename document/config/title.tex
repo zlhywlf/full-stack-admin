@@ -1,0 +1,26 @@
+% ====================================================
+% 标题
+% ====================================================
+\RequirePackage[center,pagestyles]{titlesec}
+\setcounter{secnumdepth}{4}
+
+\titleformat{\chapter}[hang]{\bfseries}
+{\filcenter\LARGE\enspace\bfseries 第\zhnumber{\arabic{chapter}}章~~}
+{1pt}{\LARGE\bfseries\filcenter}
+
+\titleformat{\section}[hang]{\bfseries}
+{\Large\bfseries{\thesection}\enspace}
+{1pt}{\Large\bfseries\filright}
+
+\titleformat{\subsection}[hang]{\bfseries}
+{\large\bfseries\thesubsection\enspace}
+{1pt}{\large\bfseries\filright}
+
+\titleformat{\subsubsection}[hang]{\bfseries}
+{\large\bfseries\thesubsubsection\enspace}
+{1pt}{\large\bfseries\filright}
+
+\titlespacing{\chapter}{0pt}{-20pt}{1.3\baselineskip}
+
+\renewcommand\partname{}
+\renewcommand\thepart{第\zhnumber{\arabic{part}}部分}
