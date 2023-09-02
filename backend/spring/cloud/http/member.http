@@ -1,0 +1,9 @@
+### 查询
+GET http://localhost:8080/member/
+Accept: application/json
+
+### 添加
+POST http://localhost:8080/member/register
+Content-Type: application/x-www-form-urlencoded
+
+mobile = 12200001113

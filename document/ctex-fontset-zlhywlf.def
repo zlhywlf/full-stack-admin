@@ -1,0 +1,32 @@
+% ====================================================
+% 自定义字体，用于 ctex 包设置，使用 xelatex 编译
+% ====================================================
+\ProvidesExplFile{ctex-fontset-zlhywlf.def}{2022/12/12}{1.0.0}{自定义字体}
+
+\ctex_fontset_case:nnnn
+{\ctex_fontset_error:n{自定义字体}}
+{\ctex_fontset_error:n{自定义字体}}
+{\ctex_fontset_error:n{自定义字体}}
+{
+    % 英文衬线字体，影响 \rmfamily \textrm \rm 的字体
+    \setmainfont{Luiss~Serif}[UprightFont=*-Regular,BoldFont=*-Bold,ItalicFont=*-Italic,BoldItalicFont=*-Bold~Italic]
+    % 英文等线字体，影响 \sffamily \textsf \sf 的字体
+    \setsansfont{Aileron}[BoldFont=*-SemiBold,ItalicFont=*-Italic,BoldItalicFont=*-SemiBold~Italic]
+    % 英文等宽字体，影响 \ttfamily \texttt \tt 的字体
+    \setmonofont{JetBrains~Mono}[UprightFont=*-Regular,BoldFont=*-Bold,ItalicFont=*-Italic,BoldItalicFont=*-Bold~Italic]
+
+    % CJK 衬线字体，影响 \rmfamily \textrm \rm 的字体
+    \setCJKmainfont{Source~Han~Serif~CN~Light}[BoldFont=Source~Han~Serif~CN~Bold,SlantedFont=Source~Han~Serif~CN~Bold]
+    % CJK 等线字体，影响 \sffamily \textsf \sf 的字体
+    \setCJKsansfont{Noto~Sans~CJK~Medium}[BoldFont=Noto~Sans~CJK~Bold~Bold]
+    % CJK 等宽字体，影响 \ttfamily \texttt \tt 的字体
+    \setCJKmonofont{Noto~Sans~CJK~Medium}[BoldFont=Noto~Sans~CJK~Bold~Bold]
+
+    % 声明新的 CJK 字体族
+    \setCJKfamilyfont{zhfangsong}{FZFangSong-Z02S}
+    \setCJKfamilyfont{zhhei}{Noto~Sans~CJK~Light}
+    \setCJKfamilyfont{zhkai}{FZKai-Z03S}
+}
+\NewDocumentCommand\fangsong{}{\CJKfamily{zhfangsong}}
+\NewDocumentCommand\heiti{}{\CJKfamily{zhhei}}
+\NewDocumentCommand\kaishu{}{\CJKfamily{zhkai}}
