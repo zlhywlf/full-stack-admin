@@ -13,13 +13,16 @@
 
 % 页面
 \RequirePackage[
-    paperwidth=185mm,paperheight=260mm,
-    text={148mm,220mm},
-    left=21mm,top=25.5mm,bottom=25.5mm,right=20mm,
-    headheight=2.17cm,headsep=4mm,footskip=12mm
+    a4paper,
+    top=25.4mm, bottom=25.4mm,
+    left=20mm, right=20mm,
+    headheight=2.17cm,
+    headsep=4mm,
+    footskip=12mm
 ]{geometry}
 
-
+% 超链接
+\RequirePackage[hidelinks]{hyperref}
 
 % 中文支持
 \RequirePackage[
@@ -27,6 +30,12 @@
     fontset=zlhywlf,
     zihao=5
 ]{ctex}
+
+% 首段缩进
+\RequirePackage{indentfirst}
+
+% 使空白页无内容
+\usepackage{emptypage}
 
 % 标题
 \input{config/title}
@@ -41,51 +50,21 @@
 \input{config/cover}
 \newcommand\saying[1]{\gdef\@saying{#1}}
 
-% % 工具
-% \RequirePackage{etoolbox}
-
-% % 图
-% \RequirePackage{graphicx}
-% \graphicspath{{./asset/}}
-
-% % 颜色
-% \RequirePackage[table]{xcolor}
-
-% % 绘图
-% \RequirePackage{tikz}
-
-% % 超链接
-% \RequirePackage[hidelinks]{hyperref}
-
-
-
-
-
-
-
-
-% % 页眉页脚
-% \RequirePackage{fancyhdr}
-% \fancyhf{}
-% \pagestyle{fancy}
-% \fancyfoot[c]{\small\thepage}
-% \fancyhead[R]{\rightmark}
-
-% % 代码块 \definecolor{winered}{rgb}{0.5,0,0}
-% \RequirePackage{listings}
-% \definecolor{dkgreen}{rgb}{0,0.6,0}
-% \definecolor{winered}{rgb}{0.5,0,0}
-% \lstset{
-%     frame=tb,
-%     aboveskip=3mm,
-%     belowskip=3mm,
-%     showstringspaces=false,
-%     columns=flexible,
-%     basicstyle = \ttfamily\small,
-%     keywordstyle=\color{winered},
-%     commentstyle=\color{dkgreen},
-%     stringstyle=\color{dkgreen},
-%     breaklines=true,
-%     breakatwhitespace=true,
-%     tabsize=2
-% }
+% 代码块
+\RequirePackage{listings}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{winered}{rgb}{0.5,0,0}
+\lstset{
+    frame=tb,
+    aboveskip=3mm,
+    belowskip=3mm,
+    showstringspaces=false,
+    columns=flexible,
+    basicstyle = \ttfamily\small,
+    keywordstyle=\color{winered},
+    commentstyle=\color{dkgreen},
+    stringstyle=\color{dkgreen},
+    breaklines=true,
+    breakatwhitespace=true,
+    tabsize=2
+}

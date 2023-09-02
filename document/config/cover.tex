@@ -10,7 +10,7 @@
     \pagestyle{empty}
     \begin{titlepage}
         \newgeometry{margin=0mm}\parindent=0mm
-        {\null \vskip 5ex}
+        {\null \vskip 15ex}
         \begin{center}
             \begin{tikzpicture}[font=\large]
                 \draw[->,dashed,color=coverC2](-7.5,0)--(7.5,0)node[below]{$x$};
@@ -22,29 +22,26 @@
                 \node at(0,-7.5){$R=a(1-\sin\theta)$};
             \end{tikzpicture}
         \end{center}
-        {\vskip 5ex}
+        {\vskip 15ex}
         {
         \begin{center}
             \ttfamily
             {\Huge \textbf{\@title} \par}
-            {\vskip 2ex}
+            {\vskip 4ex}
             {\large \lineskip .75ex
                 \begin{tabular}[t]{c}
                     \@author
                 \end{tabular}
             }
-            {\vskip 1.5ex}
+            {\vskip 2.5ex}
             {\large \@date \par}
             {\null\vfill}
-            {\large\textrm{\@saying}}
+            {\large\rm{\@saying}}
         \end{center}\par
         }
     \end{titlepage}
+    \frontmatter
     \pagestyle{fancy}
-    \pagenumbering{roman}
-    \setcounter{page}{1}
     \tableofcontents
-    \clearpage
-    \pagenumbering{arabic}
-    \setcounter{page}{1}
+    \mainmatter
 }
