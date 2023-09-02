@@ -1,0 +1,13 @@
+% ====================================================
+% 页眉页脚
+% ====================================================
+\RequirePackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+% EL EC ER | OL OC OR
+\fancyhead[EL,OR]{--\ \thepage\ --}
+\fancyhead[EC,OC]{\nouppercase{\fangsong\rightmark}}
+% 标题页不要页眉页脚
+\fancypagestyle{plain}{\renewcommand{\headrulewidth}{0em}\fancyhf{}}
+% 将小节置于页眉
+\renewcommand\sectionmark[1]{\markright{\thesection#1}}
