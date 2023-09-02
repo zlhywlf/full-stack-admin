@@ -30,6 +30,7 @@
     fontset=zlhywlf,
     zihao=5
 ]{ctex}
+\renewcommand{\baselinestretch}{1.3}
 
 % 首段缩进
 \RequirePackage{indentfirst}
