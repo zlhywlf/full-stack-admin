@@ -1,0 +1,13 @@
+{
+  "name": "@fs/cli",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "main": "src/index.ts",
+  "bin": {
+    "th-cli": "bin/th-cli.js"
+  },
+  "scripts": {
+    "dev": "tsc -w"
+  }
+}
