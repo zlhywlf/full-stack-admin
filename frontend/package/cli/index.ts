@@ -19,7 +19,9 @@ export default (pkg: { bin: object; version: string }) => {
       if (!semver.gte(process.version, LOWEST_NODE_VERSION)) {
         throw new Error(`最低版本要求${LOWEST_NODE_VERSION}`);
       }
-    });
+    })
+    .on("command:*", obj => log.error("命令不存在", obj[0]))
+    .on("option:debug", () => log.verbose("开启 debug 模式", ""));
 
   new InitCommand().register(program);
 
