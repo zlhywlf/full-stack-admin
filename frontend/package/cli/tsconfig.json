@@ -1,12 +1,14 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
+    "rootDir": "src",
     "outDir": "dist",
     "composite": true,
     "module": "esnext",
     "moduleResolution": "node",
     "noEmit": false,
-    "allowImportingTsExtensions": false
+    "allowImportingTsExtensions": false,
+    "tsBuildInfoFile": "dist/.tsbuildinfo"
   },
   "include": [
     "src/**/*.ts"
