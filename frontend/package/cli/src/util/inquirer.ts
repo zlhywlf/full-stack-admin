@@ -30,13 +30,22 @@ export const useList = async (
   });
 };
 
-export const useInput = async (message: string, defaultValue?: string) => {
+export const useInput = async (
+  message: string,
+
+  validate?: (
+    input: string,
+    answers?: Answers | undefined
+  ) => string | boolean | Promise<string | boolean>,
+  defaultValue?: string
+) => {
   return use(() => {
     return {
       name: "name",
       type: "input",
       message,
-      default: defaultValue
+      default: defaultValue,
+      validate
     };
   });
 };
