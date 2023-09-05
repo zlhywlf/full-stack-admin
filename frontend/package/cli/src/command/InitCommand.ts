@@ -1,28 +1,19 @@
 import { BaseCommand } from "./BaseCommand.js";
 import log from "../util/log.js";
-import inquirer from "inquirer";
+import { useInput, useList } from "../util/inquirer.js";
+import { $ } from "execa";
 
 export class InitCommand extends BaseCommand {
   static TEMPLATE = [
     {
-      name: "示例1",
-      value: "demo1",
-      version: "v1.0.0"
+      name: "vue-dev",
+      value: "dev",
+      project: "vue-template"
     },
     {
-      name: "示例2",
-      value: "demo2",
-      version: "v1.0.0"
-    }
-  ];
-  static TYPE = [
-    {
-      name: "页面",
-      value: "page"
-    },
-    {
-      name: "项目",
-      value: "project"
+      name: "vue-master",
+      value: "",
+      project: "vue-template"
     }
   ];
 
@@ -44,38 +35,19 @@ export class InitCommand extends BaseCommand {
   }
 
   private async createTemplate(name: string) {
-    const type = await inquirer
-      .prompt({
-        name,
-        choices: InitCommand.TYPE,
-        message: "请选择初始化类型",
-        default: "project",
-        type: "list"
-      })
-      .then(answer => answer[name]);
-    log.verbose("type == ", type);
-    if (type == "project") {
-      const pName = await inquirer
-        .prompt({
-          name,
-          message: "请输入项目名称",
-          type: "input"
-        })
-        .then(answer => answer[name]);
-      log.verbose("pName == ", pName);
-      const tempalteValue = await inquirer
-        .prompt({
-          name,
-          choices: InitCommand.TEMPLATE,
-          message: "请选择项目模板",
-          type: "list"
-        })
-        .then(answer => answer[name]);
-      log.verbose("tempalte == ", tempalteValue);
-      const selectTemplate = InitCommand.TEMPLATE.find(
-        t => t.value === tempalteValue
-      );
-      log.verbose("selectTemplate == ", selectTemplate as unknown as string);
+    const pName = await useInput("请输入项目名称", name);
+    log.verbose("pName == ", pName);
+    const tempalteValue = await useList("请选择项目模板", InitCommand.TEMPLATE);
+    const selectTemplate = InitCommand.TEMPLATE.find(
+      t => t.value === tempalteValue
+    );
+    if (selectTemplate) {
+      const { value, project } = selectTemplate;
+      const url = `git clone -b ${value} --depth=1 https://github.com/zlhywlf/${project}.git`;
+      log.verbose("url", url);
+      await $`${url}`;
+    } else {
+      throw new Error("Template does not exist");
     }
   }
 }
